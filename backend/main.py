@@ -23,9 +23,13 @@ def get_esportal_stats(user_id: str) -> dict:
 
 
 def get_leetify_stats(user_id: str) -> dict:
-    leetify_url = f"https://api.cs-prod.leetify.com/api/profile/id/{user_id}"
-    leetify_response = r.get(leetify_url)
-    return leetify_response.json()
+    stats = {}
+    url = f"https://api.cs-prod.leetify.com/api/profile/id/{user_id}"
+    response = r.get(url).json()
+    stats["recentGameRatings"] = response["recentGameRatings"]
+    stats["currentPremiereRating"] = response["games"][0]["skillLevel"]
+    stats["maxPremiereRating"] = max(game["skillLevel"] for game in response["games"] if game["skillLevel"] is not None)
+    return stats
 
 @app.route("/profiles/<user_id>/")
 def get_profile(user_id: str) -> dict:
