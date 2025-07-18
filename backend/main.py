@@ -1,11 +1,15 @@
 from flask import Flask
 import requests as r
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 app = Flask(__name__)
 
 
 def get_steam_stats(user_id: str) -> dict:
-    steam_url = f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=STEAM_API_KEY&steamids={user_id}"
+    api_key = os.getenv("STEAM_API_KEY")
+    steam_url = f"https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key={api_key}&steamid={user_id}"
     steam_response = r.get(steam_url)
     return steam_response.json()
 
@@ -19,10 +23,11 @@ def get_esportal_stats(user_id: str) -> dict:
 
 
 def get_leetify_stats(user_id: str) -> dict:
-    pass
+    leetify_url = f"https://api.cs-prod.leetify.com/api/profile/id/{user_id}"
+    leetify_response = r.get(leetify_url)
+    return leetify_response.json()
 
-
-@app.route("profiles/<user_id>/")
+@app.route("/profiles/<user_id>/")
 def get_profile(user_id: str) -> dict:
     user_stats = {
         "steam_stats": get_steam_stats(user_id),
