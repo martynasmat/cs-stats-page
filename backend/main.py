@@ -9,13 +9,31 @@ app = Flask(__name__)
 
 def get_steam_stats(user_id: str) -> dict:
     api_key = os.getenv("STEAM_API_KEY")
-    steam_url = f"https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key={api_key}&steamid={user_id}"
-    steam_response = r.get(steam_url)
-    return steam_response.json()
+
+    # Get Steam statistics
+    url = f"https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key={api_key}&steamid={user_id}"
+    response = r.get(url)
+    return response.json()
 
 
 def get_faceit_stats(user_id: str) -> dict:
-    pass
+    stats = {}
+
+    # Get FACEIT username by Steam ID
+    url_get_username = f"https://www.faceit.com/api/searcher/v1/players?limit=20&offset=0&game_id={user_id}"
+    username = r.get(url_get_username).json()["payload"]["nickname"]
+
+    # Get FACEIT statistics
+    url = f"https://www.faceit.com/api/users/v1/nicknames/{username}"
+    response = r.get(url).json()["payload"]
+    stats["createdAt"] = response["activated_at"]
+    stats["avatar"] = response["avatar"]
+    stats["country"] = response["country"]
+    stats["statsCS2"] = response["games"]["cs2"]
+    stats["statsCSGO"] = response["games"]["csgo"]
+    stats["memberships"] = response["memberships"]
+    stats["nickname"] = response["nickname"]
+    return stats
 
 
 def get_esportal_stats(user_id: str) -> dict:
@@ -24,6 +42,8 @@ def get_esportal_stats(user_id: str) -> dict:
 
 def get_leetify_stats(user_id: str) -> dict:
     stats = {}
+
+    # Get Leetify statistics
     url = f"https://api.cs-prod.leetify.com/api/profile/id/{user_id}"
     response = r.get(url).json()
     stats["recentGameRatings"] = response["recentGameRatings"]
