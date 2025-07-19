@@ -32,14 +32,14 @@ def get_average_stats(items, count):
         headshot_percentage += float(item["stats"]["Headshots %"])
 
     return {
-        "adr": adr / count,
+        "adr": round(adr / count, 2),
         "kills": kills / count,
         "deaths": deaths / count,
         "assists": assists / count,
-        "kd_ratio": kd / count,
-        "rounds_won": rounds_won / count,
-        "win_percentage": games_won / count * 100,
-        "headshot_percentage": headshot_percentage / count,
+        "kd_ratio": round(kd / count, 2),
+        "rounds_won": round(rounds_won / count, 2),
+        "win_percentage": round(games_won / count * 100, 2),
+        "headshot_percentage": round(headshot_percentage / count, 2),
     }
 
 
@@ -110,7 +110,6 @@ class Scraper:
             "memberships": response_general["memberships"],
             "nickname": response_general["nickname"],
             "playerID": response_general["player_id"],
-            #"recent": response_recent,
             "recentGameStats": get_average_stats(response_recent["items"], response_recent["end"]),
         }
         return stats
@@ -149,13 +148,11 @@ def home() -> str:
     return render_template("stats.html", user_stats=user_stats)
 
 @app.route("/profiles/<steam_id>/")
-def get_profile(steam_id: str) -> dict:
+def get_profile(steam_id: str) -> str:
     user_stats = Scraper(steam_id).get_stats()
-    return user_stats
-    #return render_template("stats.html", user_stats=user_stats)
+    return render_template("stats.html", user_stats=user_stats)
 
 @app.route("/id/<vanity_name>/")
-def get_id(vanity_name: str) -> dict:
+def get_id(vanity_name: str) -> str:
     user_stats = Scraper(vanity_name, True).get_stats()
-    return user_stats
-    #return render_template("stats.html", user_stats=user_stats)
+    return render_template("stats.html", user_stats=user_stats)

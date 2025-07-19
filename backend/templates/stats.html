@@ -27,6 +27,7 @@
                 <img
                     class="content__steam-avatar"
                     src="{{ user_stats.steam.general.avatarfull }}"
+                    alt="Steam profile avatar"
                 />
                 <p>
                     Joined
@@ -37,7 +38,32 @@
                 </p>
             </div>
             <div class="content__faceit">
-                <p>Faceit stats</p>
+                <p>FACEIT stats</p>
+                <div>
+                    <p>COUNTRY</p>
+                    <p>{{ user_stats.faceit.country }}</p>
+                </div>
+                <div>
+                    <p>JOINED ON</p>
+                    <p>{{ user_stats.faceit.createdAt }}</p>
+                </div>
+                <div>
+                    <p>NICKNAME</p>
+                    <p>{{ user_stats.faceit.nickname }}</p>
+                </div>
+                <div>
+                    <p>LEVEL</p>
+                    <p>{{ user_stats.faceit.statsCS2.skill_level }}</p>
+                </div>
+                <div>
+                    <p>RECENT STATS</p>
+                    <p>ADR: {{ user_stats.faceit.recentGameStats.adr }}</p>
+                    <p>Kills: {{ user_stats.faceit.recentGameStats.kills }}</p>
+                    <p>Deaths: {{ user_stats.faceit.recentGameStats.deaths }}</p>
+                    <p>Assists: {{ user_stats.faceit.recentGameStats.assists}}</p>
+                    <p>Headshots: {{ user_stats.faceit.recentGameStats.headshot_percentage }}</p>
+                    <p>K/D Ratio: {{ user_stats.faceit.recentGameStats.kd_ratio}}</p>
+                </div>
             </div>
             <div class="content__leetify">
                 <p>Leetify stats</p>
