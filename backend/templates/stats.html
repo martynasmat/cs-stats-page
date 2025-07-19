@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='style.css') }}"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CS stats</title>
+    </head>
+    <body>
+        <main class="content">
+            <div class="content__steam">
+                <a
+                    class="content__steam-link"
+                    href="{{ user_stats.steam.general.profileurl }}"
+                >
+                    {{ user_stats.steam.general.personaname }}
+                </a>
+                <img
+                    class="content__steam-avatar"
+                    src="{{ user_stats.steam.general.avatarfull }}"
+                />
+                <p>
+                    Joined
+                    <time>
+                        {{ user_stats.steam.general.timecreated | datetimeformat
+                        }}
+                    </time>
+                </p>
+            </div>
+            <div class="content__faceit">
+                <p>Faceit stats</p>
+            </div>
+            <div class="content__leetify">
+                <p>Leetify stats</p>
+            </div>
+        </main>
+    </body>
+</html>

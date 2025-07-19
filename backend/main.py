@@ -1,12 +1,14 @@
-from flask import Flask, abort
-import requests as r
-from dotenv import load_dotenv
-from typing import Self
+import json
 import os
 import logging
+from flask import Flask, abort, render_template
+from dotenv import load_dotenv
+import requests as r
+from filters import init_filters
 
 load_dotenv()
 app = Flask(__name__)
+init_filters(app)
 logger = logging.getLogger(__name__)
 
 
@@ -44,8 +46,16 @@ class Scraper:
 
         url = (f"https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key="
                f"{self.steam_api_key}&steamid={self.steam_id}")
-        response = r.get(url)
-        return response.json()
+        response_cs2 = r.get(url)
+
+        url = (f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="
+               f"{self.steam_api_key}&steamids={self.steam_id}")
+        response_general = r.get(url)
+
+        return {
+            "general": response_general.json()["response"]["players"][0],
+            "cs2": response_cs2.json()
+        }
 
     def get_faceit_stats(self) -> dict:
         """Gets player statistics from FACEIT API by Steam user ID. Returns a dictionary with player statistics."""
@@ -92,14 +102,18 @@ class Scraper:
 
         return stats
 
+@app.route("/")
+def home() -> str:
+    file = open("tmp/stats.json", "r")
+    user_stats = json.loads(file.read())
+    return render_template("stats.html", user_stats=user_stats)
+
 @app.route("/profiles/<steam_id>/")
-def get_profile(steam_id: str) -> dict:
-    scraper = Scraper(steam_id)
-    user_stats = scraper.get_stats()
-    return user_stats
+def get_profile(steam_id: str) -> str:
+    user_stats = Scraper(steam_id).get_stats()
+    return render_template("stats.html", user_stats=user_stats)
 
 @app.route("/id/<vanity_name>/")
-def get_id(vanity_name: str) -> dict:
-    scraper = Scraper(vanity_name, True)
-    stats = scraper.get_stats()
-    return stats
+def get_id(vanity_name: str) -> str:
+    user_stats = Scraper(vanity_name, True).get_stats()
+    return render_template("stats.html", user_stats=user_stats)
