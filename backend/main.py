@@ -59,19 +59,20 @@ class Scraper:
 
     def get_faceit_stats(self) -> dict:
         """Gets player statistics from FACEIT API by Steam user ID. Returns a dictionary with player statistics."""
-        stats = {}
         headers = {"Authorization": f"Bearer {self.faceit_api_key}"}
 
         # Get FACEIT statistics
         url_get_username = f"https://open.faceit.com/data/v4/players?game=cs2&game_player_id={self.steam_id}"
         response = r.get(url_get_username, headers=headers).json()
-        stats["createdAt"] = response["activated_at"]
-        stats["avatar"] = response["avatar"]
-        stats["country"] = response["country"]
-        stats["statsCS2"] = response["games"]["cs2"]
-        stats["statsCSGO"] = response["games"]["csgo"]
-        stats["memberships"] = response["memberships"]
-        stats["nickname"] = response["nickname"]
+        stats = {
+            "createdAt": response["activated_at"],
+            "avatar": response["avatar"],
+            "country": response["country"],
+            "statsCS2": response["games"]["cs2"],
+            "statsCSGO": response["games"]["csgo"],
+            "memberships": response["memberships"],
+            "nickname": response["nickname"]
+        }
         return stats
 
     def get_esportal_stats(user_id: str) -> dict:
@@ -79,15 +80,14 @@ class Scraper:
 
     def get_leetify_stats(self) -> dict:
         """Gets player statistics from Leetify API by Steam user ID. Returns a dictionary with player statistics."""
-        stats = {}
-
         # Get Leetify statistics
         url = f"https://api.cs-prod.leetify.com/api/profile/id/{self.steam_id}"
         response = r.get(url).json()
-        stats["recentGameRatings"] = response["recentGameRatings"]
-        stats["currentPremiereRating"] = response["games"][0]["skillLevel"]
-        stats["maxPremiereRating"] = max(
-            game["skillLevel"] for game in response["games"] if game["skillLevel"] is not None)
+        stats = {
+            "recentGameRatings": response["recentGameRatings"],
+            "currentPremiereRating": response["games"][0]["skillLevel"],
+            "maxPremiereRating": max(game["skillLevel"] for game in response["games"] if game["skillLevel"] is not None)
+        }
 
         return stats
 
