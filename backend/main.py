@@ -12,6 +12,37 @@ init_filters(app)
 logger = logging.getLogger(__name__)
 
 
+def get_average_stats(items, count):
+    adr = 0
+    kills = 0
+    deaths = 0
+    assists = 0
+    rounds_won = 0
+    games_won = 0
+    kd = 0
+    headshot_percentage = 0
+    for item in items:
+        adr += float(item["stats"]["ADR"])
+        kills += float(item["stats"]["Kills"])
+        deaths += float(item["stats"]["Deaths"])
+        assists += float(item["stats"]["Assists"])
+        rounds_won += float(item["stats"]["Final Score"])
+        games_won += float(item["stats"]["Result"])
+        kd += float(item["stats"]["K/D Ratio"])
+        headshot_percentage += float(item["stats"]["Headshots %"])
+
+    return {
+        "adr": adr / count,
+        "kills": kills / count,
+        "deaths": deaths / count,
+        "assists": assists / count,
+        "kd_ratio": kd / count,
+        "rounds_won": rounds_won / count,
+        "win_percentage": games_won / count * 100,
+        "headshot_percentage": headshot_percentage / count,
+    }
+
+
 class Scraper:
     def __init__(self, steam_id, is_vanity_name=False) -> None:
         self.steam_id = steam_id
@@ -44,11 +75,12 @@ class Scraper:
             if not self.steam_id:
                 abort(404, "Steam user ID not found")
 
-        url = (f"https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key="
-               f"{self.steam_api_key}&steamid={self.steam_id}")
+        # CS2 app ID is 730
+        url = (f"https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?key="
+               f"{self.steam_api_key}&steamid={self.steam_id}&appid=730")
         response_cs2 = r.get(url)
 
-        url = (f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="
+        url = (f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key="
                f"{self.steam_api_key}&steamids={self.steam_id}")
         response_general = r.get(url)
 
@@ -62,16 +94,24 @@ class Scraper:
         headers = {"Authorization": f"Bearer {self.faceit_api_key}"}
 
         # Get FACEIT statistics
-        url_get_username = f"https://open.faceit.com/data/v4/players?game=cs2&game_player_id={self.steam_id}"
-        response = r.get(url_get_username, headers=headers).json()
+        url = f"https://open.faceit.com/data/v4/players?game=cs2&game_player_id={self.steam_id}"
+        response_general = r.get(url, headers=headers).json()
+
+        # Get FACEIT statistics for the last 20 games
+        url = f"https://open.faceit.com/data/v4/players/{response_general["player_id"]}/games/cs2/stats"
+        response_recent = r.get(url, headers=headers).json()
+
         stats = {
-            "createdAt": response["activated_at"],
-            "avatar": response["avatar"],
-            "country": response["country"],
-            "statsCS2": response["games"]["cs2"],
-            "statsCSGO": response["games"]["csgo"],
-            "memberships": response["memberships"],
-            "nickname": response["nickname"]
+            "createdAt": response_general["activated_at"],
+            "avatar": response_general["avatar"],
+            "country": response_general["country"],
+            "statsCS2": response_general["games"]["cs2"],
+            "statsCSGO": response_general["games"]["csgo"],
+            "memberships": response_general["memberships"],
+            "nickname": response_general["nickname"],
+            "playerID": response_general["player_id"],
+            #"recent": response_recent,
+            "recentGameStats": get_average_stats(response_recent["items"], response_recent["end"]),
         }
         return stats
 
@@ -109,11 +149,13 @@ def home() -> str:
     return render_template("stats.html", user_stats=user_stats)
 
 @app.route("/profiles/<steam_id>/")
-def get_profile(steam_id: str) -> str:
+def get_profile(steam_id: str) -> dict:
     user_stats = Scraper(steam_id).get_stats()
-    return render_template("stats.html", user_stats=user_stats)
+    return user_stats
+    #return render_template("stats.html", user_stats=user_stats)
 
 @app.route("/id/<vanity_name>/")
-def get_id(vanity_name: str) -> str:
+def get_id(vanity_name: str) -> dict:
     user_stats = Scraper(vanity_name, True).get_stats()
-    return render_template("stats.html", user_stats=user_stats)
+    return user_stats
+    #return render_template("stats.html", user_stats=user_stats)
