@@ -32,14 +32,14 @@ def get_average_stats(items, count):
         headshot_percentage += float(item["stats"]["Headshots %"])
 
     return {
-        "adr": round(adr / count, 2),
-        "kills": kills / count,
-        "deaths": deaths / count,
-        "assists": assists / count,
-        "kd_ratio": round(kd / count, 2),
-        "rounds_won": round(rounds_won / count, 2),
-        "win_percentage": round(games_won / count * 100, 2),
-        "headshot_percentage": round(headshot_percentage / count, 2),
+        "adr": "%0.2f" % (adr / count),
+        "kills": "%0.2f" % (kills / count),
+        "deaths": "%0.2f" % (deaths / count),
+        "assists": "%0.2f" % (assists / count),
+        "kd_ratio": "%0.2f" % (kd / count),
+        "rounds_won":"%0.2f" % (rounds_won / count),
+        "win_percentage": "%0.2f" % (games_won / count * 100),
+        "headshot_percentage": "%0.2f" % (headshot_percentage / count),
     }
 
 

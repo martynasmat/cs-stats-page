@@ -78,6 +78,11 @@ body {
 
 .content {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 70%;
+    max-width: 1200px;
 }
 
 .content__steam-link {
@@ -87,4 +92,24 @@ body {
 
 .content__steam-avatar {
     width: min(100%, 100px);
+}
+
+.stat.recent {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+.stat.list_recent {
+    width: 6rem;
+}
+
+.wrapper__cs, .wrapper__faceit, .wrapper__leetify {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 300px;
 }
