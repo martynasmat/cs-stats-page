@@ -83,7 +83,11 @@
                     </div>
                     <div class="stat level">
                         <h3>LEVEL</h3>
-                        <p>{{ user_stats.faceit.statsCS2.skill_level }}</p>
+                        <img
+                            src="{{ url_for('static', filename='images/faceit/' ~ user_stats.faceit.statsCS2.skill_level ~ '.png') }}"
+                            width="25"
+                            alt="Faceit Level"
+                        />
                     </div>
                     <div class="stat wrapper__recent">
                         <h3>RECENT STATS</h3>
