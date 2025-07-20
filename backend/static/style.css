@@ -83,6 +83,7 @@ body {
     justify-content: space-between;
     width: 70%;
     max-width: 1200px;
+    gap: 1rem;
 }
 
 .content__steam-link {
@@ -104,6 +105,9 @@ body {
 
 .stat.list_recent {
     width: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .wrapper__cs, .wrapper__faceit, .wrapper__leetify {
@@ -112,4 +116,12 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     max-width: 300px;
+}
+
+h3 {
+    font-size: 1rem;
+}
+
+h4 {
+    font-size: 1rem;
 }

@@ -166,7 +166,6 @@ def home() -> str:
 @app.route("/profiles/<steam_id>/")
 def get_profile(steam_id: str) -> str:
     user_stats = Scraper(steam_id).get_stats()
-    print(user_stats)
     return render_template("stats.html", user_stats=user_stats)
 
 @app.route("/id/<vanity_name>/")
