@@ -17,6 +17,7 @@
     </head>
     <body>
         <main class="content">
+            {% if "error" not in user_stats.steam.general %}
             <div class="content__user">
                 <a
                     class="content__steam-link"
@@ -37,6 +38,12 @@
                     </time>
                 </p>
             </div>
+            {% else %}
+            <div class="content__user">
+                <h3>Profile not found</h3>
+            </div>
+            {% endif %}
+            {% if "error" not in user_stats.leetify %}
             <div class="content__cs">
                 <h2>CS</h2>
                 <div class="wrapper__cs">
@@ -50,6 +57,13 @@
                     </div>
                 </div>
             </div>
+            {% else %}
+            <div class="content__cs">
+                <h2>CS</h2>
+                <h3>Profile not found</h3>
+            </div>
+            {% endif %}
+            {% if "error" not in user_stats.faceit %}
             <div class="content__faceit">
                 <h2>FACEIT</h2>
                 <div class="wrapper__faceit">
@@ -100,6 +114,13 @@
                     </div>
                 </div>
             </div>
+            {% else %}
+            <div class="content__faceit">
+                <h2>FACEIT</h2>
+                <h3>Profile not found</h3>
+            </div>
+            {% endif %}
+            {% if "error" not in user_stats.leetify %}
             <div class="content__leetify">
                 <h2>Leetify</h2>
                 <div class="wrapper__leetify">
@@ -133,6 +154,12 @@
                     </div>
                 </div>
             </div>
+            {% else %}
+             <div class="content__leetify">
+                <h2>Leetify</h2>
+                <h3>Profile not found</h3>
+             </div>
+            {% endif %}
         </main>
     </body>
 </html>
