@@ -17,7 +17,7 @@
     </head>
     <body>
         <main class="content">
-            {% if "error" not in user_stats.steam.general %}
+            {% if "error" not in user_stats.steam %}
             <div class="content__user">
                 <a
                     class="content__steam-link"
@@ -42,8 +42,7 @@
             <div class="content__user">
                 <h3>Profile not found</h3>
             </div>
-            {% endif %}
-            {% if "error" not in user_stats.leetify %}
+            {% endif %} {% if "error" not in user_stats.leetify %}
             <div class="content__cs">
                 <h2>CS</h2>
                 <div class="wrapper__cs">
@@ -62,14 +61,17 @@
                 <h2>CS</h2>
                 <h3>Profile not found</h3>
             </div>
-            {% endif %}
-            {% if "error" not in user_stats.faceit %}
+            {% endif %} {% if "error" not in user_stats.faceit %}
             <div class="content__faceit">
                 <h2>FACEIT</h2>
                 <div class="wrapper__faceit">
                     <div class="stat country">
                         <h3>COUNTRY</h3>
-                        <p>{{ user_stats.faceit.country }}</p>
+                        <img
+                            src="https://flagcdn.com/{{ user_stats.faceit.country }}.svg"
+                            width="30"
+                            alt="Country"
+                        />
                     </div>
                     <div class="stat joined">
                         <h3>JOINED</h3>
@@ -88,27 +90,46 @@
                         <div class="stat recent">
                             <div class="stat list_recent adr">
                                 <h4>ADR</h4>
-                                <p>{{ user_stats.faceit.recentGameStats.adr }}</p>
+                                <p>
+                                    {{ user_stats.faceit.recentGameStats.adr }}
+                                </p>
                             </div>
                             <div class="stat list_recent kills">
                                 <h4>Kills</h4>
-                                <p>{{ user_stats.faceit.recentGameStats.kills }}</p>
+                                <p>
+                                    {{ user_stats.faceit.recentGameStats.kills
+                                    }}
+                                </p>
                             </div>
                             <div class="stat list_recent deaths">
                                 <h4>Deaths</h4>
-                                <p>{{ user_stats.faceit.recentGameStats.deaths }}</p>
+                                <p>
+                                    {{ user_stats.faceit.recentGameStats.deaths
+                                    }}
+                                </p>
                             </div>
                             <div class="stat list_recent assists">
                                 <h4>Assists</h4>
-                                <p>{{ user_stats.faceit.recentGameStats.assists }}</p>
+                                <p>
+                                    {{ user_stats.faceit.recentGameStats.assists
+                                    }}
+                                </p>
                             </div>
                             <div class="stat list_recent headshot_percentage">
                                 <h4>Headshots</h4>
-                                <p>{{ user_stats.faceit.recentGameStats.headshot_percentage }}</p>
+                                <p>
+                                    {{
+                                    user_stats.faceit.recentGameStats.headshot_percentage
+                                    }}
+                                </p>
                             </div>
                             <div class="stat list_recent kd_ratio">
                                 <h4>K/D Ratio</h4>
-                                <p>{{ user_stats.faceit.recentGameStats.kd_ratio }}</p>
+                                <p>
+                                    {{
+                                    user_stats.faceit.recentGameStats.kd_ratio
+                                    }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -119,46 +140,73 @@
                 <h2>FACEIT</h2>
                 <h3>Profile not found</h3>
             </div>
-            {% endif %}
-            {% if "error" not in user_stats.leetify %}
+            {% endif %} {% if "error" not in user_stats.leetify %}
             <div class="content__leetify">
                 <h2>Leetify</h2>
                 <div class="wrapper__leetify">
                     <div class="stat aim">
                         <h3>AIM</h3>
-                        <p>{{ "%.2f"|format(user_stats.leetify.recentGameRatings.aim) }}</p>
+                        <p>
+                            {{
+                            "%.2f"|format(user_stats.leetify.recentGameRatings.aim)
+                            }}
+                        </p>
                     </div>
                     <div class="stat positioning">
                         <h3>POSITIONING</h3>
-                        <p>{{ "%.2f"|format(user_stats.leetify.recentGameRatings.positioning) }}</p>
+                        <p>
+                            {{
+                            "%.2f"|format(user_stats.leetify.recentGameRatings.positioning)
+                            }}
+                        </p>
                     </div>
                     <div class="stat utility">
                         <h3>UTILITY</h3>
-                        <p>{{ "%.2f"|format(user_stats.leetify.recentGameRatings.utility) }}</p>
+                        <p>
+                            {{
+                            "%.2f"|format(user_stats.leetify.recentGameRatings.utility)
+                            }}
+                        </p>
                     </div>
                     <div class="stat opening">
                         <h3>ENTRY</h3>
-                        <p>{{ "%.2f"|format(user_stats.leetify.recentGameRatings.opening * 100) }}</p>
+                        <p>
+                            {{
+                            "%.2f"|format(user_stats.leetify.recentGameRatings.opening
+                            * 100) }}
+                        </p>
                     </div>
                     <div class="stat leetify-rating">
                         <h3>RATING</h3>
-                        <p>{{ "%.2f"|format(user_stats.leetify.recentGameRatings.leetify * 100) }}</p>
+                        <p>
+                            {{
+                            "%.2f"|format(user_stats.leetify.recentGameRatings.leetify
+                            * 100) }}
+                        </p>
                     </div>
                     <div class="stat tleetify-rating">
                         <h3>T RATING</h3>
-                        <p>{{ "%.2f"|format(user_stats.leetify.recentGameRatings.tLeetify * 100) }}</p>
+                        <p>
+                            {{
+                            "%.2f"|format(user_stats.leetify.recentGameRatings.tLeetify
+                            * 100) }}
+                        </p>
                     </div>
                     <div class="stat ctleetify-rating">
                         <h3>CT RATING</h3>
-                        <p>{{ "%.2f"|format(user_stats.leetify.recentGameRatings.ctLeetify * 100) }}</p>
+                        <p>
+                            {{
+                            "%.2f"|format(user_stats.leetify.recentGameRatings.ctLeetify
+                            * 100) }}
+                        </p>
                     </div>
                 </div>
             </div>
             {% else %}
-             <div class="content__leetify">
+            <div class="content__leetify">
                 <h2>Leetify</h2>
                 <h3>Profile not found</h3>
-             </div>
+            </div>
             {% endif %}
         </main>
     </body>

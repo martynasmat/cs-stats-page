@@ -1,7 +1,9 @@
 import json
 import os
 import logging
-from flask import Flask, abort, render_template
+import concurrent.futures
+import time
+from flask import Flask, render_template
 from dotenv import load_dotenv
 import requests as r
 from filters import init_filters
@@ -10,6 +12,19 @@ load_dotenv()
 app = Flask(__name__)
 init_filters(app)
 logger = logging.getLogger(__name__)
+
+ERRORS = {
+    "steam": {
+        "not_found": "STEAM_NOT_FOUND"
+    },
+    "faceit": {
+        "not_found": "FACEIT_NOT_FOUND",
+        "no_recent_games": "FACEIT_RECENT_NOT_FOUND"
+    },
+    "leetify": {
+        "not_found": "LEETIFY_NOT_FOUND"
+    }
+}
 
 
 def get_average_stats(items, count):
@@ -22,7 +37,7 @@ def get_average_stats(items, count):
     kd = 0
     headshot_percentage = 0
     for item in items:
-        adr += float(item["stats"]["ADR"])
+        adr += float(item["stats"].get("ADR", 0))
         kills += float(item["stats"]["Kills"])
         deaths += float(item["stats"]["Deaths"])
         assists += float(item["stats"]["Assists"])
@@ -63,33 +78,39 @@ class Scraper:
                 return data["steamid"]
             else:
                 logger.error("Failed to resolve vanity URL")
-                return None
         except Exception as e:
             logger.error(str(e))
-            return None
+
+        return None
 
     def get_steam_stats(self) -> dict:
         """Gets player statistics from Steam API by Steam user ID. Returns a dictionary with player statistics."""
-        if self.is_vanity_name:
-            self.steam_id = self.resolve_steam_id(self.steam_id)
-            if not self.steam_id:
-                return {
-                    "error": "STEAM_NOT_FOUND"
-                }
+        cs2_app_id = 730
 
-        # CS2 app ID is 730
         url = (f"https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?key="
-               f"{self.steam_api_key}&steamid={self.steam_id}&appid=730")
+               f"{self.steam_api_key}&steamid={self.steam_id}&appid={cs2_app_id}")
         response_cs2 = r.get(url)
+
+        if response_cs2.status_code != 200:
+            return {
+                "error": ERRORS["steam"]["not_found"]
+            }
 
         url = (f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key="
                f"{self.steam_api_key}&steamids={self.steam_id}")
         response_general = r.get(url)
 
+        if response_cs2.status_code != 200:
+            return {
+                "error": ERRORS["steam"]["not_found"]
+            }
+        
+        cs2_json = response_cs2.json()
+        general_json = response_general.json()["response"]
+
         return {
-            "general": response_general.json()["response"]["players"][0] if response_general.status_code == 200
-                                                                            and response_general.json()["response"]["players"] else {"error": "STEAM_NOT_FOUND"},
-            "cs2": response_cs2.json() if response_cs2.status_code == 200 else {"error": "STEAM_NOT_FOUND"}
+            "general": general_json["players"][0],
+            "cs2": cs2_json
         }
 
     def get_faceit_stats(self) -> dict:
@@ -100,15 +121,19 @@ class Scraper:
         url = f"https://open.faceit.com/data/v4/players?game=cs2&game_player_id={self.steam_id}"
         response_general = r.get(url, headers=headers)
         if response_general.status_code != 200:
-            return {"error": "FACEIT_NOT_FOUND"}
+            return {
+                "error": ERRORS["faceit"]["not_found"]
+            }
 
         response_general_json = response_general.json()
 
         # Get FACEIT statistics for the last 20 games
-        url = f"https://open.faceit.com/data/v4/players/{response_general_json["player_id"]}/games/cs2/stats"
+        url = f"https://open.faceit.com/data/v4/players/{response_general_json['player_id']}/games/cs2/stats"
         response_recent = r.get(url, headers=headers)
         if response_general.status_code != 200:
-            return {"error": "FACEIT_RECENT_NOT_FOUND"}
+            return {
+                "error": ERRORS["faceit"]["no_recent_games"]
+            }
 
         response_recent_json = response_recent.json()
 
@@ -130,43 +155,62 @@ class Scraper:
 
     def get_leetify_stats(self) -> dict:
         """Gets player statistics from Leetify API by Steam user ID. Returns a dictionary with player statistics."""
-        # Get Leetify statistics
+
         url = f"https://api.cs-prod.leetify.com/api/profile/id/{self.steam_id}"
         response = r.get(url)
-        if response.status_code == 200:
-            response_json = response.json()
+
+        if response.status_code != 200:
             return {
-                "recentGameRatings": response_json["recentGameRatings"],
-                "currentPremiereRating": response_json["games"][0]["skillLevel"],
-                "maxPremiereRating": max(game["skillLevel"]
-                                         for game in response_json["games"] if game["skillLevel"] is not None)
+                "error": ERRORS["leeitfy"]["not_found"]
             }
-        else:
-            return {
-                "error": "LEETIFY_NOT_FOUND"
-            }
+
+        response_json = response.json()
+        return {
+            "recentGameRatings": response_json["recentGameRatings"],
+            "currentPremiereRating": response_json["games"][0]["skillLevel"],
+            "maxPremiereRating": max(game["skillLevel"]
+                                        for game in response_json["games"] if game["skillLevel"] is not None)
+        }
 
     def get_stats(self) -> dict:
         """Returns a formatted dictionary with player statistics to be presented to the end user."""
-        stats = {
-            "steam": self.get_steam_stats(),
-            "leetify": self.get_leetify_stats(),
-            "faceit": self.get_faceit_stats(),
-            "esportal": self.get_esportal_stats(),
-        }
 
-        return stats
+        if self.is_vanity_name:
+            self.steam_id = self.resolve_steam_id(self.steam_id)
+            if not self.steam_id:
+                return {
+                    "steam": {
+                        "error": ERRORS["steam"]["not_found"]
+                    },
+                    "leetify": {
+                        "error": ERRORS["leetify"]["not_found"]
+                    },
+                    "faceit": {
+                        "error": ERRORS["faceit"]["not_found"]
+                    }
+                }
+            
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            steam_future = executor.submit(self.get_steam_stats)
+            leetify_future = executor.submit(self.get_leetify_stats)
+            faceit_future = executor.submit(self.get_faceit_stats)
 
-@app.route("/")
-def home() -> str:
-    file = open("tmp/stats.json", "r")
-    user_stats = json.loads(file.read())
-    return render_template("stats.html", user_stats=user_stats)
+            return {
+                "steam": steam_future.result(),
+                "leetify": leetify_future.result(),
+                "faceit": faceit_future.result()
+            }
+
+
+# @app.route("/")
+# def home() -> str:
+#     file = open("tmp/stats.json", "r")
+#     user_stats = json.loads(file.read())
+#     return render_template("stats.html", user_stats=user_stats)
 
 @app.route("/profiles/<steam_id>/")
 def get_profile(steam_id: str) -> str:
     user_stats = Scraper(steam_id).get_stats()
-    print(user_stats)
     return render_template("stats.html", user_stats=user_stats)
 
 @app.route("/id/<vanity_name>/")
