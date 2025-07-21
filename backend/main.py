@@ -26,6 +26,26 @@ ERRORS = {
     }
 }
 
+CS2_RATINGS = {
+    0: "tier-1",
+    5000: "tier-2",
+    10000: "tier-3",
+    15000: "tier-4",
+    20000: "tier-5",
+    25000: "tier-6",
+    30000: "tier-7",
+}
+
+def get_cs2_rating_tier(rating: int) -> str:
+    tier = ""
+
+    for key in CS2_RATINGS:
+        if rating >= key:
+            tier = CS2_RATINGS[key]
+        else:
+            break
+
+    return tier
 
 def get_average_stats(items, count):
     adr = 0
@@ -165,11 +185,15 @@ class Scraper:
             }
 
         response_json = response.json()
+        current_rating = response_json["games"][0]["skillLevel"]
+        max_rating = max(game["skillLevel"]
+                                        for game in response_json["games"] if game["skillLevel"] is not None)
         return {
             "recentGameRatings": response_json["recentGameRatings"],
-            "currentPremiereRating": response_json["games"][0]["skillLevel"],
-            "maxPremiereRating": max(game["skillLevel"]
-                                        for game in response_json["games"] if game["skillLevel"] is not None)
+            "currentPremiereRating": current_rating,
+            "currentRatingTier": get_cs2_rating_tier(current_rating),
+            "maxPremiereRating": max_rating,
+            "maxRatingTier": get_cs2_rating_tier(max_rating)
         }
 
     def get_stats(self) -> dict:
@@ -216,4 +240,5 @@ def get_profile(steam_id: str) -> str:
 @app.route("/id/<vanity_name>/")
 def get_id(vanity_name: str) -> str:
     user_stats = Scraper(vanity_name, True).get_stats()
+    get_cs2_rating_tier(18450)
     return render_template("stats.html", user_stats=user_stats)

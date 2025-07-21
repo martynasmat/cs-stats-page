@@ -48,11 +48,21 @@
                 <div class="wrapper__cs">
                     <div class="stat premiere-rating">
                         <h3>CURRENT RATING</h3>
-                        <p>{{ user_stats.leetify.currentPremiereRating }}</p>
+                        <div
+                            class="rating {{ user_stats.leetify.currentRatingTier }}"
+                        >
+                            <p>
+                                {{ user_stats.leetify.currentPremiereRating }}
+                            </p>
+                        </div>
                     </div>
                     <div class="stat max-premiere-rating">
                         <h3>MAX RATING</h3>
-                        <p>{{ user_stats.leetify.maxPremiereRating }}</p>
+                        <div
+                            class="rating {{ user_stats.leetify.maxRatingTier }}"
+                        >
+                            <p>{{ user_stats.leetify.maxPremiereRating }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
