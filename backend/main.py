@@ -72,6 +72,7 @@ class Scraper:
         """Gets player statistics from Steam API by Steam user ID. Returns a dictionary with player statistics."""
         if self.is_vanity_name:
             self.steam_id = self.resolve_steam_id(self.steam_id)
+            print(self.steam_id)
             if not self.steam_id:
                 return {
                     "error": "STEAM_NOT_FOUND"
@@ -95,34 +96,63 @@ class Scraper:
     def get_faceit_stats(self) -> dict:
         """Gets player statistics from FACEIT API by Steam user ID. Returns a dictionary with player statistics."""
         headers = {"Authorization": f"Bearer {self.faceit_api_key}"}
+        stats = {
+            "csgo": {},
+            "cs2": {},
+            "recentGameStats": {}
+        }
+        player_uuid = None
 
-        # Get FACEIT statistics
+        # Get FACEIT CS:GO statistics
+        url = f"https://open.faceit.com/data/v4/players?game=csgo&game_player_id={self.steam_id}"
+        response_csgo = r.get(url, headers=headers)
+        if response_csgo.status_code != 200:
+            stats["csgo"] = {"error": "FACEIT_CSGO_NOT_FOUND"}
+        else:
+            response_csgo_json = response_csgo.json()
+            stats["csgo"] = {
+                "createdAt": response_csgo_json["activated_at"],
+                "avatar": response_csgo_json["avatar"],
+                "country": response_csgo_json["country"],
+                "statsCSGO": response_csgo_json["games"]["csgo"],
+                "memberships": response_csgo_json["memberships"],
+                "nickname": response_csgo_json["nickname"],
+                "playerID": response_csgo_json["player_id"],
+            }
+            player_uuid = response_csgo_json["player_id"]
+
+        # Get FACEIT CS2 statistics
         url = f"https://open.faceit.com/data/v4/players?game=cs2&game_player_id={self.steam_id}"
-        response_general = r.get(url, headers=headers)
-        if response_general.status_code != 200:
+        response_cs2 = r.get(url, headers=headers)
+        print(response_cs2.text)
+        if response_cs2.status_code != 200:
+            stats["cs2"] = {"error": "FACEIT_CS2_NOT_FOUND"}
+        else:
+            response_cs2_json = response_cs2.json()
+            stats["cs2"] = {
+                "createdAt": response_cs2_json["activated_at"],
+                "avatar": response_cs2_json["avatar"],
+                "country": response_cs2_json["country"],
+                "statsCS2": response_cs2_json["games"]["cs2"],
+                "statsCSGO": response_cs2_json["games"]["csgo"],
+                "memberships": response_cs2_json["memberships"],
+                "nickname": response_cs2_json["nickname"],
+                "playerID": response_cs2_json["player_id"],
+            }
+            player_uuid = response_cs2_json["player_id"]
+
+        if player_uuid is not None:
+            # Get FACEIT statistics for the last 20 games
+            url = f"https://open.faceit.com/data/v4/players/{player_uuid}/games/cs2/stats"
+            response_recent = r.get(url, headers=headers)
+            if response_recent.status_code != 200:
+                return {"error": "FACEIT_RECENT_NOT_FOUND"}
+            else:
+                response_recent_json = response_recent.json()
+                stats["recentGameStats"] = get_average_stats(response_recent_json["items"], response_recent_json["end"])
+        else:
             return {"error": "FACEIT_NOT_FOUND"}
 
-        response_general_json = response_general.json()
-
-        # Get FACEIT statistics for the last 20 games
-        url = f"https://open.faceit.com/data/v4/players/{response_general_json["player_id"]}/games/cs2/stats"
-        response_recent = r.get(url, headers=headers)
-        if response_general.status_code != 200:
-            return {"error": "FACEIT_RECENT_NOT_FOUND"}
-
-        response_recent_json = response_recent.json()
-
-        stats = {
-            "createdAt": response_general_json["activated_at"],
-            "avatar": response_general_json["avatar"],
-            "country": response_general_json["country"],
-            "statsCS2": response_general_json["games"]["cs2"],
-            "statsCSGO": response_general_json["games"]["csgo"],
-            "memberships": response_general_json["memberships"],
-            "nickname": response_general_json["nickname"],
-            "playerID": response_general_json["player_id"],
-            "recentGameStats": get_average_stats(response_recent_json["items"], response_recent_json["end"]),
-        }
         return stats
 
     def get_esportal_stats(user_id: str) -> dict:
