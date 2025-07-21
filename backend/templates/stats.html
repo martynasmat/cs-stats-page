@@ -64,10 +64,9 @@
             </div>
             {% endif %}
             {% if "error" not in user_stats.faceit %}
-                <div class="content__faceit">
+            <div class="content__faceit">
                 <h2>FACEIT</h2>
-                {% if "error" not in user_stats.faceit.cs2 %}
-                <div class="wrapper__faceit__cs2">
+                <div class="wrapper__faceit">
                     <div class="stat country">
                         <h3>COUNTRY</h3>
                         <p>{{ user_stats.faceit.country }}</p>
@@ -114,10 +113,6 @@
                         </div>
                     </div>
                 </div>
-                    {% endif %}
-                {% if "error" not in user_stats.faceit.csgo %}
-                    <div>CSGO found</div>
-                {% endif %}
             </div>
             {% else %}
             <div class="content__faceit">
