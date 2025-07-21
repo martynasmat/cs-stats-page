@@ -143,15 +143,44 @@ class Scraper:
             "cs2": {},
             "recentGameStats": {}
         }
-        player_uuid = None
 
-        # Get FACEIT statistics
-        url = f"https://open.faceit.com/data/v4/players?game=cs2&game_player_id={self.steam_id}"
-        response_general = r.get(url, headers=headers)
-        if response_general.status_code != 200:
+        # Get FACEIT CS:GO statistics
+        url = f"https://open.faceit.com/data/v4/players?game=csgo&game_player_id={self.steam_id}"
+        response_csgo = r.get(url, headers=headers)
+        if response_csgo.status_code != 200:
             return {
                 "error": ERRORS["faceit"]["not_found"]
             }
+        else:
+            response_csgo = response_csgo.json()
+            stats["csgo"] = {
+                "createdAt": response_csgo["activated_at"],
+                "avatar": response_csgo["avatar"],
+                "country": response_csgo["country"],
+                "statsCSGO": response_csgo["games"]["csgo"],
+                "memberships": response_csgo["memberships"],
+            }
+            player_uuid = response_csgo["player_id"]
+
+        # Get FACEIT CS2 statistics
+        url = f"https://open.faceit.com/data/v4/players?game=cs2&game_player_id={self.steam_id}"
+        response_cs2 = r.get(url, headers=headers)
+        if response_cs2.status_code != 200:
+            stats["cs2"] = {"error": "FACEIT_CS2_NOT_FOUND"}
+        else:
+            response_cs2 = response_cs2.json()["items"][0]
+            stats["cs2"] = {
+                "createdAt": response_cs2["activated_at"],
+                "avatar": response_cs2["avatar"],
+                "country": response_cs2["country"],
+                "statsCS2": response_cs2["games"]["cs2"],
+                "statsCSGO": response_cs2["games"]["csgo"],
+                "memberships": response_cs2["memberships"],
+                "nickname": response_cs2["nickname"],
+                "playerID": response_cs2["player_id"],
+                "recentGameStats": get_average_stats(response_cs2["items"], response_cs2["end"]),
+            }
+            player_uuid = response_cs2["player_id"]
 
         if player_uuid is not None:
             # Get FACEIT statistics for the last 20 games
@@ -165,17 +194,6 @@ class Scraper:
         else:
             return {"error": "FACEIT_NOT_FOUND"}
 
-        stats = {
-            "createdAt": response_general_json["activated_at"],
-            "avatar": response_general_json["avatar"],
-            "country": response_general_json["country"],
-            "statsCS2": response_general_json["games"]["cs2"],
-            "statsCSGO": response_general_json["games"]["csgo"],
-            "memberships": response_general_json["memberships"],
-            "nickname": response_general_json["nickname"],
-            "playerID": response_general_json["player_id"],
-            "recentGameStats": get_average_stats(response_recent_json["items"], response_recent_json["end"]),
-        }
         return stats
 
     def get_esportal_stats(user_id: str) -> dict:
