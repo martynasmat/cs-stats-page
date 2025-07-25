@@ -94,12 +94,10 @@ body {
 }
 
 .content {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: 70%;
-    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2em;
+    width: min(60rem, 100%);
 }
 
 .content__steam-link {
@@ -112,24 +110,45 @@ body {
 }
 
 .stat.recent {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5em;
 }
 
-.stat.list_recent {
-    width: 6rem;
+.wrapper__faceit__cs2 {
+    display: grid;
+    gap: 1em;
 }
 
-.wrapper__cs,
-.wrapper__faceit,
+.wrapper__faceit__cs2 .wrapper__general {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5em;
+}
+
 .wrapper__leetify {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5em;
+}
+
+.tleetify-rating {
+    grid-column: 2 / -1;
+}
+
+.rating-container {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    max-width: 300px;
+    gap: 0.5em;
+}
+
+.rating-item {
+    display: flex;
+    gap: 0.25em;
+}
+
+.rating-item > img {
+    display: block;
+    width: min(25px, 100%);
 }
 
 .rating {

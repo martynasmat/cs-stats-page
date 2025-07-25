@@ -168,7 +168,7 @@ class Scraper:
         if response_cs2.status_code != 200:
             stats["cs2"] = {"error": "FACEIT_CS2_NOT_FOUND"}
         else:
-            response_cs2 = response_cs2.json()["items"][0]
+            response_cs2 = response_cs2.json()
             stats["cs2"] = {
                 "createdAt": response_cs2["activated_at"],
                 "avatar": response_cs2["avatar"],
@@ -178,7 +178,6 @@ class Scraper:
                 "memberships": response_cs2["memberships"],
                 "nickname": response_cs2["nickname"],
                 "playerID": response_cs2["player_id"],
-                "recentGameStats": get_average_stats(response_cs2["items"], response_cs2["end"]),
             }
             player_uuid = response_cs2["player_id"]
 
