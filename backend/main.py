@@ -223,7 +223,8 @@ class Scraper:
 
     def get_stats(self) -> dict:
         """Returns a formatted dictionary with player statistics to be presented to the end user."""
-        print(os.getenv("STEAM_API_KEY"))
+        logger.error(self.steam_api_key)
+        logger.error(self.faceit_api_key)
         if self.is_vanity_name:
             self.steam_id = self.resolve_steam_id(self.steam_id)
             if not self.steam_id:
