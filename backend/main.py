@@ -206,7 +206,7 @@ class Scraper:
 
         if response.status_code != 200:
             return {
-                "error": ERRORS["leeitfy"]["not_found"]
+                "error": ERRORS["leetify"]["not_found"]
             }
 
         response_json = response.json()
@@ -223,7 +223,7 @@ class Scraper:
 
     def get_stats(self) -> dict:
         """Returns a formatted dictionary with player statistics to be presented to the end user."""
-
+        print(os.getenv("STEAM_API_KEY"))
         if self.is_vanity_name:
             self.steam_id = self.resolve_steam_id(self.steam_id)
             if not self.steam_id:
@@ -265,5 +265,6 @@ def get_profile(steam_id: str) -> str:
 @app.route("/id/<vanity_name>/")
 def get_id(vanity_name: str) -> str:
     user_stats = Scraper(vanity_name, True).get_stats()
+    print(json.dumps(user_stats))
     get_cs2_rating_tier(18450)
     return render_template("stats.html", user_stats=user_stats)
