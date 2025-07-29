@@ -244,7 +244,11 @@ class Scraper:
             steam_future = executor.submit(self.get_steam_stats)
             leetify_future = executor.submit(self.get_leetify_stats)
             faceit_future = executor.submit(self.get_faceit_stats)
-
+            logger.error({
+                "steam": steam_future.result(),
+                "leetify": leetify_future.result(),
+                "faceit": faceit_future.result()
+            })
             return {
                 "steam": steam_future.result(),
                 "leetify": leetify_future.result(),
