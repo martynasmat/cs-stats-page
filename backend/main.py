@@ -129,7 +129,7 @@ class Scraper:
 
         cs2_json = response_cs2.json()
         general_json = response_general.json()["response"]
-
+        logger.error(general_json["players"][0])
         return {
             "general": general_json["players"][0],
             "cs2": cs2_json
@@ -244,11 +244,6 @@ class Scraper:
             steam_future = executor.submit(self.get_steam_stats)
             leetify_future = executor.submit(self.get_leetify_stats)
             faceit_future = executor.submit(self.get_faceit_stats)
-            logger.error({
-                "steam": steam_future.result(),
-                "leetify": leetify_future.result(),
-                "faceit": faceit_future.result()
-            })
             return {
                 "steam": steam_future.result(),
                 "leetify": leetify_future.result(),
