@@ -107,21 +107,21 @@ class Scraper:
     def get_steam_stats(self) -> dict:
         """Gets player statistics from Steam API by Steam user ID. Returns a dictionary with player statistics."""
         cs2_app_id = 730
+        print('AAAAAAAAAAAAAAAAAAA23232')
+
+        url = (f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key="
+               f"{self.steam_api_key}&steamids={self.steam_id}")
+        response_general = r.get(url)
+        print(response_general.json())
+        if response_general.status_code != 200:
+            return {
+                "error": ERRORS["steam"]["not_found"]
+            }
 
         # CS2 app ID is 730
         url = (f"https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?key="
                f"{self.steam_api_key}&steamid={self.steam_id}&appid={cs2_app_id}")
         response_cs2 = r.get(url)
-
-        if response_cs2.status_code != 200:
-            return {
-                "error": ERRORS["steam"]["not_found"]
-            }
-
-        url = (f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key="
-               f"{self.steam_api_key}&steamids={self.steam_id}")
-        response_general = r.get(url)
-
         if response_cs2.status_code != 200:
             return {
                 "error": ERRORS["steam"]["not_found"]
@@ -204,15 +204,23 @@ class Scraper:
         url = f"https://api.cs-prod.leetify.com/api/profile/id/{self.steam_id}"
         response = r.get(url)
 
+        print(response.json())
+
         if response.status_code != 200:
             return {
                 "error": ERRORS["leetify"]["not_found"]
             }
 
         response_json = response.json()
-        current_rating = response_json["games"][0]["skillLevel"]
+        current_rating = -1
+        for game in response_json["games"]:
+            if game['dataSource'] == 'matchmaking':
+                current_rating = game["skillLevel"]
+                break
+
         max_rating = max(game["skillLevel"]
-                                        for game in response_json["games"] if game["skillLevel"] is not None)
+                                        for game in response_json["games"] if game["skillLevel"] is not None
+                         and game['dataSource'] == 'matchmaking')
         return {
             "recentGameRatings": response_json["recentGameRatings"],
             "currentPremiereRating": current_rating,
@@ -259,12 +267,10 @@ def home() -> str:
 @app.route("/profiles/<steam_id>/")
 def get_profile(steam_id: str) -> str:
     user_stats = Scraper(steam_id).get_stats()
-    print(user_stats)
     return render_template("stats.html", user_stats=user_stats)
 
 @app.route("/id/<vanity_name>/")
 def get_id(vanity_name: str) -> str:
     user_stats = Scraper(vanity_name, True).get_stats()
-    print(json.dumps(user_stats))
     get_cs2_rating_tier(18450)
     return render_template("stats.html", user_stats=user_stats)
