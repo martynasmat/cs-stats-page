@@ -119,20 +119,20 @@ class Scraper:
             }
 
         # CS2 app ID is 730
-        url = (f"https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?key="
-               f"{self.steam_api_key}&steamid={self.steam_id}&appid={cs2_app_id}")
-        response_cs2 = r.get(url)
-        if response_cs2.status_code != 200:
-            return {
-                "error": ERRORS["steam"]["not_found"]
-            }
+        # url = (f"https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?key="
+        #        f"{self.steam_api_key}&steamid={self.steam_id}&appid={cs2_app_id}")
+        # response_cs2 = r.get(url)
+        # if response_cs2.status_code != 200:
+        #     return {
+        #         "error": ERRORS["steam"]["not_found"]
+        #     }
 
-        cs2_json = response_cs2.json()
+        # cs2_json = response_cs2.json()
         general_json = response_general.json()["response"]
         logger.error(general_json["players"][0])
         return {
             "general": general_json["players"][0],
-            "cs2": cs2_json
+            # "cs2": cs2_json
         }
 
     def get_faceit_stats(self) -> dict:
@@ -203,8 +203,6 @@ class Scraper:
 
         url = f"https://api.cs-prod.leetify.com/api/profile/id/{self.steam_id}"
         response = r.get(url)
-
-        print(response.json())
 
         if response.status_code != 200:
             return {
