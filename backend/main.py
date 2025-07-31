@@ -260,15 +260,15 @@ class Scraper:
 def home() -> str:
     file = open("tmp/stats.json", "r")
     user_stats = json.loads(file.read())
-    return render_template("stats.html", user_stats=user_stats)
+    return render_template("stats_design.html", user_stats=user_stats)
 
 @app.route("/profiles/<steam_id>/")
 def get_profile(steam_id: str) -> str:
     user_stats = Scraper(steam_id).get_stats()
-    return render_template("stats.html", user_stats=user_stats)
+    return render_template("stats_design.html", user_stats=user_stats)
 
 @app.route("/id/<vanity_name>/")
 def get_id(vanity_name: str) -> str:
     user_stats = Scraper(vanity_name, True).get_stats()
     get_cs2_rating_tier(18450)
-    return render_template("stats.html", user_stats=user_stats)
+    return render_template("stats_design.html", user_stats=user_stats)
