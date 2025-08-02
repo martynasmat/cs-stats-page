@@ -3,10 +3,14 @@ import os
 import logging
 import concurrent.futures
 import time
-from flask import Flask, render_template
+from flask import Flask, render_template, request, abort
 from dotenv import load_dotenv
 import requests as r
 from filters import init_filters
+import hmac
+import hashlib
+import subprocess
+
 
 load_dotenv()
 app = Flask(__name__)
@@ -272,6 +276,32 @@ def get_id(vanity_name: str) -> str:
     user_stats = Scraper(vanity_name, True).get_stats()
     get_cs2_rating_tier(18450)
     return render_template("stats_design.html", user_stats=user_stats)
+
+@app.route("/redeploy/", methods=["POST"])
+def redeploy() -> tuple[str, int]:
+    header_signature = request.headers.get('X-Hub-Signature-256')
+    payload = request.data
+
+    if not verify_signature(payload, header_signature):
+        abort(403, "Signature verification failed")
+
+    subprocess.call(["./deploy_script.sh"])
+    return "Webhook received and verified", 200
+
+
+def verify_signature(payload, header_signature):
+    if header_signature is None:
+        return False
+
+    sha_name, signature = header_signature.split('=')
+    if sha_name != 'sha256':
+        return False
+
+    mac = hmac.new(os.getenv("REDEPLOY_WEBHOOK_SECRET").encode(), msg=payload, digestmod=hashlib.sha256)
+    expected_signature = mac.hexdigest()
+
+    return hmac.compare_digest(expected_signature, signature)
+
 
 if __name__ == "__main__":
     app.run()
