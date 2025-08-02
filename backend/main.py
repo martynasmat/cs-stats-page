@@ -11,7 +11,6 @@ import hmac
 import hashlib
 import subprocess
 
-
 load_dotenv()
 app = Flask(__name__)
 init_filters(app)
