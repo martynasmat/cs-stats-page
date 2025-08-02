@@ -10,6 +10,10 @@
         />
         <link
             rel="stylesheet"
+            href="{{ url_for('static', filename='reset.css') }}"
+        />
+        <link
+            rel="stylesheet"
             href="{{ url_for('static', filename='style.css') }}"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,262 +21,421 @@
     </head>
     <body>
         <main class="content">
-            <div class="content__steam">
-                <img
-                    class="content__steam-avatar"
-                    src="{{ user_stats.steam.general.avatarfull }}"
-                    alt="Steam profile avatar"
-                />
-                <a
-                    class="content__steam-link"
-                    href="{{ user_stats.steam.general.profileurl }}"
-                >
-                    {{ user_stats.steam.general.personaname }}
-                </a>
-                <div class="wrapper__stat steam joined">
-                    <h3>JOINED</h3>
-                    <p>
-                        <time>
-                            {{ user_stats.steam.general.timecreated | datetimeformat
-                            }}
-                        </time>
-                    </p>
-                </div>
-                <div class="wrapper__stat steam commendations">
-                    <h3>COMMENDATIONS</h3>
-                    <p>
-                        placeholder
-                    </p>
-                </div>
-                <div class="wrapper__stat steam friends">
-                    <h3>FRIENDS</h3>
-                    <p>
-                        placeholder
-                    </p>
-                </div>
-                <div class="wrapper__stat steam country">
-                    <h3>COUNTRY</h3>
-                    <p>
-                        placeholder
-                    </p>
-                </div>
-                <div class="wrapper__stat steam xp">
-                    <h3>XP LEVEL</h3>
-                    <p>
-                        placeholder
-                    </p>
-                </div>
-                <div class="wrapper__stat steam current_rating">
-                    <h3>CURRENT RATING</h3>
-                    <div
-                        class="rating {{ user_stats.leetify.currentRatingTier }}"
-                    >
-                        <p>
-                            {{ user_stats.leetify.currentPremiereRating }}
-                        </p>
-                    </div>
-                </div>
-                <div class="wrapper__stat steam max_rating">
-                    <h3>MAX RATING</h3>
-                    <div class="rating {{ user_stats.leetify.maxRatingTier }}"
+            <div class="content__wrapper">
+                <div class="content__steam">
+                    <div class="user__wrapper">
+                        <img
+                            class="user__avatar"
+                            src="{{ user_stats.steam.general.avatarfull }}"
+                            alt="Steam profile avatar"
+                        />
+                        <a
+                            class="user__link"
+                            href="{{ user_stats.steam.general.profileurl }}"
                         >
-                        <p>{{ user_stats.leetify.maxPremiereRating }}</p>
+                            {{ user_stats.steam.general.personaname }}
+                        </a>
                     </div>
-                </div>
-            </div>
-
-            <div class="content__cs">
-                <h2>CS</h2>
-                <div class="wrapper__cs">
-                    <div class="stat premiere-rating">
-                        <h3>CURRENT RATING</h3>
-                        <div
-                            class="rating {{ user_stats.leetify.currentRatingTier }}"
-                        >
-                            <p>
-                                {{ user_stats.leetify.currentPremiereRating }}
-                            </p>
+                    <div class="user__stats">
+                        <div class="stat">
+                            <p class="stat__name">Registered</p>
+                            <time class="stat__value">
+                                {{ user_stats.steam.general.timecreated |
+                                datetimeformat }}
+                            </time>
                         </div>
-                    </div>
-                    <div class="stat max-premiere-rating">
-                        <h3>MAX RATING</h3>
-                        <div
-                            class="rating {{ user_stats.leetify.maxRatingTier }}"
-                        >
-                            <p>{{ user_stats.leetify.maxPremiereRating }}</p>
+                        <div class="stat">
+                            <p class="stat__name">Vanity</p>
+                            <p class="stat__value">Vanitykazkasidk</p>
+                        </div>
+                        <div class="stat">
+                            <p class="stat__name">Commendations</p>
+                            <div class="stat__wrapper">
+                                <div>69</div>
+                                <div>420</div>
+                                <div>50</div>
+                            </div>
+                        </div>
+                        <div class="stat__wrapper--even">
+                            <div class="stat stat--center">
+                                <p class="stat__name">Friends</p>
+                                <p class="stat">0</p>
+                            </div>
+                            <div class="stat stat--center">
+                                <p class="stat__name">Country</p>
+                                <img
+                                    class="stat__country"
+                                    src="https://flagcdn.com/{{ user_stats.faceit.cs2.country }}.svg"
+                                    alt="Country"
+                                />
+                            </div>
+                            <div class="stat stat--center">
+                                <p class="stat__name">Xp level</p>
+                                <p>45</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            {% if "error" not in user_stats.faceit %}
-            <div class="content__faceit">
-                <h2>FACEIT</h2>
-                {% if "error" not in user_stats.faceit.cs2 %}
-                <div class="wrapper__faceit__cs2">
-                    <div class="wrapper__general">
-                        <div class="stat country">
-                            <h3>COUNTRY</h3>
-                            <img
-                                src="https://flagcdn.com/{{ user_stats.faceit.cs2.country }}.svg"
-                                width="30"
-                                alt="Country"
-                            />
+                <div class="content__faceit">
+                    <div class="user__wrapper">
+                        <img
+                            class="user__avatar"
+                            src="{{ user_stats.steam.general.avatarfull }}"
+                            alt="Faceit profile avatar"
+                        />
+                        <a
+                            class="user__link"
+                            href="{{ user_stats.steam.general.profileurl }}"
+                        >
+                            {{ user_stats.faceit.cs2.nickname }}
+                        </a>
+                    </div>
+                    <div class="user__stats">
+                        <div class="stat__wrapper">
+                            <div class="stat">
+                                <p class="stat__name">Registered</p>
+                                <p>
+                                    {{ user_stats.faceit.cs2.createdAt |
+                                    formatisodate }}
+                                </p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Country</p>
+                                <img
+                                    class="stat__country"
+                                    src="https://flagcdn.com/{{ user_stats.faceit.cs2.country }}.svg"
+                                    alt="Country"
+                                />
+                            </div>
                         </div>
-                        <div class="stat level">
-                            <h3>LEVEL</h3>
-                            <img
-                                src="{{
+                        <div class="stat__grid">
+                            <div class="stat">
+                                <div class="stat__elo">
+                                    <p class="stat__name">Elo</p>
+                                    <img
+                                        class="stat__fc-level"
+                                        src="{{
                                 url_for('static', filename='images/faceit/' ~ user_stats.faceit.cs2.statsCS2.skill_level ~ '.png')
                             }}"
-                                width="25"
-                                alt="Faceit Level"
-                            />
+                                        alt="Faceit Level"
+                                    />
+                                </div>
+                                <p>1590</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Hs%</p>
+                                <p>0%</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Clutch 1v1</p>
+                                <p>36%</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Winrate</p>
+                                <p>0%</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Kd</p>
+                                <p>0</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Clutch 1v2</p>
+                                <p>0%</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Matches</p>
+                                <p>1541</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Adr</p>
+                                <p>77.7</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Util dmg</p>
+                                <p>6.00</p>
+                            </div>
                         </div>
-                        <div class="stat nickname">
-                            <h3>NICKNAME</h3>
-                            <p>{{ user_stats.faceit.cs2.nickname }}</p>
+                        <div class="stat__wrapper">
+                            <div class="stat">
+                                <p class="stat__name">Last match</p>
+                                <time>Jul 25, 2025</time>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Recent</p>
+                                <div class="stat__recent-games">
+                                    <span class="stat__recent-games--win"
+                                        >W</span
+                                    >
+                                    <span class="stat__recent-games--win"
+                                        >W</span
+                                    >
+                                    <span class="stat__recent-games--loss"
+                                        >L</span
+                                    >
+                                    <span class="stat__recent-games--win"
+                                        >W</span
+                                    >
+                                    <span class="stat__recent-games--loss"
+                                        >L</span
+                                    >
+                                </div>
+                            </div>
                         </div>
-                        <div class="stat joined">
-                            <h3>JOINED</h3>
+                    </div>
+                </div>
+                <div class="content__leetify">
+                    <div class="user__wrapper">
+                        <img
+                            class="user__avatar"
+                            src="{{ user_stats.steam.general.avatarfull }}"
+                            alt="Faceit profile avatar"
+                        />
+                        <a
+                            class="user__link"
+                            href="{{ user_stats.steam.general.profileurl }}"
+                        >
+                            {{ user_stats.faceit.cs2.nickname }}
+                        </a>
+                    </div>
+                    <div class="user__stats">
+                        <div class="stat__grid">
+                            <div class="stat">
+                                <p class="stat__name">Aim</p>
+                                <p>68.8</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Preaim</p>
+                                <p>6°</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Matches</p>
+                                <p>555</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Kd</p>
+                                <p>5</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Opening</p>
+                                <p>+3.1</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Avg he dmg</p>
+                                <p>12.5</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Rating</p>
+                                <p>+0.4</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Position</p>
+                                <p>57.5</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Banned mates</p>
+                                <p>0.00%</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Party</p>
+                                <p>2.65</p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Reaction</p>
+                                <p>650 <span>ms</span></p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Winrate</p>
+                                <p></p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">utility</p>
+                                <p></p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Clutch</p>
+                                <p></p>
+                            </div>
+                            <div class="stat">
+                                <p class="stat__name">Max rating</p>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- {% if "error" not in user_stats.faceit %}
+                <div class="content__faceit">
+                    <h2>FACEIT</h2>
+                    {% if "error" not in user_stats.faceit.cs2 %}
+                    <div class="wrapper__faceit__cs2">
+                        <div class="wrapper__general">
+                            <div class="stat country">
+                                <h3>COUNTRY</h3>
+                                <img
+                                    src="https://flagcdn.com/{{ user_stats.faceit.cs2.country }}.svg"
+                                    width="30"
+                                    alt="Country"
+                                />
+                            </div>
+                            <div class="stat level">
+                                <h3>LEVEL</h3>
+                                <img
+                                    src="{{
+                                url_for('static', filename='images/faceit/' ~ user_stats.faceit.cs2.statsCS2.skill_level ~ '.png')
+                            }}"
+                                    width="25"
+                                    alt="Faceit Level"
+                                />
+                            </div>
+                            <div class="stat nickname">
+                                <h3>NICKNAME</h3>
+                                <p>{{ user_stats.faceit.cs2.nickname }}</p>
+                            </div>
+                            <div class="stat joined">
+                                <h3>JOINED</h3>
+                                <p>
+                                    {{ user_stats.faceit.cs2.createdAt |
+                                    formatisodate }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="stat wrapper__recent">
+                            <h3>RECENT STATS</h3>
+                            <div class="stat recent">
+                                <div class="stat list_recent adr">
+                                    <h4>ADR</h4>
+                                    <p>
+                                        {{ user_stats.faceit.recentGameStats.adr
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="stat list_recent kills">
+                                    <h4>Kills</h4>
+                                    <p>
+                                        {{
+                                        user_stats.faceit.recentGameStats.kills
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="stat list_recent deaths">
+                                    <h4>Deaths</h4>
+                                    <p>
+                                        {{
+                                        user_stats.faceit.recentGameStats.deaths
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="stat list_recent assists">
+                                    <h4>Assists</h4>
+                                    <p>
+                                        {{
+                                        user_stats.faceit.recentGameStats.assists
+                                        }}
+                                    </p>
+                                </div>
+                                <div
+                                    class="stat list_recent headshot_percentage"
+                                >
+                                    <h4>Headshots</h4>
+                                    <p>
+                                        {{
+                                        user_stats.faceit.recentGameStats.headshot_percentage
+                                        }}
+                                    </p>
+                                </div>
+                                <div class="stat list_recent kd_ratio">
+                                    <h4>K/D Ratio</h4>
+                                    <p>
+                                        {{
+                                        user_stats.faceit.recentGameStats.kd_ratio
+                                        }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %} {% if "error" not in user_stats.faceit.csgo %}
+                    <div>CSGO FOUND</div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="content__faceit">
+                    <h2>FACEIT</h2>
+                    <h3>Profile not found</h3>
+                </div> -->
+                <!-- {% endif %}  -->
+                <!-- {% if "error" not in user_stats.leetify %}
+                <div class="content__leetify">
+                    <h2>Leetify</h2>
+                    <div class="wrapper__leetify">
+                        <div class="stat aim">
+                            <h3>AIM</h3>
                             <p>
-                                {{ user_stats.faceit.cs2.createdAt |
-                                formatisodate }}
+                                {{
+                                "%.2f"|format(user_stats.leetify.recentGameRatings.aim)
+                                }}
                             </p>
                         </div>
-                    </div>
-                    <div class="stat wrapper__recent">
-                        <h3>RECENT STATS</h3>
-                        <div class="stat recent">
-                            <div class="stat list_recent adr">
-                                <h4>ADR</h4>
-                                <p>
-                                    {{ user_stats.faceit.recentGameStats.adr }}
-                                </p>
-                            </div>
-                            <div class="stat list_recent kills">
-                                <h4>Kills</h4>
-                                <p>
-                                    {{ user_stats.faceit.recentGameStats.kills
-                                    }}
-                                </p>
-                            </div>
-                            <div class="stat list_recent deaths">
-                                <h4>Deaths</h4>
-                                <p>
-                                    {{ user_stats.faceit.recentGameStats.deaths
-                                    }}
-                                </p>
-                            </div>
-                            <div class="stat list_recent assists">
-                                <h4>Assists</h4>
-                                <p>
-                                    {{ user_stats.faceit.recentGameStats.assists
-                                    }}
-                                </p>
-                            </div>
-                            <div class="stat list_recent headshot_percentage">
-                                <h4>Headshots</h4>
-                                <p>
-                                    {{
-                                    user_stats.faceit.recentGameStats.headshot_percentage
-                                    }}
-                                </p>
-                            </div>
-                            <div class="stat list_recent kd_ratio">
-                                <h4>K/D Ratio</h4>
-                                <p>
-                                    {{
-                                    user_stats.faceit.recentGameStats.kd_ratio
-                                    }}
-                                </p>
+                        <div class="stat positioning">
+                            <h3>POSITIONING</h3>
+                            <p>
+                                {{
+                                "%.2f"|format(user_stats.leetify.recentGameRatings.positioning)
+                                }}
+                            </p>
+                        </div>
+                        <div class="stat utility">
+                            <h3>UTILITY</h3>
+                            <p>
+                                {{
+                                "%.2f"|format(user_stats.leetify.recentGameRatings.utility)
+                                }}
+                            </p>
+                        </div>
+                        <div class="stat opening">
+                            <h3>ENTRY</h3>
+                            <p>
+                                {{
+                                "%.2f"|format(user_stats.leetify.recentGameRatings.opening
+                                * 100) }}
+                            </p>
+                        </div>
+                        <div class="stat tleetify-rating">
+                            <h3>RATING</h3>
+                            <div class="rating-container">
+                                <div class="rating-item">
+                                    <img
+                                        src="{{ url_for('static', filename='images/t.webp') }}"
+                                        alt="T-side rating"
+                                    />
+                                    <p>
+                                        {{
+                                        "%.2f"|format(user_stats.leetify.recentGameRatings.tLeetify
+                                        * 100) }}
+                                    </p>
+                                </div>
+                                <div class="rating-item">
+                                    <img
+                                        src="{{ url_for('static', filename='images/ct.webp') }}"
+                                        alt="CT-side rating"
+                                    />
+                                    <p>
+                                        {{
+                                        "%.2f"|format(user_stats.leetify.recentGameRatings.ctLeetify
+                                        * 100) }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {% endif %} {% if "error" not in user_stats.faceit.csgo %}
-                <div>CSGO FOUND</div>
-                {% endif %}
-            </div>
-            {% else %}
-            <div class="content__faceit">
-                <h2>FACEIT</h2>
-                <h3>Profile not found</h3>
-            </div>
-            {% endif %} {% if "error" not in user_stats.leetify %}
-            <div class="content__leetify">
-                <h2>Leetify</h2>
-                <div class="wrapper__leetify">
-                    <div class="stat aim">
-                        <h3>AIM</h3>
-                        <p>
-                            {{
-                            "%.2f"|format(user_stats.leetify.recentGameRatings.aim)
-                            }}
-                        </p>
-                    </div>
-                    <div class="stat positioning">
-                        <h3>POSITIONING</h3>
-                        <p>
-                            {{
-                            "%.2f"|format(user_stats.leetify.recentGameRatings.positioning)
-                            }}
-                        </p>
-                    </div>
-                    <div class="stat utility">
-                        <h3>UTILITY</h3>
-                        <p>
-                            {{
-                            "%.2f"|format(user_stats.leetify.recentGameRatings.utility)
-                            }}
-                        </p>
-                    </div>
-                    <div class="stat opening">
-                        <h3>ENTRY</h3>
-                        <p>
-                            {{
-                            "%.2f"|format(user_stats.leetify.recentGameRatings.opening
-                            * 100) }}
-                        </p>
-                    </div>
-                    <div class="stat tleetify-rating">
-                        <h3>RATING</h3>
-                        <div class="rating-container">
-                            <div class="rating-item">
-                                <img
-                                    src="{{ url_for('static', filename='images/t.webp') }}"
-                                    alt="T-side rating"
-                                />
-                                <p>
-                                    {{
-                                    "%.2f"|format(user_stats.leetify.recentGameRatings.tLeetify
-                                    * 100) }}
-                                </p>
-                            </div>
-                            <div class="rating-item">
-                                <img
-                                    src="{{ url_for('static', filename='images/ct.webp') }}"
-                                    alt="CT-side rating"
-                                />
-                                <p>
-                                    {{
-                                    "%.2f"|format(user_stats.leetify.recentGameRatings.ctLeetify
-                                    * 100) }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="stat ctleetify-rating">
-                        <h3>CT RATING</h3>
-                    </div> -->
+                {% else %}
+                <div class="content__leetify">
+                    <h2>Leetify</h2>
+                    <h3>Profile not found</h3>
                 </div>
+                {% endif %} -->
             </div>
-            {% else %}
-            <div class="content__leetify">
-                <h2>Leetify</h2>
-                <h3>Profile not found</h3>
-            </div>
-            {% endif %}
         </main>
     </body>
 </html>

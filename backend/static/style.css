@@ -1,5 +1,10 @@
 :root {
-    --clr-base: #312b39;
+    --clr-base: hsl(0, 0%, 40%);
+    --clr-base-lt: hsl(0, 0%, 78%);
+    --clr-base-dk: hsl(0, 0%, 20%);
+
+    --clr-secondary-lt: #355f5d;
+    --clr-secondary-dk: #031121;
 
     --clr-neutral-min: #fff;
     --clr-neutral-max: #000;
@@ -19,66 +24,10 @@
     --clr-rating-tier-6-dk: hsl(0, 79%, 50%);
     --clr-rating-tier-7: hsl(38, 86%, 63%);
     --clr-rating-tier-7-dk: hsl(38, 86%, 45%);
-}
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-* {
-    margin: 0;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    html {
-        interpolate-size: allow-keywords;
-    }
-}
-
-body {
-    font-family: "Lato", sans-serif;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-}
-
-img,
-picture,
-video,
-canvas,
-svg {
-    display: block;
-    max-width: 100%;
-}
-
-input,
-button,
-textarea,
-select {
-    font: inherit;
-}
-
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    overflow-wrap: break-word;
-}
-
-p {
-    text-wrap: pretty;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    text-wrap: balance;
+    --fs-xs: 0.75rem;
+    --fs-sm: 0.9rem;
+    --fs-base: 1rem;
 }
 
 html {
@@ -86,59 +35,133 @@ html {
 }
 
 body {
-    display: grid;
-    place-items: center;
     height: 100%;
-    background-color: var(--clr-base);
+    background: linear-gradient(
+        to top right,
+        var(--clr-secondary-lt) 0%,
+        var(--clr-secondary-dk) 40%,
+        var(--clr-secondary-dk) 60%,
+        var(--clr-secondary-lt) 100%
+    );
     color: var(--clr-neutral-min);
 }
 
 .content {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2em;
-    width: min(60rem, 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    overflow: hidden;
 }
 
-.content__steam-link {
+.content__background {
+    position: absolute;
+    bottom: -300px;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    font-size: 600px;
+}
+
+.content__wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+    margin-inline: auto;
+}
+
+.content__wrapper > * {
+    padding: 1em;
+    border-radius: 15px;
+    background: rgba(31, 31, 31, 0.23);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6.1px);
+    -webkit-backdrop-filter: blur(6.1px);
+}
+
+/*  */
+
+.user__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-bottom: 1.5em;
+}
+
+.user__avatar {
+    width: min(100%, 50px);
+    border-radius: 100%;
+}
+
+.user__link {
+    font-size: 1.5rem;
     color: var(--clr-neutral-min);
     text-decoration: none;
 }
 
-.content__steam-avatar {
-    width: min(100%, 100px);
+.user__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
 }
 
-.stat.recent {
+.stat {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5em;
 }
 
-.wrapper__faceit__cs2 {
-    display: grid;
-    gap: 1em;
+.stat--center {
+    justify-items: center;
 }
 
-.wrapper__faceit__cs2 .wrapper__general {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5em;
-}
-
-.wrapper__leetify {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5em;
-}
-
-.tleetify-rating {
-    grid-column: 2 / -1;
-}
-
-.rating-container {
+.stat__wrapper {
     display: flex;
     gap: 0.5em;
+}
+
+.stat__wrapper--even {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.25em;
+}
+
+.stat__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5em;
+}
+
+.stat__name {
+    color: var(--clr-base-lt);
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+}
+
+.stat__country {
+    width: 30px;
+}
+
+.stat__elo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat__fc-level {
+    width: 20px;
+}
+
+.stat__recent-games {
+    display: flex;
+    gap: 0.25em;
+}
+
+.stat__recent-games--win {
+    color: green;
+}
+
+.stat__recent-games--loss {
+    color: red;
 }
 
 .rating-item {

@@ -272,3 +272,6 @@ def get_id(vanity_name: str) -> str:
     user_stats = Scraper(vanity_name, True).get_stats()
     get_cs2_rating_tier(18450)
     return render_template("stats_design.html", user_stats=user_stats)
+
+if __name__ == "__main__":
+    app.run()
