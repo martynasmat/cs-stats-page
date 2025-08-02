@@ -110,12 +110,10 @@ class Scraper:
     def get_steam_stats(self) -> dict:
         """Gets player statistics from Steam API by Steam user ID. Returns a dictionary with player statistics."""
         cs2_app_id = 730
-        print('AAAAAAAAAAAAAAAAAAA23232')
 
         url = (f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key="
                f"{self.steam_api_key}&steamids={self.steam_id}")
         response_general = r.get(url)
-        print(response_general.json())
         if response_general.status_code != 200:
             return {
                 "error": ERRORS["steam"]["not_found"]
@@ -282,7 +280,7 @@ def redeploy() -> tuple[str, int]:
     logger.error(request.data)
     if not verify_signature(payload, header_signature):
         abort(403, "Signature verification failed")
-    #
+
     subprocess.call(["./deploy_script.sh"])
     return "Webhook received and verified", 200
 
