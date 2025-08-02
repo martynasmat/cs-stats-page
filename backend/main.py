@@ -28,7 +28,7 @@ ERRORS = {
         "not_found": "LEETIFY_NOT_FOUND"
     }
 }
-
+#
 CS2_RATINGS = {
     0: "tier-1",
     5000: "tier-2",
