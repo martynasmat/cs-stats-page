@@ -279,7 +279,7 @@ def get_id(vanity_name: str) -> str:
 def redeploy() -> tuple[str, int]:
     header_signature = request.headers.get('X-Hub-Signature-256')
     payload = request.data
-
+    logger.error(request.data)
     if not verify_signature(payload, header_signature):
         abort(403, "Signature verification failed")
 
