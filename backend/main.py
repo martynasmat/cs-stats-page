@@ -129,8 +129,8 @@ class Scraper:
         #     return {
         #         "error": ERRORS["steam"]["not_found"]
         #     }
-
         # cs2_json = response_cs2.json()
+
         general_json = response_general.json()["response"]
         logger.error(general_json["players"][0])
         return {
