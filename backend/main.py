@@ -248,7 +248,6 @@ class Scraper:
                         "error": ERRORS["faceit"]["not_found"]
                     }
                 }
-
         with concurrent.futures.ThreadPoolExecutor() as executor:
             steam_future = executor.submit(self.get_steam_stats)
             leetify_future = executor.submit(self.get_leetify_stats)
