@@ -206,6 +206,14 @@ body {
     color: red;
 }
 
+.positive {
+    color: green;
+}
+
+.negative {
+    color: red;
+}
+
 .rating-item {
     display: flex;
     gap: 0.25em;
