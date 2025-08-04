@@ -282,7 +282,7 @@ def redeploy() -> tuple[str, int]:
     if not verify_signature(payload, header_signature):
         abort(403, "Signature verification failed")
 
-    subprocess.run(["/bin/bash", "/home/cs-stats-page/backend/deploy_script.sh"])
+    subprocess.run(["/bin/bash", "/usr/bin/sudo", "/home/cs-stats-page/backend/deploy_script.sh"])
     return "Webhook received and verified", 200
 
 
