@@ -257,18 +257,18 @@ class Scraper:
                 "faceit": faceit_future.result()
             }
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def home() -> str:
     file = open("tmp/stats.json", "r")
     user_stats = json.loads(file.read())
     return render_template("stats_design.html", user_stats=user_stats)
 
-@app.route("/profiles/<steam_id>/")
+@app.route("/profiles/<steam_id>/", methods=["GET"])
 def get_profile(steam_id: str) -> str:
     user_stats = Scraper(steam_id).get_stats()
     return render_template("stats_design.html", user_stats=user_stats)
 
-@app.route("/id/<vanity_name>/")
+@app.route("/id/<vanity_name>/", methods=["GET"])
 def get_id(vanity_name: str) -> str:
     user_stats = Scraper(vanity_name, True).get_stats()
     get_cs2_rating_tier(18450)
