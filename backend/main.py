@@ -227,7 +227,7 @@ class Scraper:
             "preaim": round(response_json["stats"]["preaim"]),
             "matches": response_json["total_matches"],
             "kd": 0,
-            "opening": round(response_json["rating"]["opening"], 2),
+            "opening": round(response_json["rating"]["opening"] * 100, 2),
             "avg_he": round(response_json["stats"]["he_foes_damage_avg"], 2),
             "rating": round(response_json["ranks"]["leetify"], 2),
             "position": round(response_json["rating"]["positioning"], 2),
@@ -236,7 +236,7 @@ class Scraper:
             "reaction_time": round(response_json["stats"]["reaction_time_ms"]),
             "winrate": round(response_json["winrate"] * 100),
             "utility": round(response_json["rating"]["utility"], 2),
-            "clutch": round(response_json["rating"]["clutch"], 2),
+            "clutch": round(response_json["rating"]["clutch"] * 100, 2),
             "max_rating": max_rating,
         }
 

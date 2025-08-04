@@ -246,63 +246,75 @@
                             <div class="stat__grid">
                                 <div class="stat">
                                     <p class="stat__name">Aim</p>
-                                    <p>68.8</p>
+                                    <p>{{ user_stats.leetify.aim }}</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Preaim</p>
-                                    <p>6°</p>
+                                    <p>{{ user_stats.leetify.preaim }}°</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Matches</p>
-                                    <p>555</p>
+                                    <p>{{ user_stats.leetify.matches }}</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Kd</p>
-                                    <p>5</p>
+                                    <p>{{ user_stats.leetify.kd }}</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Opening</p>
-                                    <p>+3.1</p>
+                                    <p>
+                                        {% set opening = user_stats.leetify.opening %}
+                                        {{ '+' if opening >= 0 else '' }}{{ user_stats.leetify.opening }}
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Avg he dmg</p>
-                                    <p>12.5</p>
+                                    <p>{{ user_stats.leetify.avg_he }}</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Rating</p>
-                                    <p>+0.4</p>
+                                    <p>
+                                        {% set rating = user_stats.leetify.rating %}
+                                        {{ '+' if rating >= 0 else '' }}{{ user_stats.leetify.rating }}
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Position</p>
-                                    <p>57.5</p>
+                                    <p>{{ user_stats.leetify.position }}</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Banned mates</p>
-                                    <p>0.00%</p>
+                                    <p>{{ user_stats.leetify.banned_mates }}%</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Party</p>
-                                    <p>2.65</p>
+                                    <p>
+                                        {% set party = user_stats.leetify.party %}
+                                        {{ '+' if party >= 0 else '' }}{{ party }}
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Reaction</p>
-                                    <p>650 <span>ms</span></p>
+                                    <p>{{ user_stats.leetify.reaction_time }} <span>ms</span></p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Winrate</p>
-                                    <p></p>
+                                    <p>{{ user_stats.leetify.winrate }}%</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">utility</p>
-                                    <p></p>
+                                    <p>{{ user_stats.leetify.utility }}</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Clutch</p>
-                                    <p></p>
+                                    <p>
+                                        {% set clutch = user_stats.leetify.clutch %}
+                                        {{ '+' if clutch >= 0 else '' }}{{ clutch }}
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Max rating</p>
-                                    <p></p>
+                                    <p>{{ user_stats.leetify.max_rating }}</p>
                                 </div>
                             </div>
                         </div>
