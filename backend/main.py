@@ -286,7 +286,6 @@ def redeploy() -> tuple[str, int]:
     return "Webhook received and verified", 200
 
 
-
 def verify_signature(payload, header_signature):
     if header_signature is None:
         return False
