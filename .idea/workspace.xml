@@ -41,7 +41,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/marty/Desktop/cs-stats-page",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -88,7 +88,7 @@
       <workItem from="1754165969515" duration="2153000" />
       <workItem from="1754263583800" duration="8546000" />
       <workItem from="1754317181464" duration="33000" />
-      <workItem from="1754319153296" duration="3355000" />
+      <workItem from="1754319153296" duration="3722000" />
     </task>
     <servers />
   </component>
