@@ -204,29 +204,40 @@ class Scraper:
         """Gets player statistics from Leetify API by Steam user ID. Returns a dictionary with player statistics."""
 
         url = f"https://api.cs-prod.leetify.com/api/profile/id/{self.steam_id}"
+        response_not_public = r.get(url)
+        url = f"https://api-public.cs-prod.leetify.com/v3/profile?steam64_id={self.steam_id}"
         response = r.get(url)
 
-        if response.status_code != 200:
+        if response.status_code != 200 or response_not_public.status_code != 200:
             return {
                 "error": ERRORS["leetify"]["not_found"]
             }
 
+
         response_json = response.json()
-        current_rating = -1
-        for game in response_json["games"]:
-            if game['dataSource'] == 'matchmaking':
-                current_rating = game["skillLevel"]
-                break
+        response_not_public_json = response_not_public.json()
 
         max_rating = max(game["skillLevel"]
-                                        for game in response_json["games"] if game["skillLevel"] is not None
+                                        for game in response_not_public_json["games"] if game["skillLevel"] is not None
                          and game['dataSource'] == 'matchmaking')
+        banned_mates = list(filter(lambda x: x["isBanned"], response_not_public_json["teammates"]))
+
         return {
-            "recentGameRatings": response_json["recentGameRatings"],
-            "currentPremiereRating": current_rating,
-            "currentRatingTier": get_cs2_rating_tier(current_rating),
-            "maxPremiereRating": max_rating,
-            "maxRatingTier": get_cs2_rating_tier(max_rating)
+            "aim": round(response_json["rating"]["aim"], 2),
+            "preaim": round(response_json["stats"]["preaim"]),
+            "matches": response_json["total_matches"],
+            "kd": 0,
+            "opening": round(response_json["rating"]["opening"], 2),
+            "avg_he": round(response_json["stats"]["he_foes_damage_avg"], 2),
+            "rating": round(response_json["ranks"]["leetify"], 2),
+            "position": round(response_json["rating"]["positioning"], 2),
+            "banned_mates": round(len(banned_mates) / len(response_not_public_json["teammates"]) * 100, 2),
+            "party": round(response_not_public_json["club"]["ratings"]["leetifyRating"], 2),
+            "reaction_time": round(response_json["stats"]["reaction_time_ms"]),
+            "winrate": round(response_json["winrate"] * 100),
+            "utility": round(response_json["rating"]["utility"], 2),
+            "clutch": round(response_json["rating"]["clutch"], 2),
+            "max_rating": max_rating,
         }
 
     def get_stats(self) -> dict:
@@ -301,5 +312,5 @@ def verify_signature(payload, header_signature):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
 
