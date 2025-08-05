@@ -76,7 +76,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 2em;
+    gap: 1em;
     margin-inline: auto;
 }
 
@@ -94,7 +94,7 @@ body {
 .content__leetify {
     display: grid;
     grid-template-rows: auto 2fr 6fr;
-    max-height: 550px;
+    max-height: 600px;
     padding: 0;
     width: 325px;
 }
@@ -184,8 +184,8 @@ body {
 
 .stat__wrapper__recent {
     display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 0.25em;
 }
 
@@ -213,10 +213,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.stat__rounds-won {
-    grid-column: span 2;
 }
 
 .stat__fc-level {

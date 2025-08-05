@@ -60,6 +60,9 @@ def get_average_stats(items, count):
     games_won = 0
     kd = 0
     headshot_percentage = 0
+    maps_played = dict()
+    maps_won = dict()
+    maps_winrate = dict()
     for item in items:
         adr += float(item["stats"].get("ADR", 0))
         kills += float(item["stats"]["Kills"])
@@ -69,6 +72,12 @@ def get_average_stats(items, count):
         games_won += float(item["stats"]["Result"])
         kd += float(item["stats"]["K/D Ratio"])
         headshot_percentage += float(item["stats"]["Headshots %"])
+        maps_played[item["stats"]["Map"]] = maps_played.get(item["stats"]["Map"], 0) + 1
+        if int(item["stats"]["Result"]) == 1:
+            maps_won[item["stats"]["Map"]] = maps_won.get(item["stats"]["Map"], 0) + 1
+
+    for key in maps_played:
+        maps_winrate[key] = maps_won[key] / maps_played[key]
 
     return {
         "adr": "%0.2f" % (adr / count),
@@ -79,6 +88,10 @@ def get_average_stats(items, count):
         "rounds_won":"%0.2f" % (rounds_won / count),
         "win_percentage": "%0.2f" % (games_won / count * 100),
         "headshot_percentage": "%0.2f" % (headshot_percentage / count),
+        "best_map": max(maps_winrate, key=maps_winrate.get),
+        "best_map_winrate": maps_winrate[max(maps_winrate, key=maps_winrate.get)] * 100,
+        "worst_map": min(maps_winrate, key=maps_winrate.get),
+        "worst_map_winrate": maps_winrate[min(maps_winrate, key=maps_winrate.get)] * 100,
     }
 
 

@@ -257,12 +257,42 @@
                                         </p>
                                     </div>
                                     <div class="stat stat__rounds-won">
-                                        <p class="stat__name">Rounds won</p>
+                                        <p class="stat__name">RNDS won</p>
                                         <p class="stat__value">
                                             {{
                                             user_stats.faceit.recentGameStats.rounds_won
                                             }}
                                         </p>
+                                    </div>
+                                    <div class="stat stat__best-map">
+                                        <p class="stat__name">best map</p>
+                                        <div class="stat__value__wrapper">
+                                            <p class="stat__value">
+                                                {{
+                                                user_stats.faceit.recentGameStats.best_map
+                                                }}
+                                            </p>
+                                            <p class="stat__value">
+                                                {{
+                                                user_stats.faceit.recentGameStats.best_map_winrate
+                                                }}%
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="stat stat__worst-map">
+                                        <p class="stat__name">worst map</p>
+                                        <div class="stat__value__wrapper">
+                                            <p class="stat__value">
+                                                {{
+                                                user_stats.faceit.recentGameStats.worst_map
+                                                }}
+                                            </p>
+                                            <p class="stat__value">
+                                                {{
+                                                user_stats.faceit.recentGameStats.worst_map_winrate
+                                                }}%
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -401,7 +431,7 @@
                                     </p>
                                 </div>
                                 <div class="stat">
-                                    <p class="stat__name">Avg he dmg</p>
+                                    <p class="stat__name">he dmg</p>
                                     <p class="stat__value">
                                         {{ user_stats.leetify.avg_he }}
                                     </p>
