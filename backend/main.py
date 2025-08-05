@@ -232,7 +232,8 @@ class Scraper:
             "rating": round(response_json["ranks"]["leetify"], 2),
             "position": round(response_json["rating"]["positioning"], 2),
             "banned_mates": round(len(banned_mates) / len(response_not_public_json["teammates"]) * 100, 2),
-            "party": round(response_not_public_json["club"]["ratings"]["leetifyRating"], 2),
+            "party": round(response_not_public_json["club"]["ratings"]["leetifyRating"], 2)
+                if response_not_public_json["club"] is not None else 0,
             "reaction_time": round(response_json["stats"]["reaction_time_ms"]),
             "winrate": round(response_json["winrate"] * 100),
             "utility": round(response_json["rating"]["utility"], 2),

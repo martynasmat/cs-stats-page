@@ -87,7 +87,20 @@ body {
     grid-template-rows: auto 2fr 6fr;
     max-height: 600px;
     padding: 0;
-    min-width: 450px;
+    width: 375px;
+}
+
+@media (max-width: 768px) {
+    .content {
+        height: auto;
+        padding: 1em;
+    }
+}
+
+.faceit__wrapper__recent {
+    display: flex;
+    flex-direction: column;
+    border-top: solid 2px #2c5254;
 }
 
 .logo__wrapper {
