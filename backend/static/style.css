@@ -26,8 +26,8 @@
     --clr-rating-tier-7-dk: hsl(38, 86%, 45%);
 
     --fs-xs: 0.75rem;
-    --fs-sm: 0.9rem;
-    --fs-base: 1rem;
+    --fs-sm: 0.8rem;
+    --fs-base: 0.9rem;
 }
 
 html {
@@ -69,7 +69,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 2em;
+    gap: 1em;
     margin-inline: auto;
 }
 
@@ -87,7 +87,7 @@ body {
     grid-template-rows: auto 2fr 6fr;
     max-height: 600px;
     padding: 0;
-    width: 375px;
+    width: 325px;
 }
 
 @media (max-width: 768px) {
@@ -156,6 +156,7 @@ body {
 
 .stat {
     display: grid;
+    font-size: var(--fs-base);
 }
 
 .stat--center {
