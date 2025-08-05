@@ -266,12 +266,13 @@
                                     </div>
                                     <div class="stat stat__best-map">
                                         <p class="stat__name">best map</p>
-                                        <div class="stat__value__wrapper">
-                                            <p class="stat__value">
-                                                {{
-                                                user_stats.faceit.recentGameStats.best_map
-                                                }}
-                                            </p>
+                                        <div
+                                            class="stat__value__wrapper stat__map"
+                                        >
+                                            <img
+                                                class="map"
+                                                src="{{ url_for('static', filename='images/maps/' ~ user_stats.faceit.recentGameStats.best_map ~ '.webp') }}"
+                                            />
                                             <p class="stat__value">
                                                 {{
                                                 user_stats.faceit.recentGameStats.best_map_winrate
@@ -281,12 +282,13 @@
                                     </div>
                                     <div class="stat stat__worst-map">
                                         <p class="stat__name">worst map</p>
-                                        <div class="stat__value__wrapper">
-                                            <p class="stat__value">
-                                                {{
-                                                user_stats.faceit.recentGameStats.worst_map
-                                                }}
-                                            </p>
+                                        <div
+                                            class="stat__value__wrapper stat__map"
+                                        >
+                                            <img
+                                                class="map"
+                                                src="{{ url_for('static', filename='images/maps/' ~ user_stats.faceit.recentGameStats.worst_map ~ '.webp') }}"
+                                            />
                                             <p class="stat__value">
                                                 {{
                                                 user_stats.faceit.recentGameStats.worst_map_winrate

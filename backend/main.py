@@ -77,7 +77,7 @@ def get_average_stats(items, count):
             maps_won[item["stats"]["Map"]] = maps_won.get(item["stats"]["Map"], 0) + 1
 
     for key in maps_played:
-        maps_winrate[key] = maps_won[key] / maps_played[key]
+        maps_winrate[key] = maps_won.get(key, 0) / maps_played[key]
 
     return {
         "adr": "%0.2f" % (adr / count),
