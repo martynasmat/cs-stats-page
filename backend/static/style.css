@@ -26,8 +26,8 @@
     --clr-rating-tier-7-dk: hsl(38, 86%, 45%);
 
     --fs-xs: 0.75rem;
-    --fs-sm: 0.9rem;
-    --fs-base: 1rem;
+    --fs-sm: 0.8rem;
+    --fs-base: 0.9rem;
 }
 
 html {
@@ -94,7 +94,7 @@ body {
 .content__leetify {
     display: grid;
     grid-template-rows: auto 2fr 6fr;
-    max-height: 600px;
+    max-height: 550px;
     padding: 0;
     width: 325px;
 }
@@ -109,7 +109,6 @@ body {
 .faceit__wrapper__recent {
     display: flex;
     flex-direction: column;
-    border-top: solid 2px #2c5254;
 }
 
 .logo__wrapper {
