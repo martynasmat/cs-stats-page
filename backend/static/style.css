@@ -30,19 +30,7 @@
     --fs-base: 1rem;
 }
 
-html {
-    height: 100dvh;
-}
-
 body {
-    height: 100%;
-    background: linear-gradient(
-        to top right,
-        var(--clr-secondary-lt) 0%,
-        var(--clr-secondary-dk) 40%,
-        var(--clr-secondary-dk) 60%,
-        var(--clr-secondary-lt) 100%
-    );
     color: var(--clr-neutral-min);
 }
 
@@ -51,8 +39,15 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100%;
-    overflow: hidden;
+    min-height: 100dvh;
+    background: linear-gradient(
+        to top right,
+        var(--clr-secondary-lt) 0%,
+        var(--clr-secondary-dk) 40%,
+        var(--clr-secondary-dk) 60%,
+        var(--clr-secondary-lt) 100%
+    );
+    background-repeat: no-repeat;
 }
 
 .content__background {
@@ -82,25 +77,19 @@ body {
     -webkit-backdrop-filter: blur(6.1px);
 }
 
-.content__steam, .content__faceit, .content__leetify {
+.content__steam,
+.content__faceit,
+.content__leetify {
     display: grid;
     grid-template-rows: auto 2fr 6fr;
+    width: 375px;
     max-height: 600px;
     padding: 0;
-    width: 375px;
-}
-
-@media (max-width: 768px) {
-    .content {
-        height: auto;
-        padding: 1em;
-    }
 }
 
 .faceit__wrapper__recent {
     display: flex;
     flex-direction: column;
-    border-top: solid 2px #2c5254;
 }
 
 .logo__wrapper {
@@ -114,7 +103,7 @@ body {
     align-items: center;
 }
 
-.content__leetify > .logo__wrapper  {
+.content__leetify > .logo__wrapper {
     background: #16373f;
 }
 
@@ -192,6 +181,10 @@ body {
     text-transform: uppercase;
 }
 
+.stat__value {
+    align-self: flex-end;
+}
+
 .stat__country {
     width: 30px;
 }
@@ -200,6 +193,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.stat__rounds-won {
+    grid-column: span 2;
 }
 
 .stat__fc-level {
@@ -311,4 +308,10 @@ body {
     }
 }
 
-
+.divider {
+    height: 2px;
+    margin-block: 0.25em;
+    background-color: var(--clr-secondary-lt);
+    border-radius: 10px;
+    opacity: 0.45;
+}

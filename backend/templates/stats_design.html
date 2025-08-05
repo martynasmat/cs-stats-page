@@ -24,7 +24,11 @@
             <div class="content__wrapper">
                 <div class="content__steam">
                     <div class="logo__wrapper">
-                        <img class="image__logo" src="{{ url_for('static', filename='images/steam_logo.webp') }}" alt="Steam logo">
+                        <img
+                            class="image__logo"
+                            src="{{ url_for('static', filename='images/steam_logo.webp') }}"
+                            alt="Steam logo"
+                        />
                     </div>
                     <div class="content__wrapper__inside">
                         <div class="user__wrapper">
@@ -63,7 +67,7 @@
                             <div class="stat__wrapper--even">
                                 <div class="stat stat--center">
                                     <p class="stat__name">Friends</p>
-                                    <p class="stat">0</p>
+                                    <p class="stat__value">0</p>
                                 </div>
                                 <div class="stat stat--center">
                                     <p class="stat__name">Country</p>
@@ -75,7 +79,7 @@
                                 </div>
                                 <div class="stat stat--center">
                                     <p class="stat__name">Xp level</p>
-                                    <p>45</p>
+                                    <p class="stat__value">45</p>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +87,11 @@
                 </div>
                 <div class="content__faceit">
                     <div class="logo__wrapper">
-                        <img class="image__logo" src="{{ url_for('static', filename='images/faceit_logo.webp') }}" alt="Steam logo">
+                        <img
+                            class="image__logo"
+                            src="{{ url_for('static', filename='images/faceit_logo.webp') }}"
+                            alt="Steam logo"
+                        />
                     </div>
                     <div class="content__wrapper__inside">
                         <div class="user__wrapper">
@@ -103,7 +111,7 @@
                             <div class="stat__wrapper">
                                 <div class="stat">
                                     <p class="stat__name">Registered</p>
-                                    <p>
+                                    <p class="stat__value">
                                         {{ user_stats.faceit.cs2.createdAt |
                                         formatisodate }}
                                     </p>
@@ -129,45 +137,51 @@
                                             alt="Faceit Level"
                                         />
                                     </div>
-                                    <p>{{ user_stats.faceit.cs2.statsCS2.faceit_elo }}</p>
+                                    <p class="stat__value">
+                                        {{
+                                        user_stats.faceit.cs2.statsCS2.faceit_elo
+                                        }}
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Hs%</p>
-                                    <p>2%</p>
+                                    <p class="stat__value">2%</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Clutch 1v1</p>
-                                    <p>36%</p>
+                                    <p class="stat__value">36%</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Winrate</p>
-                                    <p>0%</p>
+                                    <p class="stat__value">0%</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Kd</p>
-                                    <p>0</p>
+                                    <p class="stat__value">0</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Clutch 1v2</p>
-                                    <p>0%</p>
+                                    <p class="stat__value">0%</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Matches</p>
-                                    <p>1541</p>
+                                    <p class="stat__value">1541</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Adr</p>
-                                    <p>77.7</p>
+                                    <p class="stat__value">77.7</p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Util dmg</p>
-                                    <p>6.00</p>
+                                    <p class="stat__value">6.00</p>
                                 </div>
                             </div>
                             <div class="stat__wrapper">
                                 <div class="stat">
                                     <p class="stat__name">Last match</p>
-                                    <time>Jul 25, 2025</time>
+                                    <time class="stat__value"
+                                        >Jul 25, 2025</time
+                                    >
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Recent</p>
@@ -190,36 +204,65 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="divider"></div>
                             <div class="faceit__wrapper__recent">
                                 <p class="stat__name">LAST 20 GAMES</p>
                                 <div class="stat__wrapper__recent">
                                     <div class="stat">
                                         <p class="stat__name">ADR</p>
-                                        <p>{{ user_stats.faceit.recentGameStats.adr }}</p>
+                                        <p class="stat__value">
+                                            {{
+                                            user_stats.faceit.recentGameStats.adr
+                                            }}
+                                        </p>
                                     </div>
                                     <div class="stat">
                                         <p class="stat__name">Kills</p>
-                                        <p>{{ user_stats.faceit.recentGameStats.kills }}</p>
+                                        <p class="stat__value">
+                                            {{
+                                            user_stats.faceit.recentGameStats.kills
+                                            }}
+                                        </p>
                                     </div>
                                     <div class="stat">
                                         <p class="stat__name">Deaths</p>
-                                        <p>{{ user_stats.faceit.recentGameStats.deaths }}</p>
+                                        <p class="stat__value">
+                                            {{
+                                            user_stats.faceit.recentGameStats.deaths
+                                            }}
+                                        </p>
                                     </div>
                                     <div class="stat">
                                         <p class="stat__name">Assists</p>
-                                        <p>{{ user_stats.faceit.recentGameStats.assists }}</p>
+                                        <p class="stat__value">
+                                            {{
+                                            user_stats.faceit.recentGameStats.assists
+                                            }}
+                                        </p>
                                     </div>
                                     <div class="stat">
                                         <p class="stat__name">K/D Ratio</p>
-                                        <p>{{ user_stats.faceit.recentGameStats.kd_ratio }}</p>
+                                        <p class="stat__value">
+                                            {{
+                                            user_stats.faceit.recentGameStats.kd_ratio
+                                            }}
+                                        </p>
                                     </div>
                                     <div class="stat">
                                         <p class="stat__name">Win %</p>
-                                        <p>{{ user_stats.faceit.recentGameStats.win_percentage }}</p>
+                                        <p class="stat__value">
+                                            {{
+                                            user_stats.faceit.recentGameStats.win_percentage
+                                            }}
+                                        </p>
                                     </div>
-                                    <div class="stat">
+                                    <div class="stat stat__rounds-won">
                                         <p class="stat__name">Rounds won</p>
-                                        <p>{{ user_stats.faceit.recentGameStats.rounds_won }}</p>
+                                        <p class="stat__value">
+                                            {{
+                                            user_stats.faceit.recentGameStats.rounds_won
+                                            }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -228,7 +271,11 @@
                 </div>
                 <div class="content__leetify">
                     <div class="logo__wrapper">
-                        <img class="image__logo" src="{{ url_for('static', filename='images/leetify_logo.webp') }}" alt="Steam logo">
+                        <img
+                            class="image__logo"
+                            src="{{ url_for('static', filename='images/leetify_logo.webp') }}"
+                            alt="Steam logo"
+                        />
                     </div>
                     <div class="content__wrapper__inside">
                         <div class="user__wrapper">
@@ -248,84 +295,122 @@
                             <div class="stat__grid">
                                 <div class="stat">
                                     <p class="stat__name">Max rating</p>
-                                    <p>{{ user_stats.leetify.max_rating }}</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.leetify.max_rating }}
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Matches</p>
-                                    <p>{{ user_stats.leetify.matches }}</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.leetify.matches }}
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Banned mates</p>
-                                    <p>{{ user_stats.leetify.banned_mates }}%</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.leetify.banned_mates }}%
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Aim</p>
                                     {% set aim = user_stats.leetify.aim %}
-                                    <p class="{{ 'positive' if aim >= 75 }} {{ 'negative' if aim <= 50 }}">
+                                    <p
+                                        class="{{ 'positive' if aim >= 75 }} {{ 'negative' if aim <= 50 }} stat__value"
+                                    >
                                         {{ aim }}
                                     </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">utility</p>
-                                    {% set utility = user_stats.leetify.utility %}
-                                    <p class="{{ 'positive' if utility >= 75 }} {{ 'negative' if utility <= 50 }}">
+                                    {% set utility = user_stats.leetify.utility
+                                    %}
+                                    <p
+                                        class="{{ 'positive' if utility >= 75 }} {{ 'negative' if utility <= 50 }} stat__value"
+                                    >
                                         {{ user_stats.leetify.utility }}
                                     </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Positioning</p>
-                                    {% set position = user_stats.leetify.position %}
-                                    <p class="{{ 'positive' if position >= 75 }} {{ 'negative' if position <= 50 }}">
+                                    {% set position =
+                                    user_stats.leetify.position %}
+                                    <p
+                                        class="{{ 'positive' if position >= 75 }} {{ 'negative' if position <= 50 }} stat__value"
+                                    >
                                         {{ position }}
                                     </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Rating</p>
                                     {% set rating = user_stats.leetify.rating %}
-                                    <p class="{{ 'positive' if rating >= 0 else 'negative' }}">
-                                        {{ '+' if rating >= 0 else '' }}{{ user_stats.leetify.rating }}
+                                    <p
+                                        class="{{ 'positive' if rating >= 0 else 'negative' }} stat__value"
+                                    >
+                                        {{ '+' if rating >= 0 else '' }}{{
+                                        user_stats.leetify.rating }}
                                     </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Opening</p>
-                                    {% set opening = user_stats.leetify.opening %}
-                                    <p class="{{ 'positive' if opening >= 0 else 'negative' }}">
-                                        {{ '+' if opening >= 0 else '' }}{{ user_stats.leetify.opening }}
+                                    {% set opening = user_stats.leetify.opening
+                                    %}
+                                    <p
+                                        class="{{ 'positive' if opening >= 0 else 'negative' }} stat__value"
+                                    >
+                                        {{ '+' if opening >= 0 else '' }}{{
+                                        user_stats.leetify.opening }}
                                     </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Clutch</p>
                                     {% set clutch = user_stats.leetify.clutch %}
-                                    <p class="{{ 'positive' if clutch >= 0 else negative }}">
-                                        {{ '+' if clutch >= 0 else '' }}{{ clutch }}
+                                    <p
+                                        class="{{ 'positive' if clutch >= 0 else negative }} stat__value"
+                                    >
+                                        {{ '+' if clutch >= 0 else '' }}{{
+                                        clutch }}
                                     </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Kd</p>
-                                    <p>{{ user_stats.leetify.kd }}</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.leetify.kd }}
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Reaction</p>
-                                    <p>{{ user_stats.leetify.reaction_time }} <span>ms</span></p>
+                                    <p class="stat__value">
+                                        {{ user_stats.leetify.reaction_time }}
+                                        <span>ms</span>
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Preaim</p>
-                                    <p>{{ user_stats.leetify.preaim }}°</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.leetify.preaim }}°
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Party</p>
                                     {% set party = user_stats.leetify.party %}
-                                    <p class="{{ 'positive' if party >= 0 else 'negative' }}">
-                                        {{ '+' if party >= 0 else '' }}{{ party }}
+                                    <p
+                                        class="{{ 'positive' if party >= 0 else 'negative' }} stat__value"
+                                    >
+                                        {{ '+' if party >= 0 else '' }}{{ party
+                                        }}
                                     </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Avg he dmg</p>
-                                    <p>{{ user_stats.leetify.avg_he }}</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.leetify.avg_he }}
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Winrate</p>
-                                    <p>{{ user_stats.leetify.winrate }}%</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.leetify.winrate }}%
+                                    </p>
                                 </div>
                             </div>
                         </div>
