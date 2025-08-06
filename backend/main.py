@@ -123,7 +123,6 @@ class Scraper:
 
     def get_steam_stats(self) -> dict:
         """Gets player statistics from Steam API by Steam user ID. Returns a dictionary with player statistics."""
-        cs2_app_id = 730
 
         url = (f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key="
                f"{self.steam_api_key}&steamids={self.steam_id}")
@@ -133,21 +132,11 @@ class Scraper:
                 "error": ERRORS["steam"]["not_found"]
             }
 
-        # CS2 app ID is 730
-        # url = (f"https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?key="
-        #        f"{self.steam_api_key}&steamid={self.steam_id}&appid={cs2_app_id}")
-        # response_cs2 = r.get(url)
-        # if response_cs2.status_code != 200:
-        #     return {
-        #         "error": ERRORS["steam"]["not_found"]
-        #     }
-        # cs2_json = response_cs2.json()
-
         general_json = response_general.json()["response"]
         logger.error(general_json["players"][0])
+
         return {
             "general": general_json["players"][0],
-            # "cs2": cs2_json
         }
 
     def get_faceit_stats(self) -> dict:
@@ -180,6 +169,7 @@ class Scraper:
         # Get FACEIT CS2 statistics
         url = f"https://open.faceit.com/data/v4/players?game=cs2&game_player_id={self.steam_id}"
         response_cs2 = r.get(url, headers=headers)
+
         if response_cs2.status_code != 200:
             stats["cs2"] = {"error": "FACEIT_CS2_NOT_FOUND"}
         else:
@@ -188,6 +178,7 @@ class Scraper:
                 "createdAt": response_cs2["activated_at"],
                 "avatar": response_cs2["avatar"],
                 "country": response_cs2["country"],
+                "language": response_cs2["settings"]["language"],
                 "statsCS2": response_cs2["games"]["cs2"],
                 "statsCSGO": response_cs2["games"]["csgo"],
                 "memberships": response_cs2["memberships"],
@@ -225,7 +216,6 @@ class Scraper:
             return {
                 "error": ERRORS["leetify"]["not_found"]
             }
-
 
         response_json = response.json()
         response_not_public_json = response_not_public.json()

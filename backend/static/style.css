@@ -90,7 +90,6 @@ body {
 
     .content__wrapper > *:last-child {
         grid-column: span 2;
-        background-color: red;
     }
 }
 
