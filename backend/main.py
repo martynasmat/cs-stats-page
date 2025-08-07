@@ -89,9 +89,9 @@ def get_average_stats(items, count):
         "win_percentage": "%0.2f" % (games_won / count * 100),
         "headshot_percentage": "%0.2f" % (headshot_percentage / count),
         "best_map": max(maps_winrate, key=maps_winrate.get),
-        "best_map_winrate": maps_winrate[max(maps_winrate, key=maps_winrate.get)] * 100,
+        "best_map_winrate": round(maps_winrate[max(maps_winrate, key=maps_winrate.get)] * 100, 2),
         "worst_map": min(maps_winrate, key=maps_winrate.get),
-        "worst_map_winrate": maps_winrate[min(maps_winrate, key=maps_winrate.get)] * 100,
+        "worst_map_winrate": round(maps_winrate[min(maps_winrate, key=maps_winrate.get)] * 100, 2),
     }
 
 
