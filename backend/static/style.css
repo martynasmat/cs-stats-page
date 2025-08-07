@@ -149,6 +149,14 @@ body {
     text-decoration: none;
 }
 
+.header__faceit {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
 .user__stats {
     display: flex;
     flex-direction: column;
@@ -209,7 +217,8 @@ body {
 }
 
 .stat__fc-level {
-    width: 20px;
+    height: 100%;
+    width: auto;
 }
 
 .stat__recent-games {

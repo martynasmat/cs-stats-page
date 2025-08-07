@@ -96,12 +96,22 @@
                                 src="{{ user_stats.steam.general.avatarfull }}"
                                 alt="Faceit profile avatar"
                             />
-                            <a
-                                class="user__link"
-                                href="{{ user_stats.steam.general.profileurl }}"
-                            >
-                                {{ user_stats.faceit.cs2.nickname }}
-                            </a>
+                            <div class="header__faceit">
+                                <a
+                                    class="user__link"
+                                    href="{{ user_stats.steam.general.profileurl }}"
+                                >
+                                    {{ user_stats.faceit.cs2.nickname }}
+                                </a>
+                                <img
+                                    class="stat__fc-level"
+                                    src="{{
+                                    url_for('static', filename='images/faceit/' ~
+                                    user_stats.faceit.cs2.statsCS2.skill_level ~ '.png')
+                                }}"
+                                    alt="Faceit Level"
+                                />
+                            </div>
                         </div>
                         <div class="user__stats">
                             <div class="stat__wrapper">
@@ -125,13 +135,6 @@
                                 <div class="stat">
                                     <div class="stat__elo">
                                         <p class="stat__name">Elo</p>
-                                        <img
-                                            class="stat__fc-level"
-                                            src="{{
-                                    url_for('static', filename='images/faceit/' ~ user_stats.faceit.cs2.statsCS2.skill_level ~ '.png')
-                                }}"
-                                            alt="Faceit Level"
-                                        />
                                     </div>
                                     <p class="stat__value">
                                         {{
