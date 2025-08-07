@@ -188,8 +188,8 @@ class Scraper:
             player_uuid = response_cs2["player_id"]
 
         if player_uuid is not None:
-            # Get FACEIT statistics for the last 20 games
-            url = f"https://open.faceit.com/data/v4/players/{player_uuid}/games/cs2/stats"
+            # Get FACEIT statistics for the last 50 games
+            url = f"https://open.faceit.com/data/v4/players/{player_uuid}/games/cs2/stats?limit=50"
             response_recent = r.get(url, headers=headers)
             if response_recent.status_code != 200:
                 return {"error": "FACEIT_RECENT_NOT_FOUND"}
