@@ -169,8 +169,6 @@ class Scraper:
         # Get FACEIT CS2 statistics
         url = f"https://open.faceit.com/data/v4/players?game=cs2&game_player_id={self.steam_id}"
         response_cs2 = r.get(url, headers=headers)
-        file  = open("./tmp/r.json", "w")
-        file.write(json.dumps(response_cs2.json()))
         url = f"https://open.faceit.com/data/v4/players/{player_uuid}/stats/cs2"
         response_lifetime = r.get(url, headers=headers)
 
