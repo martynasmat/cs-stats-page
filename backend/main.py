@@ -169,11 +169,17 @@ class Scraper:
         # Get FACEIT CS2 statistics
         url = f"https://open.faceit.com/data/v4/players?game=cs2&game_player_id={self.steam_id}"
         response_cs2 = r.get(url, headers=headers)
+        file  = open("./tmp/r.json", "w")
+        file.write(json.dumps(response_cs2.json()))
+        url = f"https://open.faceit.com/data/v4/players/{player_uuid}/stats/cs2"
+        response_lifetime = r.get(url, headers=headers)
 
-        if response_cs2.status_code != 200:
+        if response_cs2.status_code != 200 or response_lifetime.status_code != 200:
             stats["cs2"] = {"error": "FACEIT_CS2_NOT_FOUND"}
         else:
             response_cs2 = response_cs2.json()
+            lifetime = response_lifetime.json()["lifetime"]
+
             stats["cs2"] = {
                 "createdAt": response_cs2["activated_at"],
                 "avatar": response_cs2["avatar"],
@@ -184,8 +190,18 @@ class Scraper:
                 "memberships": response_cs2["memberships"],
                 "nickname": response_cs2["nickname"],
                 "playerID": response_cs2["player_id"],
+                "hs_percentage": lifetime["Average Headshots %"],
+                "clutch_1v1": lifetime["1v1 Win Rate"],
+                "clutch_1v2": lifetime["1v2 Win Rate"],
+                "winrate": lifetime["Win Rate %"],
+                "kd": lifetime["Average K/D Ratio"],
+                "matches": lifetime["Matches"],
+                "adr": lifetime["ADR"],
+                "utility_damage": lifetime["Utility Damage per Round"],
+                "recent": list(map(lambda x: "W" if x == "1" else "L", lifetime["Recent Results"]))
             }
             player_uuid = response_cs2["player_id"]
+
 
         if player_uuid is not None:
             # Get FACEIT statistics for the last 50 games
@@ -196,6 +212,7 @@ class Scraper:
             else:
                 response_recent_json = response_recent.json()
                 stats["recentGameStats"] = get_average_stats(response_recent_json["items"], response_recent_json["end"])
+                stats["cs2"]["last_game"] = response_recent_json["items"][0]["stats"]["Created At"]
         else:
             return {"error": "FACEIT_NOT_FOUND"}
 
@@ -266,11 +283,11 @@ class Scraper:
             steam_future = executor.submit(self.get_steam_stats)
             leetify_future = executor.submit(self.get_leetify_stats)
             faceit_future = executor.submit(self.get_faceit_stats)
-            print({
-                "steam": steam_future.result(),
-                "leetify": leetify_future.result(),
-                "faceit": faceit_future.result()
-            })
+            # print({
+            #     "steam": steam_future.result(),
+            #     "leetify": leetify_future.result(),
+            #     "faceit": faceit_future.result()
+            # })
             return {
                 "steam": steam_future.result(),
                 "leetify": leetify_future.result(),

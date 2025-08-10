@@ -144,62 +144,73 @@
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Hs%</p>
-                                    <p class="stat__value">2%</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.faceit.cs2.hs_percentage
+                                        }}%
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Clutch 1v1</p>
-                                    <p class="stat__value">36%</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.faceit.cs2.clutch_1v1 }}%
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Winrate</p>
-                                    <p class="stat__value">0%</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.faceit.cs2.winrate }}%
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Kd</p>
-                                    <p class="stat__value">0</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.faceit.cs2.kd }}
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Clutch 1v2</p>
-                                    <p class="stat__value">0%</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.faceit.cs2.clutch_1v2 }}%
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Matches</p>
-                                    <p class="stat__value">1541</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.faceit.cs2.matches }}
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Adr</p>
-                                    <p class="stat__value">77.7</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.faceit.cs2.adr }}
+                                    </p>
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Util dmg</p>
-                                    <p class="stat__value">6.00</p>
+                                    <p class="stat__value">
+                                        {{ user_stats.faceit.cs2.utility_damage
+                                        }}
+                                    </p>
                                 </div>
                             </div>
                             <div class="stat__wrapper">
                                 <div class="stat">
                                     <p class="stat__name">Last match</p>
                                     <time class="stat__value"
-                                        >Jul 25, 2025</time
+                                        >{{ user_stats.faceit.cs2.last_game |
+                                        formatisodate }}</time
                                     >
                                 </div>
                                 <div class="stat">
                                     <p class="stat__name">Recent</p>
                                     <div class="stat__recent-games">
-                                        <span class="stat__recent-games--win"
-                                            >W</span
+                                        {% for r in user_stats.faceit.cs2.recent
+                                        %}
+                                        <span
+                                            class="stat__recent-games--{{ 'win' if r == 'W' else 'loss' }}"
+                                            >{{ r }}</span
                                         >
-                                        <span class="stat__recent-games--win"
-                                            >W</span
-                                        >
-                                        <span class="stat__recent-games--loss"
-                                            >L</span
-                                        >
-                                        <span class="stat__recent-games--win"
-                                            >W</span
-                                        >
-                                        <span class="stat__recent-games--loss"
-                                            >L</span
-                                        >
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>
