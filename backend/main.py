@@ -148,6 +148,7 @@ class Scraper:
             "recentGameStats": {}
         }
 
+
         # Get FACEIT CS:GO statistics
         url = f"https://open.faceit.com/data/v4/players?game=csgo&game_player_id={self.steam_id}"
         response_csgo = r.get(url, headers=headers)
@@ -189,8 +190,8 @@ class Scraper:
                 "nickname": response_cs2["nickname"],
                 "playerID": response_cs2["player_id"],
                 "hs_percentage": lifetime["Average Headshots %"],
-                "clutch_1v1": lifetime["1v1 Win Rate"],
-                "clutch_1v2": lifetime["1v2 Win Rate"],
+                "clutch_1v1": round(int(lifetime["1v1 Win Rate"]) * 100),
+                "clutch_1v2": round(int(lifetime["1v2 Win Rate"]) * 100),
                 "winrate": lifetime["Win Rate %"],
                 "kd": lifetime["Average K/D Ratio"],
                 "matches": lifetime["Matches"],
