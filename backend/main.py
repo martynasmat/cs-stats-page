@@ -133,7 +133,7 @@ class Scraper:
             }
 
         general_json = response_general.json()["response"]
-
+        print(general_json)
         return {
             "general": general_json["players"][0],
         }
@@ -171,7 +171,6 @@ class Scraper:
         response_cs2 = r.get(url, headers=headers)
         url = f"https://open.faceit.com/data/v4/players/{player_uuid}/stats/cs2"
         response_lifetime = r.get(url, headers=headers)
-        print(response_cs2.json())
         if response_cs2.status_code != 200 or response_lifetime.status_code != 200:
             stats["cs2"] = {"error": "FACEIT_CS2_NOT_FOUND"}
         else:
@@ -235,12 +234,10 @@ class Scraper:
 
         response_json = response.json()
         response_not_public_json = response_not_public.json()
-
         max_rating = max(game["skillLevel"]
                                         for game in response_not_public_json["games"] if game["skillLevel"] is not None
                          and game['dataSource'] == 'matchmaking')
         banned_mates = list(filter(lambda x: x["isBanned"], response_not_public_json["teammates"]))
-
         return {
             "aim": round(response_json["rating"]["aim"], 2),
             "preaim": round(response_json["stats"]["preaim"]),
@@ -258,6 +255,8 @@ class Scraper:
             "utility": round(response_json["rating"]["utility"], 2),
             "clutch": round(response_json["rating"]["clutch"] * 100, 2),
             "max_rating": max_rating,
+            "nickname": response_json["name"],
+            "leetify_url": f"https://leetify.com/app/profile/{self.steam_id}",
         }
 
     def get_stats(self) -> dict:
