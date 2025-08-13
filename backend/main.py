@@ -31,13 +31,13 @@ ERRORS = {
 
 
 CS2_RATINGS = {
-    0: "tier-1",
-    5000: "tier-2",
-    10000: "tier-3",
-    15000: "tier-4",
-    20000: "tier-5",
-    25000: "tier-6",
-    30000: "tier-7",
+    0: "tier1",
+    5000: "tier2",
+    10000: "tier3",
+    15000: "tier4",
+    20000: "tier5",
+    25000: "tier6",
+    30000: "tier7",
 }
 
 def get_cs2_rating_tier(rating: int) -> str:
@@ -208,6 +208,8 @@ class Scraper:
                 return {"error": "FACEIT_RECENT_NOT_FOUND"}
             else:
                 response_recent_json = response_recent.json()
+                file = open("./tmp/r.json", "w")
+                file.write(json.dumps(response_cs2))
                 stats["recentGameStats"] = get_average_stats(response_recent_json["items"], response_recent_json["end"])
                 stats["cs2"]["last_game"] = response_recent_json["items"][0]["stats"]["Created At"]
 
@@ -265,6 +267,7 @@ class Scraper:
             "max_rating": max_rating,
             "nickname": response_json["name"],
             "leetify_url": f"https://leetify.com/app/profile/{self.steam_id}",
+            "rating_tier": get_cs2_rating_tier(max_rating)
         }
 
     def get_stats(self) -> dict:
@@ -300,9 +303,7 @@ class Scraper:
 
 @app.route("/", methods=["GET"])
 def home() -> str:
-    file = open("tmp/stats.json", "r")
-    user_stats = json.loads(file.read())
-    return render_template("stats_design.html", user_stats=user_stats)
+    return render_template("index.html")
 
 @app.route("/profiles/<steam_id>/", methods=["GET"])
 def get_profile(steam_id: str) -> str:

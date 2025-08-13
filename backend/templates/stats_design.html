@@ -1,464 +1,420 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-            rel="stylesheet"
-        />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='reset.css') }}"
-        />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='style.css') }}"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>CS stats</title>
-    </head>
-    <body>
-        <main class="content">
-            <div class="content__wrapper">
-                <div class="content__steam">
-                    <div class="logo__wrapper">
-                        <img
-                            class="image__logo"
-                            src="{{ url_for('static', filename='images/steam_logo.webp') }}"
-                            alt="Steam logo"
-                        />
-                    </div>
-                    <div class="content__wrapper__inside">
-                        <div class="user__wrapper">
-                            <img
-                                class="user__avatar"
-                                src="{{ user_stats.steam.general.avatarfull }}"
-                                alt="Steam profile avatar"
-                            />
-                            <a
-                                class="user__link"
-                                href="{{ user_stats.steam.general.profileurl }}"
-                            >
-                                {{ user_stats.steam.general.personaname }}
-                            </a>
-                        </div>
-                        <div class="user__stats">
-                            <div class="stat">
-                                <p class="stat__name">Registered</p>
-                                <time class="stat__value">
-                                    {{ user_stats.steam.general.timecreated |
-                                    datetimeformat }}
-                                </time>
-                            </div>
-                            <div class="stat">
-                                <p class="stat__name">Commendations</p>
-                                <div class="stat__wrapper">
-                                    <div>69</div>
-                                    <div>420</div>
-                                    <div>50</div>
-                                </div>
-                            </div>
-                            <div class="stat__wrapper--even">
-                                <div class="stat stat--center">
-                                    <p class="stat__name">Friends</p>
-                                    <p class="stat__value">0</p>
-                                </div>
-                                <div class="stat stat--center">
-                                    <p class="stat__name">Country</p>
-                                    <img
-                                        class="stat__country"
-                                        src="https://flagcdn.com/{{ user_stats.faceit.cs2.country }}.svg"
-                                        alt="Country"
-                                    />
-                                </div>
-                                <div class="stat stat--center">
-                                    <p class="stat__name">Xp level</p>
-                                    <p class="stat__value">45</p>
-                                </div>
-                            </div>
-                        </div>
+{% extends 'base.html' %} {% block content %}
+<div class="content__wrapper">
+    <div class="content__steam">
+        <div class="logo__wrapper">
+            <img
+                class="image__logo"
+                src="{{ url_for('static', filename='images/steam_logo.webp') }}"
+                alt="Steam logo"
+            />
+        </div>
+        <div class="content__wrapper__inside">
+            <div class="user__wrapper">
+                <img
+                    class="user__avatar"
+                    src="{{ user_stats.steam.general.avatarfull }}"
+                    alt="Steam profile avatar"
+                />
+                <a
+                    class="user__link"
+                    href="{{ user_stats.steam.general.profileurl }}"
+                >
+                    {{ user_stats.steam.general.personaname }}
+                </a>
+            </div>
+            <div class="user__stats">
+                <div class="stat">
+                    <p class="stat__name">Registered</p>
+                    <time class="stat__value">
+                        {{ user_stats.steam.general.timecreated | datetimeformat
+                        }}
+                    </time>
+                </div>
+                <div class="stat">
+                    <p class="stat__name">Commendations</p>
+                    <div class="stat__wrapper">
+                        <div>69</div>
+                        <div>420</div>
+                        <div>50</div>
                     </div>
                 </div>
-                <div class="content__faceit">
-                    <div class="logo__wrapper">
+                <div class="stat__wrapper--even">
+                    <div class="stat stat--center">
+                        <p class="stat__name">Friends</p>
+                        <p class="stat__value">0</p>
+                    </div>
+                    <div class="stat stat--center">
+                        <p class="stat__name">Country</p>
                         <img
-                            class="image__logo"
-                            src="{{ url_for('static', filename='images/faceit_logo.webp') }}"
-                            alt="Steam logo"
+                            class="stat__country"
+                            src="https://flagcdn.com/{{ user_stats.faceit.cs2.country }}.svg"
+                            alt="Country"
                         />
                     </div>
-                    <div class="content__wrapper__inside">
-                        <div class="user__wrapper">
-                            <img
-                                class="user__avatar"
-                                src="{{ user_stats.faceit.cs2.avatar }}"
-                                alt="Faceit profile avatar"
-                            />
-                            <div class="header__faceit">
-                                <a
-                                    class="user__link"
-                                    href="{{ user_stats.faceit.cs2.profileURL }}"
-                                >
-                                    {{ user_stats.faceit.cs2.nickname }}
-                                </a>
-                                <img
-                                    class="stat__fc-level"
-                                    src="{{
+                    <div class="stat stat--center">
+                        <p class="stat__name">Xp level</p>
+                        <p class="stat__value">45</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content__faceit">
+        <div class="logo__wrapper">
+            <img
+                class="image__logo"
+                src="{{ url_for('static', filename='images/faceit_logo.webp') }}"
+                alt="Steam logo"
+            />
+        </div>
+        <div class="content__wrapper__inside">
+            <div class="user__wrapper">
+                <img
+                    class="user__avatar"
+                    src="{{ user_stats.faceit.cs2.avatar }}"
+                    alt="Faceit profile avatar"
+                />
+                <div class="header__faceit">
+                    <a
+                        class="user__link"
+                        href="{{ user_stats.faceit.cs2.profileURL }}"
+                    >
+                        {{ user_stats.faceit.cs2.nickname }}
+                    </a>
+                    <img
+                        class="stat__fc-level"
+                        src="{{
                                     url_for('static', filename='images/faceit/' ~
                                     user_stats.faceit.cs2.statsCS2.skill_level ~ '.png')
                                 }}"
-                                    alt="Faceit Level"
-                                />
-                            </div>
+                        alt="Faceit Level"
+                    />
+                </div>
+            </div>
+            <div class="user__stats">
+                <div class="stat__wrapper">
+                    <div class="stat">
+                        <p class="stat__name">Registered</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.cs2.createdAt | formatisodate
+                            }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Country</p>
+                        <img
+                            class="stat__country"
+                            src="https://flagcdn.com/{{ user_stats.faceit.cs2.country }}.svg"
+                            alt="Country"
+                        />
+                    </div>
+                </div>
+                <div class="stat__grid">
+                    <div class="stat">
+                        <div class="stat__elo">
+                            <p class="stat__name">Elo</p>
                         </div>
-                        <div class="user__stats">
-                            <div class="stat__wrapper">
-                                <div class="stat">
-                                    <p class="stat__name">Registered</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.faceit.cs2.createdAt |
-                                        formatisodate }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Country</p>
-                                    <img
-                                        class="stat__country"
-                                        src="https://flagcdn.com/{{ user_stats.faceit.cs2.country }}.svg"
-                                        alt="Country"
-                                    />
-                                </div>
-                            </div>
-                            <div class="stat__grid">
-                                <div class="stat">
-                                    <div class="stat__elo">
-                                        <p class="stat__name">Elo</p>
-                                    </div>
-                                    <p class="stat__value">
-                                        {{
-                                        user_stats.faceit.cs2.statsCS2.faceit_elo
-                                        }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Hs%</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.faceit.cs2.hs_percentage
-                                        }}%
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Clutch 1v1</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.faceit.cs2.clutch_1v1 }}%
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Winrate</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.faceit.cs2.winrate }}%
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Kd</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.faceit.cs2.kd }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Clutch 1v2</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.faceit.cs2.clutch_1v2 }}%
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Matches</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.faceit.cs2.matches }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Adr</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.faceit.cs2.adr }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Util dmg</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.faceit.cs2.utility_damage
-                                        }}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="stat__wrapper">
-                                <div class="stat">
-                                    <p class="stat__name">Last match</p>
-                                    <time class="stat__value"
-                                        >{{ user_stats.faceit.cs2.last_game |
-                                        formatisodate }}</time
-                                    >
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Recent</p>
-                                    <div class="stat__recent-games">
-                                        {% for r in user_stats.faceit.cs2.recent
-                                        %}
-                                        <span
-                                            class="stat__recent-games--{{ 'win' if r == 'W' else 'loss' }}"
-                                            >{{ r }}</span
-                                        >
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="divider"></div>
-                            <div class="faceit__wrapper__recent">
-                                <p class="stat__name">LAST 50 GAMES</p>
-                                <div class="stat__wrapper__recent">
-                                    <div class="stat">
-                                        <p class="stat__name">ADR</p>
-                                        <p class="stat__value">
-                                            {{
-                                            user_stats.faceit.recentGameStats.adr
-                                            }}
-                                        </p>
-                                    </div>
-                                    <div class="stat">
-                                        <p class="stat__name">Kills</p>
-                                        <p class="stat__value">
-                                            {{
-                                            user_stats.faceit.recentGameStats.kills
-                                            }}
-                                        </p>
-                                    </div>
-                                    <div class="stat">
-                                        <p class="stat__name">Deaths</p>
-                                        <p class="stat__value">
-                                            {{
-                                            user_stats.faceit.recentGameStats.deaths
-                                            }}
-                                        </p>
-                                    </div>
-                                    <div class="stat">
-                                        <p class="stat__name">Assists</p>
-                                        <p class="stat__value">
-                                            {{
-                                            user_stats.faceit.recentGameStats.assists
-                                            }}
-                                        </p>
-                                    </div>
-                                    <div class="stat">
-                                        <p class="stat__name">K/D</p>
-                                        <p class="stat__value">
-                                            {{
-                                            user_stats.faceit.recentGameStats.kd_ratio
-                                            }}
-                                        </p>
-                                    </div>
-                                    <div class="stat">
-                                        <p class="stat__name">Win %</p>
-                                        <p class="stat__value">
-                                            {{
-                                            user_stats.faceit.recentGameStats.win_percentage
-                                            }}%
-                                        </p>
-                                    </div>
-                                    <div class="stat stat__rounds-won">
-                                        <p class="stat__name">RNDS won</p>
-                                        <p class="stat__value">
-                                            {{
-                                            user_stats.faceit.recentGameStats.rounds_won
-                                            }}
-                                        </p>
-                                    </div>
-                                    <div class="stat stat__best-map">
-                                        <p class="stat__name">best map</p>
-                                        <div
-                                            class="stat__value__wrapper stat__map"
-                                        >
-                                            <img
-                                                class="map"
-                                                src="{{ url_for('static', filename='images/maps/' ~ user_stats.faceit.recentGameStats.best_map ~ '.webp') }}"
-                                            />
-                                            <p class="stat__value">
-                                                {{
-                                                user_stats.faceit.recentGameStats.best_map_winrate
-                                                }}%
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="stat stat__worst-map">
-                                        <p class="stat__name">worst map</p>
-                                        <div
-                                            class="stat__value__wrapper stat__map"
-                                        >
-                                            <img
-                                                class="map"
-                                                src="{{ url_for('static', filename='images/maps/' ~ user_stats.faceit.recentGameStats.worst_map ~ '.webp') }}"
-                                            />
-                                            <p class="stat__value">
-                                                {{
-                                                user_stats.faceit.recentGameStats.worst_map_winrate
-                                                }}%
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.cs2.statsCS2.faceit_elo }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Hs%</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.cs2.hs_percentage }}%
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Clutch 1v1</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.cs2.clutch_1v1 }}%
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Winrate</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.cs2.winrate }}%
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Kd</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.cs2.kd }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Clutch 1v2</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.cs2.clutch_1v2 }}%
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Matches</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.cs2.matches }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Adr</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.cs2.adr }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Util dmg</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.cs2.utility_damage }}
+                        </p>
+                    </div>
+                </div>
+                <div class="stat__wrapper">
+                    <div class="stat">
+                        <p class="stat__name">Last match</p>
+                        <time class="stat__value"
+                            >{{ user_stats.faceit.cs2.last_game | formatisodate
+                            }}</time
+                        >
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Recent</p>
+                        <div class="stat__recent-games">
+                            {% for r in user_stats.faceit.cs2.recent %}
+                            <span
+                                class="stat__recent-games--{{ 'win' if r == 'W' else 'loss' }}"
+                                >{{ r }}</span
+                            >
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-                <div class="content__leetify">
-                    <div class="logo__wrapper">
-                        <img
-                            class="image__logo"
-                            src="{{ url_for('static', filename='images/leetify_logo.webp') }}"
-                            alt="Leetify logo"
-                        />
-                    </div>
-                    <div class="content__wrapper__inside">
-                        <div class="user__wrapper">
-                            <img
-                                class="user__avatar"
-                                src="{{ user_stats.steam.general.avatarfull }}"
-                                alt="Faceit profile avatar"
-                            />
-                            <a
-                                class="user__link"
-                                href="{{ user_stats.leetify.leetify_url }}"
-                            >
-                                {{ user_stats.leetify.nickname }}
-                            </a>
+                <div class="divider"></div>
+                <div class="faceit__wrapper__recent">
+                    <p class="stat__name">LAST 50 GAMES</p>
+                    <div class="stat__wrapper__recent">
+                        <div class="stat">
+                            <p class="stat__name">ADR</p>
+                            <p class="stat__value">
+                                {{ user_stats.faceit.recentGameStats.adr }}
+                            </p>
                         </div>
-                        <div class="user__stats">
-                            <div class="stat__grid">
-                                <div class="stat">
-                                    <p class="stat__name">Max rating</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.leetify.max_rating }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Matches</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.leetify.matches }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Banned mates</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.leetify.banned_mates }}%
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Aim</p>
-                                    {% set aim = user_stats.leetify.aim %}
-                                    <p
-                                        class="{{ 'positive' if aim >= 75 }} {{ 'negative' if aim <= 50 }} stat__value"
-                                    >
-                                        {{ aim }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">utility</p>
-                                    {% set utility = user_stats.leetify.utility
-                                    %}
-                                    <p
-                                        class="{{ 'positive' if utility >= 75 }} {{ 'negative' if utility <= 50 }} stat__value"
-                                    >
-                                        {{ user_stats.leetify.utility }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Positioning</p>
-                                    {% set position =
-                                    user_stats.leetify.position %}
-                                    <p
-                                        class="{{ 'positive' if position >= 75 }} {{ 'negative' if position <= 50 }} stat__value"
-                                    >
-                                        {{ position }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Rating</p>
-                                    {% set rating = user_stats.leetify.rating %}
-                                    <p
-                                        class="{{ 'positive' if rating >= 0 else 'negative' }} stat__value"
-                                    >
-                                        {{ '+' if rating >= 0 else '' }}{{
-                                        user_stats.leetify.rating }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Opening</p>
-                                    {% set opening = user_stats.leetify.opening
-                                    %}
-                                    <p
-                                        class="{{ 'positive' if opening >= 0 else 'negative' }} stat__value"
-                                    >
-                                        {{ '+' if opening >= 0 else '' }}{{
-                                        user_stats.leetify.opening }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Clutch</p>
-                                    {% set clutch = user_stats.leetify.clutch %}
-                                    <p
-                                        class="{{ 'positive' if clutch >= 0 else negative }} stat__value"
-                                    >
-                                        {{ '+' if clutch >= 0 else '' }}{{
-                                        clutch }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">K/D</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.leetify.kd }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Reaction</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.leetify.reaction_time }}
-                                        <span>ms</span>
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Preaim</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.leetify.preaim }}°
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">Party</p>
-                                    {% set party = user_stats.leetify.party %}
-                                    <p
-                                        class="{{ 'positive' if party >= 0 else 'negative' }} stat__value"
-                                    >
-                                        {{ '+' if party >= 0 else '' }}{{ party
-                                        }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">he dmg</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.leetify.avg_he }}
-                                    </p>
-                                </div>
-                                <div class="stat">
-                                    <p class="stat__name">WIN %</p>
-                                    <p class="stat__value">
-                                        {{ user_stats.leetify.winrate }}%
-                                    </p>
-                                </div>
+                        <div class="stat">
+                            <p class="stat__name">Kills</p>
+                            <p class="stat__value">
+                                {{ user_stats.faceit.recentGameStats.kills }}
+                            </p>
+                        </div>
+                        <div class="stat">
+                            <p class="stat__name">Deaths</p>
+                            <p class="stat__value">
+                                {{ user_stats.faceit.recentGameStats.deaths }}
+                            </p>
+                        </div>
+                        <div class="stat">
+                            <p class="stat__name">Assists</p>
+                            <p class="stat__value">
+                                {{ user_stats.faceit.recentGameStats.assists }}
+                            </p>
+                        </div>
+                        <div class="stat">
+                            <p class="stat__name">K/D</p>
+                            <p class="stat__value">
+                                {{ user_stats.faceit.recentGameStats.kd_ratio }}
+                            </p>
+                        </div>
+                        <div class="stat">
+                            <p class="stat__name">Win %</p>
+                            <p class="stat__value">
+                                {{
+                                user_stats.faceit.recentGameStats.win_percentage
+                                }}%
+                            </p>
+                        </div>
+                        <div class="stat stat__rounds-won">
+                            <p class="stat__name">RNDS won</p>
+                            <p class="stat__value">
+                                {{ user_stats.faceit.recentGameStats.rounds_won
+                                }}
+                            </p>
+                        </div>
+                        <div class="stat stat__best-map">
+                            <p class="stat__name">best map</p>
+                            <div class="stat__value__wrapper stat__map">
+                                <img
+                                    class="map"
+                                    src="{{ url_for('static', filename='images/maps/' ~ user_stats.faceit.recentGameStats.best_map ~ '.webp') }}"
+                                />
+                                <p class="stat__value">
+                                    {{
+                                    user_stats.faceit.recentGameStats.best_map_winrate
+                                    }}%
+                                </p>
+                            </div>
+                        </div>
+                        <div class="stat stat__worst-map">
+                            <p class="stat__name">worst map</p>
+                            <div class="stat__value__wrapper stat__map">
+                                <img
+                                    class="map"
+                                    src="{{ url_for('static', filename='images/maps/' ~ user_stats.faceit.recentGameStats.worst_map ~ '.webp') }}"
+                                />
+                                <p class="stat__value">
+                                    {{
+                                    user_stats.faceit.recentGameStats.worst_map_winrate
+                                    }}%
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-    </body>
-</html>
+        </div>
+    </div>
+    <div class="content__leetify">
+        <div class="logo__wrapper">
+            <img
+                class="image__logo"
+                src="{{ url_for('static', filename='images/leetify_logo.webp') }}"
+                alt="Leetify logo"
+            />
+        </div>
+        <div class="content__wrapper__inside">
+            <div class="user__wrapper">
+                <img
+                    class="user__avatar"
+                    src="{{ user_stats.steam.general.avatarfull }}"
+                    alt="Faceit profile avatar"
+                />
+                <a
+                    class="user__link"
+                    href="{{ user_stats.leetify.leetify_url }}"
+                >
+                    {{ user_stats.leetify.nickname }}
+                </a>
+            </div>
+            <div class="user__stats">
+                <div class="stat__grid">
+                    <div class="stat">
+                        <p class="stat__name">Max rating</p>
+                        <div class="rating__wrapper">
+                            <img
+                                src="{{ url_for('static', filename='images/premiere-backgrounds/' ~ user_stats.leetify.rating_tier ~ '.webp') }}"
+                            />
+                            <p
+                                class="stat__value {{ user_stats.leetify.rating_tier }}"
+                            >
+                                {{ user_stats.leetify.max_rating }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Matches</p>
+                        <p class="stat__value">
+                            {{ user_stats.leetify.matches }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Banned mates</p>
+                        <p class="stat__value">
+                            {{ user_stats.leetify.banned_mates }}%
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Aim</p>
+                        {% set aim = user_stats.leetify.aim %}
+                        <p
+                            class="{{ 'positive' if aim >= 75 }} {{ 'negative' if aim <= 50 }} stat__value"
+                        >
+                            {{ aim }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">utility</p>
+                        {% set utility = user_stats.leetify.utility %}
+                        <p
+                            class="{{ 'positive' if utility >= 75 }} {{ 'negative' if utility <= 50 }} stat__value"
+                        >
+                            {{ user_stats.leetify.utility }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Positioning</p>
+                        {% set position = user_stats.leetify.position %}
+                        <p
+                            class="{{ 'positive' if position >= 75 }} {{ 'negative' if position <= 50 }} stat__value"
+                        >
+                            {{ position }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Rating</p>
+                        {% set rating = user_stats.leetify.rating %}
+                        <p
+                            class="{{ 'positive' if rating >= 0 else 'negative' }} stat__value"
+                        >
+                            {{ '+' if rating >= 0 else '' }}{{
+                            user_stats.leetify.rating }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Opening</p>
+                        {% set opening = user_stats.leetify.opening %}
+                        <p
+                            class="{{ 'positive' if opening >= 0 else 'negative' }} stat__value"
+                        >
+                            {{ '+' if opening >= 0 else '' }}{{
+                            user_stats.leetify.opening }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Clutch</p>
+                        {% set clutch = user_stats.leetify.clutch %}
+                        <p
+                            class="{{ 'positive' if clutch >= 0 else negative }} stat__value"
+                        >
+                            {{ '+' if clutch >= 0 else '' }}{{ clutch }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">K/D</p>
+                        <p class="stat__value">{{ user_stats.leetify.kd }}</p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Reaction</p>
+                        <p class="stat__value">
+                            {{ user_stats.leetify.reaction_time }}
+                            <span>ms</span>
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Preaim</p>
+                        <p class="stat__value">
+                            {{ user_stats.leetify.preaim }}°
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Party</p>
+                        {% set party = user_stats.leetify.party %}
+                        <p
+                            class="{{ 'positive' if party >= 0 else 'negative' }} stat__value"
+                        >
+                            {{ '+' if party >= 0 else '' }}{{ party }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">he dmg</p>
+                        <p class="stat__value">
+                            {{ user_stats.leetify.avg_he }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">WIN %</p>
+                        <p class="stat__value">
+                            {{ user_stats.leetify.winrate }}%
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
