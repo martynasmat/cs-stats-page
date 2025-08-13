@@ -242,9 +242,9 @@ class Scraper:
         max_rating = max(game["skillLevel"]
                                         for game in response_not_public_json["games"] if game["skillLevel"] is not None
                          and game['dataSource'] == 'matchmaking')
-        print(response_not_public_json["teammates"])
         if response_not_public_json["teammates"] is not False:
             banned_mates = list(filter(lambda x: x["isBanned"], response_not_public_json["teammates"]))
+
         return {
             "aim": round(response_json["rating"]["aim"], 2),
             "preaim": round(response_json["stats"]["preaim"]),
