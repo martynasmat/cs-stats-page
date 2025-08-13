@@ -133,7 +133,6 @@ class Scraper:
             }
 
         general_json = response_general.json()["response"]
-        logger.error(general_json["players"][0])
 
         return {
             "general": general_json["players"][0],
@@ -172,7 +171,7 @@ class Scraper:
         response_cs2 = r.get(url, headers=headers)
         url = f"https://open.faceit.com/data/v4/players/{player_uuid}/stats/cs2"
         response_lifetime = r.get(url, headers=headers)
-
+        print(response_cs2.json())
         if response_cs2.status_code != 200 or response_lifetime.status_code != 200:
             stats["cs2"] = {"error": "FACEIT_CS2_NOT_FOUND"}
         else:
@@ -181,6 +180,7 @@ class Scraper:
 
             stats["cs2"] = {
                 "createdAt": response_cs2["activated_at"],
+                "profileURL": str(response_cs2["faceit_url"]).replace('{lang}', 'en'),
                 "avatar": response_cs2["avatar"],
                 "country": response_cs2["country"],
                 "language": response_cs2["settings"]["language"],
@@ -262,8 +262,6 @@ class Scraper:
 
     def get_stats(self) -> dict:
         """Returns a formatted dictionary with player statistics to be presented to the end user."""
-        logger.error(self.steam_api_key)
-        logger.error(self.faceit_api_key)
         if self.is_vanity_name:
             self.steam_id = self.resolve_steam_id(self.steam_id)
             if not self.steam_id:
@@ -314,7 +312,6 @@ def get_id(vanity_name: str) -> str:
 def redeploy() -> tuple[str, int]:
     header_signature = request.headers.get('X-Hub-Signature-256')
     payload = request.data
-    logger.error(request.data)
     if not verify_signature(payload, header_signature):
         abort(403, "Signature verification failed")
 
