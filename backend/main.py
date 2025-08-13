@@ -147,7 +147,6 @@ class Scraper:
             "recentGameStats": {}
         }
 
-
         # Get FACEIT CS:GO statistics
         url = f"https://open.faceit.com/data/v4/players?game=csgo&game_player_id={self.steam_id}"
         response_csgo = r.get(url, headers=headers)
@@ -211,9 +210,15 @@ class Scraper:
                 response_recent_json = response_recent.json()
                 stats["recentGameStats"] = get_average_stats(response_recent_json["items"], response_recent_json["end"])
                 stats["cs2"]["last_game"] = response_recent_json["items"][0]["stats"]["Created At"]
+
+            # Get FACEIT bans
+            faceit_bans = r.get(f"https://open.faceit.com/data/v4/players/{player_uuid}/bans", headers=headers).json()
+            if faceit_bans["items"]:
+                stats["cs2"]["bans"] = faceit_bans["items"]
         else:
             return {"error": "FACEIT_NOT_FOUND"}
 
+        print(stats)
         return stats
 
     def get_esportal_stats(user_id: str) -> dict:
@@ -237,7 +242,9 @@ class Scraper:
         max_rating = max(game["skillLevel"]
                                         for game in response_not_public_json["games"] if game["skillLevel"] is not None
                          and game['dataSource'] == 'matchmaking')
-        banned_mates = list(filter(lambda x: x["isBanned"], response_not_public_json["teammates"]))
+        print(response_not_public_json["teammates"])
+        if response_not_public_json["teammates"] is not False:
+            banned_mates = list(filter(lambda x: x["isBanned"], response_not_public_json["teammates"]))
         return {
             "aim": round(response_json["rating"]["aim"], 2),
             "preaim": round(response_json["stats"]["preaim"]),
@@ -247,7 +254,8 @@ class Scraper:
             "avg_he": round(response_json["stats"]["he_foes_damage_avg"], 2),
             "rating": round(response_json["ranks"]["leetify"], 2),
             "position": round(response_json["rating"]["positioning"], 2),
-            "banned_mates": round(len(banned_mates) / len(response_not_public_json["teammates"]) * 100, 2),
+            "banned_mates": round(len(banned_mates) / len(response_not_public_json["teammates"]) * 100, 2)
+                if response_not_public_json["teammates"] is not False else 'NaN',
             "party": round(response_not_public_json["club"]["ratings"]["leetifyRating"], 2)
                 if response_not_public_json["club"] is not None else 0,
             "reaction_time": round(response_json["stats"]["reaction_time_ms"]),
