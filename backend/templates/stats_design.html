@@ -313,12 +313,16 @@
                         <p class="stat__name">Max rating</p>
                         <div class="rating__wrapper">
                             <img
-                                src="{{ url_for('static', filename='images/premiere-backgrounds/' ~ user_stats.leetify.rating_tier ~ '.webp') }}"
-                            />
+                                src="{{
+                                        url_for('static', filename='images/csgo-ranks/skillgroup' ~ user_stats.leetify.max_rating ~ '.png')
+                                        if user_stats.leetify.max_rating <= 18 else
+                                        url_for('static', filename='images/premiere-backgrounds/' ~ user_stats.leetify.rating_tier ~ '.webp')
+                                        }}"
+                             alt="Counter strike rating"/>
                             <p
                                 class="stat__value {{ user_stats.leetify.rating_tier }}"
                             >
-                                {{ user_stats.leetify.max_rating }}
+                                {{ user_stats.leetify.max_rating if user_stats.leetify.max_rating > 18 }}
                             </p>
                         </div>
                     </div>
