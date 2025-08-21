@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 <div class="content__wrapper">
+    {% if 'error' not in user_stats.steam %}
     <div class="content__steam">
         <div class="logo__wrapper">
             <img
@@ -21,6 +22,9 @@
                 >
                     {{ user_stats.steam.general.personaname }}
                 </a>
+                <div class="steam_level__wrapper {{ 'tier-' ~ (user_stats.steam.general.steam_level % 100 // 10 + 1) }} {{ 'shape-' ~ (user_stats.steam.general.steam_level // 100 + 1) }}">
+                    <p>{{ user_stats.steam.general.steam_level }}</p>
+                </div>
             </div>
             <div class="user__stats">
                 <div class="stat">
@@ -59,6 +63,21 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="content__steam">
+        <div class="logo__wrapper">
+            <img
+                class="image__logo"
+                src="{{ url_for('static', filename='images/steam_logo.webp') }}"
+                alt="Steam logo"
+            />
+        </div>
+        <div class="not_found__wrapper">
+            <p class="not_found_heading">Not found</p>
+            <img class="not_found_icon" src="{{ url_for('static', filename='images/profile-not-found.svg') }}" alt="Profile not found">
+        </div>
+    </div>
+    {% endif %}
     {% if 'error' not in user_stats.faceit %}
     <div class="content__faceit">
         <div class="logo__wrapper">
@@ -285,6 +304,7 @@
         </div>
     </div>
     {% endif %}
+    {% if 'error' not in user_stats.leetify %}
     <div class="content__leetify">
         <div class="logo__wrapper">
             <img
@@ -415,9 +435,9 @@
                         <p class="stat__name">Party</p>
                         {% set party = user_stats.leetify.party %}
                         <p
-                            class="{{ 'positive' if party >= 0 else 'negative' }} stat__value"
+                            class="{{ 'positive' if party > 0 else 'negative' }} stat__value"
                         >
-                            {{ '+' if party >= 0 else '' }}{{ party }}
+                            {{ '+' if party > 0 else '' }}{{ party }}
                         </p>
                     </div>
                     <div class="stat">
@@ -436,5 +456,20 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="content__leetify">
+        <div class="logo__wrapper">
+            <img
+                class="image__logo"
+                src="{{ url_for('static', filename='images/leetify_logo.webp') }}"
+                alt="Leetify logo"
+            />
+        </div>
+        <div class="not_found__wrapper">
+            <p class="not_found_heading">Not found</p>
+            <img class="not_found_icon" src="{{ url_for('static', filename='images/profile-not-found.svg') }}" alt="Profile not found">
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

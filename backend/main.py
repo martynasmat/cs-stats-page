@@ -127,14 +127,19 @@ class Scraper:
         url = (f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key="
                f"{self.steam_api_key}&steamids={self.steam_id}")
         response_general = r.get(url)
+
         if response_general.status_code != 200:
             return {
                 "error": ERRORS["steam"]["not_found"]
             }
 
-        general_json = response_general.json()["response"]
+        url = f"https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key={self.steam_api_key}&steamid={self.steam_id}"
+        response_xp = r.get(url)
+
+        general_json = response_general.json()["response"]["players"][0]
+        general_json["steam_level"] = response_xp.json()["response"]["player_level"] if response_xp.status_code == 200 else "error"
         return {
-            "general": general_json["players"][0],
+            "general": general_json
         }
 
     def get_faceit_stats(self) -> dict:
@@ -145,34 +150,20 @@ class Scraper:
             "cs2": {},
             "recentGameStats": {}
         }
-
-        # Get FACEIT CS:GO statistics
-        url = f"https://open.faceit.com/data/v4/players?game=csgo&game_player_id={self.steam_id}"
-        response_csgo = r.get(url, headers=headers)
-        if response_csgo.status_code != 200:
-            return {
-                "error": ERRORS["faceit"]["not_found"]
-            }
-        else:
-            response_csgo = response_csgo.json()
-            stats["csgo"] = {
-                "createdAt": response_csgo["activated_at"],
-                "avatar": response_csgo["avatar"],
-                "country": response_csgo["country"],
-                "statsCSGO": response_csgo["games"]["csgo"],
-                "memberships": response_csgo["memberships"],
-            }
-            player_uuid = response_csgo["player_id"]
+        player_uuid = None
 
         # Get FACEIT CS2 statistics
         url = f"https://open.faceit.com/data/v4/players?game=cs2&game_player_id={self.steam_id}"
         response_cs2 = r.get(url, headers=headers)
-        url = f"https://open.faceit.com/data/v4/players/{player_uuid}/stats/cs2"
-        response_lifetime = r.get(url, headers=headers)
-        if response_cs2.status_code != 200 or response_lifetime.status_code != 200:
+
+        if response_cs2.status_code != 200:
             stats["cs2"] = {"error": "FACEIT_CS2_NOT_FOUND"}
         else:
             response_cs2 = response_cs2.json()
+            player_uuid = response_cs2["player_id"]
+            url = f"https://open.faceit.com/data/v4/players/{player_uuid}/stats/cs2"
+            response_lifetime = r.get(url, headers=headers)
+
             lifetime = response_lifetime.json()["lifetime"]
 
             stats["cs2"] = {
@@ -187,24 +178,42 @@ class Scraper:
                 "nickname": response_cs2["nickname"],
                 "playerID": response_cs2["player_id"],
                 "hs_percentage": lifetime["Average Headshots %"],
-                "clutch_1v1": round(float(lifetime["1v1 Win Rate"]) * 100),
-                "clutch_1v2": round(float(lifetime["1v2 Win Rate"]) * 100),
+                "clutch_1v1": round(
+                    float(lifetime["1v1 Win Rate"]) * 100) if "1v1 Win Rate" in lifetime is not None else "NaN",
+                "clutch_1v2": round(
+                    float(lifetime["1v2 Win Rate"]) * 100) if "1v2 Win Rate" in lifetime is not None else "NaN",
                 "winrate": lifetime["Win Rate %"],
                 "kd": lifetime["Average K/D Ratio"],
                 "matches": lifetime["Matches"],
-                "adr": lifetime["ADR"],
-                "utility_damage": lifetime["Utility Damage per Round"],
+                "adr": lifetime["ADR"] if "ADR" in lifetime is not None else "NaN",
+                "utility_damage": lifetime[
+                    "Utility Damage per Round"] if "Utility Damage per Round" in lifetime is not None else "NaN",
                 "recent": list(map(lambda x: "W" if x == "1" else "L", lifetime["Recent Results"]))
             }
-            player_uuid = response_cs2["player_id"]
 
+        # Get FACEIT CS:GO statistics
+        url = f"https://open.faceit.com/data/v4/players?game=csgo&game_player_id={self.steam_id}"
+        response_csgo = r.get(url, headers=headers)
+        if response_csgo.status_code != 200:
+            stats["csgo"] = {
+                "error": ERRORS["faceit"]["not_found"]
+            }
+        else:
+            response_csgo = response_csgo.json()
+            stats["csgo"] = {
+                "createdAt": response_csgo["activated_at"],
+                "avatar": response_csgo["avatar"],
+                "country": response_csgo["country"],
+                "statsCSGO": response_csgo["games"]["csgo"],
+                "memberships": response_csgo["memberships"],
+            }
 
         if player_uuid is not None:
             # Get FACEIT statistics for the last 50 games
             url = f"https://open.faceit.com/data/v4/players/{player_uuid}/games/cs2/stats?limit=50"
             response_recent = r.get(url, headers=headers)
             if response_recent.status_code != 200 or response_recent.json()["items"] == []:
-                return {"error": "FACEIT_RECENT_NOT_FOUND"}
+                stats["recentGameStats"] = {"error": ERRORS["faceit"]["no_recent_games"]}
             else:
                 response_recent_json = response_recent.json()
                 print(response_recent_json)
@@ -215,10 +224,7 @@ class Scraper:
             faceit_bans = r.get(f"https://open.faceit.com/data/v4/players/{player_uuid}/bans", headers=headers).json()
             if faceit_bans["items"]:
                 stats["cs2"]["bans"] = faceit_bans["items"]
-        else:
-            return {"error": "FACEIT_NOT_FOUND"}
 
-        print(stats)
         return stats
 
     def get_esportal_stats(user_id: str) -> dict:
