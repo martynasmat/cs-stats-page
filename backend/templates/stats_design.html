@@ -47,7 +47,7 @@
                         <p class="stat__name">Country</p>
                         <img
                             class="stat__country"
-                            src="https://flagcdn.com/{{ user_stats.faceit.cs2.country }}.svg"
+                            src="https://flagcdn.com/{{ user_stats.steam.general.loccountrycode|lower if 'loccountrycode' in user_stats.steam.general else 'un'}}.svg"
                             alt="Country"
                         />
                     </div>
@@ -59,6 +59,7 @@
             </div>
         </div>
     </div>
+    {% if 'error' not in user_stats.faceit %}
     <div class="content__faceit">
         <div class="logo__wrapper">
             <img
@@ -256,7 +257,7 @@
                                 <img
                                     class="map"
                                     src="{{ url_for('static', filename='images/maps/' ~ user_stats.faceit.recentGameStats.worst_map ~ '.webp') }}"
-                                />
+                                    alt="CS2 map picture"/>
                                 <p class="stat__value">
                                     {{
                                     user_stats.faceit.recentGameStats.worst_map_winrate
@@ -269,6 +270,21 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="content__faceit">
+        <div class="logo__wrapper">
+            <img
+                class="image__logo"
+                src="{{ url_for('static', filename='images/faceit_logo.webp') }}"
+                alt="Faceit logo"
+            />
+        </div>
+        <div class="not_found__wrapper">
+            <p class="not_found_heading">Not found</p>
+            <img class="not_found_icon" src="{{ url_for('static', filename='images/profile-not-found.svg') }}" alt="Profile not found">
+        </div>
+    </div>
+    {% endif %}
     <div class="content__leetify">
         <div class="logo__wrapper">
             <img

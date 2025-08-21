@@ -133,7 +133,6 @@ class Scraper:
             }
 
         general_json = response_general.json()["response"]
-        print(general_json)
         return {
             "general": general_json["players"][0],
         }
@@ -208,8 +207,6 @@ class Scraper:
                 return {"error": "FACEIT_RECENT_NOT_FOUND"}
             else:
                 response_recent_json = response_recent.json()
-                file = open("./tmp/r.json", "w")
-                file.write(json.dumps(response_cs2))
                 stats["recentGameStats"] = get_average_stats(response_recent_json["items"], response_recent_json["end"])
                 stats["cs2"]["last_game"] = response_recent_json["items"][0]["stats"]["Created At"]
 

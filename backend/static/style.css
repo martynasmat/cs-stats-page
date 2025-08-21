@@ -131,6 +131,27 @@ body {
 
 /*  */
 
+.not_found__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    gap: 40px;
+    filter: invert(24%) sepia(83%) saturate(0%) hue-rotate(207deg) brightness(89%) contrast(87%);
+}
+
+.not_found_heading {
+    font-size: 2rem;
+    color: #4a4a4a;
+    text-decoration: none;
+}
+
+.not_found_icon {
+    width: 30%;
+    height: auto;
+}
+
 .user__wrapper {
     display: flex;
     align-items: center;

@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c44d002-69f7-424f-9c8f-b5290e92c14b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/static/images/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/templates/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/templates/index.html" afterDir="false" />
+    <list default="true" id="7c44d002-69f7-424f-9c8f-b5290e92c14b" name="Changes" comment="meldziuosi">
+      <change afterPath="$PROJECT_DIR$/backend/static/images/profile-not-found.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/backend/static/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/templates/stats.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/templates/stats_design.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/templates/stats_design.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,8 +44,8 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging main",
-    "last_opened_file_path": "C:/Users/marty/Desktop/cs-stats-page",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/marty/Desktop/cs-stats-page/backend/static/images",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -59,6 +56,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\marty\Desktop\cs-stats-page\backend\static\images" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\marty\Desktop\cs-stats-page\backend\static\images\maps" />
     </key>
@@ -103,10 +103,25 @@
       <workItem from="1754356530794" duration="1397000" />
       <workItem from="1754414864834" duration="4376000" />
       <workItem from="1754528258102" duration="1925000" />
+      <workItem from="1755106393912" duration="1007000" />
+      <workItem from="1755119318190" duration="19000" />
+      <workItem from="1755791007671" duration="2256000" />
     </task>
+    <task id="LOCAL−00001" summary="meldziuosi">
+      <option name="closed" value="true" />
+      <created>1755107189693</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1755107189693</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="meldziuosi" />
+    <option name="LAST_COMMIT_MESSAGE" value="meldziuosi" />
   </component>
 </project>
