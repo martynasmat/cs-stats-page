@@ -203,10 +203,11 @@ class Scraper:
             # Get FACEIT statistics for the last 50 games
             url = f"https://open.faceit.com/data/v4/players/{player_uuid}/games/cs2/stats?limit=50"
             response_recent = r.get(url, headers=headers)
-            if response_recent.status_code != 200:
+            if response_recent.status_code != 200 or response_recent.json()["items"] == []:
                 return {"error": "FACEIT_RECENT_NOT_FOUND"}
             else:
                 response_recent_json = response_recent.json()
+                print(response_recent_json)
                 stats["recentGameStats"] = get_average_stats(response_recent_json["items"], response_recent_json["end"])
                 stats["cs2"]["last_game"] = response_recent_json["items"][0]["stats"]["Created At"]
 
