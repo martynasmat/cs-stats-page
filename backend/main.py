@@ -22,7 +22,15 @@ ERRORS = {
     },
     "faceit": {
         "not_found": "FACEIT_NOT_FOUND",
-        "no_recent_games": "FACEIT_RECENT_NOT_FOUND"
+        "no_recent_games": "FACEIT_RECENT_NOT_FOUND",
+        "no_csgo": "FACEIT_CSGO_NOT_FOUND",
+        "no_cs2": "FACEIT_CS2_NOT_FOUND",
+        "csgo": {
+            "no_lifetime": "FACEIT_CSGO_LIFETIME_NOT_FOUND",
+        },
+        "cs2": {
+            "no_lifetime": "FACEIT_CS2_LIFETIME_NOT_FOUND",
+        },
     },
     "leetify": {
         "not_found": "LEETIFY_NOT_FOUND"
@@ -225,6 +233,8 @@ class Scraper:
             "recentGameStats": {}
         }
         player_uuid = None
+        has_cs2 = False
+        has_csgo = False
 
         # Get FACEIT CS2 statistics
         url = f"https://open.faceit.com/data/v4/players?game=cs2&game_player_id={self.steam_id}"
@@ -233,12 +243,29 @@ class Scraper:
         if response_cs2.status_code != 200:
             stats["cs2"] = {"error": "FACEIT_CS2_NOT_FOUND"}
         else:
+            has_cs2 = True
             response_cs2 = response_cs2.json()
             player_uuid = response_cs2["player_id"]
             url = f"https://open.faceit.com/data/v4/players/{player_uuid}/stats/cs2"
             response_lifetime = r.get(url, headers=headers)
-
-            lifetime = response_lifetime.json()["lifetime"]
+            if response_lifetime.status_code == 200:
+                lifetime = response_lifetime.json()["lifetime"]
+                lifetime_dict = {
+                    "hs_percentage": lifetime["Average Headshots %"],
+                    "clutch_1v1": round(
+                        float(lifetime["1v1 Win Rate"]) * 100) if "1v1 Win Rate" in lifetime is not None else "NaN",
+                    "clutch_1v2": round(
+                        float(lifetime["1v2 Win Rate"]) * 100) if "1v2 Win Rate" in lifetime is not None else "NaN",
+                    "winrate": lifetime["Win Rate %"],
+                    "kd": lifetime["Average K/D Ratio"],
+                    "matches": lifetime["Matches"],
+                    "adr": lifetime["ADR"] if "ADR" in lifetime is not None else "NaN",
+                    "utility_damage": lifetime[
+                        "Utility Damage per Round"] if "Utility Damage per Round" in lifetime is not None else "NaN",
+                    "recent": list(map(lambda x: "W" if x == "1" else "L", lifetime["Recent Results"]))
+                }
+            else:
+                lifetime_dict = {"error": ERRORS["faceit"]["cs2"]["no_lifetime"]}
 
             stats["cs2"] = {
                 "createdAt": response_cs2["activated_at"],
@@ -251,18 +278,7 @@ class Scraper:
                 "memberships": response_cs2["memberships"],
                 "nickname": response_cs2["nickname"],
                 "playerID": response_cs2["player_id"],
-                "hs_percentage": lifetime["Average Headshots %"],
-                "clutch_1v1": round(
-                    float(lifetime["1v1 Win Rate"]) * 100) if "1v1 Win Rate" in lifetime is not None else "NaN",
-                "clutch_1v2": round(
-                    float(lifetime["1v2 Win Rate"]) * 100) if "1v2 Win Rate" in lifetime is not None else "NaN",
-                "winrate": lifetime["Win Rate %"],
-                "kd": lifetime["Average K/D Ratio"],
-                "matches": lifetime["Matches"],
-                "adr": lifetime["ADR"] if "ADR" in lifetime is not None else "NaN",
-                "utility_damage": lifetime[
-                    "Utility Damage per Round"] if "Utility Damage per Round" in lifetime is not None else "NaN",
-                "recent": list(map(lambda x: "W" if x == "1" else "L", lifetime["Recent Results"]))
+                "lifetime": lifetime_dict,
             }
 
         # Get FACEIT CS:GO statistics
@@ -273,16 +289,39 @@ class Scraper:
                 "error": ERRORS["faceit"]["not_found"]
             }
         else:
+            has_csgo = True
             response_csgo = response_csgo.json()
+            url = f"https://open.faceit.com/data/v4/players/{player_uuid}/stats/csgo"
+            response_lifetime = r.get(url, headers=headers)
+            if response_lifetime.status_code == 200:
+                lifetime = response_lifetime.json()["lifetime"]
+                lifetime_dict = {
+                    "hs_percentage": lifetime["Average Headshots %"],
+                    "winrate": lifetime["Win Rate %"],
+                    "kd": lifetime["Average K/D Ratio"],
+                    "matches": lifetime["Matches"],
+                    "recent": list(map(lambda x: "W" if x == "1" else "L", lifetime["Recent Results"]))
+                }
+            else:
+                lifetime_dict = {"error": ERRORS["faceit"]["cs2"]["no_lifetime"]}
+
             stats["csgo"] = {
                 "createdAt": response_csgo["activated_at"],
+                "nickname": response_csgo["nickname"],
+                "profileURL": str(response_csgo["faceit_url"]).replace('{lang}', 'en'),
                 "avatar": response_csgo["avatar"],
                 "country": response_csgo["country"],
                 "statsCSGO": response_csgo["games"]["csgo"],
                 "memberships": response_csgo["memberships"],
+                "lifetime": lifetime_dict,
             }
 
-        if player_uuid is not None:
+        if not has_cs2 and not has_csgo:
+            return {
+                "error": ERRORS["faceit"]["not_found"]
+            }
+
+        if has_cs2 and player_uuid is not None:
             # Get FACEIT statistics for the last 50 games
             url = f"https://open.faceit.com/data/v4/players/{player_uuid}/games/cs2/stats?limit=50"
             response_recent = r.get(url, headers=headers)
@@ -290,7 +329,6 @@ class Scraper:
                 stats["recentGameStats"] = {"error": ERRORS["faceit"]["no_recent_games"]}
             else:
                 response_recent_json = response_recent.json()
-                print(response_recent_json)
                 stats["recentGameStats"] = get_average_stats(response_recent_json["items"], response_recent_json["end"])
                 stats["cs2"]["last_game"] = response_recent_json["items"][0]["stats"]["Created At"]
 
@@ -299,6 +337,7 @@ class Scraper:
             if faceit_bans["items"]:
                 stats["cs2"]["bans"] = faceit_bans["items"]
 
+        print(json.dumps(stats, indent=4))
         return stats
 
     def get_esportal_stats(user_id: str) -> dict:

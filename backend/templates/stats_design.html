@@ -10,25 +10,25 @@
             />
         </div>
         <div class="content__wrapper__inside">
-            <div class="user__wrapper">
-                <img
-                    class="user__avatar"
-                    src="{{ user_stats.steam.general.avatarfull }}"
-                    alt="Steam profile avatar"
-                />
-                <a
+            <a
                     class="user__link"
                     href="{{ user_stats.steam.general.profileurl }}"
                 >
-                    {{ user_stats.steam.general.personaname }}
-                </a>
-                <div
-                    style="background-image: url('{{ user_stats.steam.general.steam_level_bg }}');"
-                    class="steam_level__wrapper {{ 'tier-' ~ (user_stats.steam.general.steam_level % 100 // 10 + 1) }} {{ 'shape-' ~ (user_stats.steam.general.steam_level // 100 + 1) }}"
-                >
-                    <p>{{ user_stats.steam.general.steam_level }}</p>
+                <div class="user__wrapper steam">
+                    <img
+                        class="user__avatar"
+                        src="{{ user_stats.steam.general.avatarfull }}"
+                        alt="Steam profile avatar"
+                    />
+                    <p class="user__name">{{ user_stats.steam.general.personaname }}</p>
+                    <div
+                        style="background-image: url('{{ user_stats.steam.general.steam_level_bg }}');"
+                        class="steam_level__wrapper {{ 'tier-' ~ (user_stats.steam.general.steam_level % 100 // 10 + 1) }} {{ 'shape-' ~ (user_stats.steam.general.steam_level // 100 + 1) }}"
+                    >
+                        <p>{{ user_stats.steam.general.steam_level }}</p>
+                    </div>
                 </div>
-            </div>
+            </a>
             <div class="user__stats">
                 <div class="stat">
                     <p class="stat__name">Registered</p>
@@ -94,30 +94,39 @@
             />
         </div>
         <div class="content__wrapper__inside">
-            <div class="user__wrapper">
-                <img
-                    class="user__avatar"
-                    src="{{ user_stats.faceit.cs2.avatar }}"
-                    alt="Faceit profile avatar"
-                />
-                <div class="header__faceit">
-                    <a
-                        class="user__link"
-                        href="{{ user_stats.faceit.cs2.profileURL }}"
-                    >
-                        {{ user_stats.faceit.cs2.nickname }}
-                    </a>
-                    <img
-                        class="stat__fc-level"
-                        src="{{
-                                    url_for('static', filename='images/faceit/' ~
-                                    user_stats.faceit.cs2.statsCS2.skill_level ~ '.png')
-                                }}"
-                        alt="Faceit Level"
-                    />
+            <a
+                class="user__link"
+                href="{{ user_stats.faceit.cs2.profileURL if 'error' not in user_stats.faceit.cs2
+                        else user_}}"
+                >
+                <div class="user__wrapper faceit">
+                        <img
+                            class="user__avatar"
+                            src="{{ user_stats.faceit.cs2.avatar if 'error' not in user_stats.faceit.cs2
+                                    else user_stats.faceit.csgo.avatar}}"
+                            alt="Faceit profile avatar"
+                        />
+                        <div class="header__faceit">
+                        <p class="user__name">{{ user_stats.faceit.cs2.nickname if 'error' not in user_stats.faceit.cs2
+                        else user_stats.faceit.csgo.nickname }}</p>
+                        </div>
                 </div>
+            </a>
+            <div class="tab">
+                <button
+                        class="tablinks
+                            {{ 'hidden ' if 'error' in user_stats.faceit.cs2 }}
+                            {{ 'active' if 'error' not in user_stats.faceit.cs2 }}"
+                        onclick="openTab(event, 'CS2')">CS2</button>
+                <button class="tablinks
+                            {{ 'hidden' if 'error' in user_stats.faceit.csgo }}
+                            {{ 'active' if 'error' in user_stats.faceit.cs2 }}"
+                        onclick="openTab(event, 'CSGO')">CSGO</button>
+
+                <span class="tab__indicator" aria-hidden="true"></span>
             </div>
-            <div class="user__stats">
+            {% if 'error' not in user_stats.faceit.cs2 %}
+            <div class="user__stats tabcontent default" id="CS2">
                 <div class="stat__wrapper">
                     <div class="stat">
                         <p class="stat__name">Registered</p>
@@ -136,60 +145,68 @@
                     </div>
                 </div>
                 <div class="stat__grid">
-                    <div class="stat">
+                    <div class="elo__wrapper">
                         <div class="stat__elo">
                             <p class="stat__name">Elo</p>
                         </div>
                         <p class="stat__value">
                             {{ user_stats.faceit.cs2.statsCS2.faceit_elo }}
                         </p>
+                        <img
+                            class="stat__fc-level"
+                            src="{{
+                                        url_for('static', filename='images/faceit/' ~
+                                        user_stats.faceit.cs2.statsCS2.skill_level ~ '.png')
+                                    }}"
+                            alt="Faceit Level"
+                        />
                     </div>
                     <div class="stat">
                         <p class="stat__name">Hs%</p>
                         <p class="stat__value">
-                            {{ user_stats.faceit.cs2.hs_percentage }}%
+                            {{ user_stats.faceit.cs2.lifetime.hs_percentage }}%
                         </p>
                     </div>
                     <div class="stat">
                         <p class="stat__name">Clutch 1v1</p>
                         <p class="stat__value">
-                            {{ user_stats.faceit.cs2.clutch_1v1 }}%
+                            {{ user_stats.faceit.cs2.lifetime.clutch_1v1 }}%
                         </p>
                     </div>
                     <div class="stat">
                         <p class="stat__name">Winrate</p>
                         <p class="stat__value">
-                            {{ user_stats.faceit.cs2.winrate }}%
+                            {{ user_stats.faceit.cs2.lifetime.winrate }}%
                         </p>
                     </div>
                     <div class="stat">
                         <p class="stat__name">Kd</p>
                         <p class="stat__value">
-                            {{ user_stats.faceit.cs2.kd }}
+                            {{ user_stats.faceit.cs2.lifetime.kd }}
                         </p>
                     </div>
                     <div class="stat">
                         <p class="stat__name">Clutch 1v2</p>
                         <p class="stat__value">
-                            {{ user_stats.faceit.cs2.clutch_1v2 }}%
+                            {{ user_stats.faceit.cs2.lifetime.clutch_1v2 }}%
                         </p>
                     </div>
                     <div class="stat">
                         <p class="stat__name">Matches</p>
                         <p class="stat__value">
-                            {{ user_stats.faceit.cs2.matches }}
+                            {{ user_stats.faceit.cs2.lifetime.matches }}
                         </p>
                     </div>
                     <div class="stat">
                         <p class="stat__name">Adr</p>
                         <p class="stat__value">
-                            {{ user_stats.faceit.cs2.adr }}
+                            {{ user_stats.faceit.cs2.lifetime.adr }}
                         </p>
                     </div>
                     <div class="stat">
                         <p class="stat__name">Util dmg</p>
                         <p class="stat__value">
-                            {{ user_stats.faceit.cs2.utility_damage }}
+                            {{ user_stats.faceit.cs2.lifetime.utility_damage }}
                         </p>
                     </div>
                 </div>
@@ -204,7 +221,7 @@
                     <div class="stat">
                         <p class="stat__name">Recent</p>
                         <div class="stat__recent-games">
-                            {% for r in user_stats.faceit.cs2.recent %}
+                            {% for r in user_stats.faceit.cs2.lifetime.recent %}
                             <span
                                 class="stat__recent-games--{{ 'win' if r == 'W' else 'loss' }}"
                                 >{{ r }}</span
@@ -294,6 +311,81 @@
                     </div>
                 </div>
             </div>
+            {% endif %} {% if 'error' not in user_stats.faceit.csgo %}
+            <div class="user__stats tabcontent" id="CSGO" style="{{ 'display: none' if 'error' not in user_stats.faceit.cs2 }}">
+                <div class="stat__wrapper">
+                    <div class="stat">
+                        <p class="stat__name">Registered</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.csgo.createdAt | formatisodate }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">Country</p>
+                        <img
+                            class="stat__country"
+                            src="https://flagcdn.com/{{ user_stats.faceit.csgo.country }}.svg"
+                            alt="Country"
+                        />
+                    </div>
+                </div>
+                <div class="stat__grid">
+                    <div class="stat">
+                        <div class="elo__wrapper">
+                            <p class="stat__name">ELO</p>
+                            <p class="stat__value">
+                                {{ user_stats.faceit.csgo.statsCSGO.faceit_elo }}
+                            </p>
+                            <img
+                                class="stat__fc-level"
+                                src="{{
+                                            url_for('static', filename='images/faceit/' ~
+                                            user_stats.faceit.csgo.statsCSGO.skill_level ~ '.png')
+                                        }}"
+                                alt="Faceit Level"
+                            />
+                        </div>
+                    </div>
+                    {% if 'error' not in user_stats.faceit.csgo.lifetime %}
+                    <div class="stat">
+                        <p class="stat__name">HS%</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.csgo.lifetime.hs_percentage }}%
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">WINRATE</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.csgo.lifetime.winrate }}%
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">KD</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.csgo.lifetime.kd }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">matches</p>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.csgo.lifetime.matches }}
+                        </p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">LAST GAMES</p>
+                        <div class="stat__recent-games">
+                            {% for r in user_stats.faceit.csgo.lifetime.recent %}
+                            <span
+                                class="stat__recent-games--{{ 'win' if r == 'W' else 'loss' }}"
+                                >{{ r }}</span
+                            >
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
     {% else %}
@@ -324,19 +416,19 @@
             />
         </div>
         <div class="content__wrapper__inside">
-            <div class="user__wrapper">
-                <img
-                    class="user__avatar"
-                    src="{{ user_stats.steam.general.avatarfull }}"
-                    alt="Faceit profile avatar"
-                />
-                <a
-                    class="user__link"
-                    href="{{ user_stats.leetify.leetify_url }}"
+            <a
+                class="user__link"
+                href="{{ user_stats.leetify.leetify_url }}"
                 >
-                    {{ user_stats.leetify.nickname }}
-                </a>
-            </div>
+                <div class="user__wrapper leetify">
+                    <img
+                        class="user__avatar"
+                        src="{{ user_stats.steam.general.avatarfull }}"
+                        alt="Faceit profile avatar"
+                    />
+                    <p class="user__name">{{ user_stats.leetify.nickname }}</p>
+                </div>
+            </a>
             <div class="user__stats">
                 <div class="stat__grid">
                     <div class="stat">
@@ -488,4 +580,7 @@
     </div>
     {% endif %}
 </div>
+<script>
+    moveTabIndicator(document.querySelector('.tablinks.active'));
+</script>
 {% endblock %}
