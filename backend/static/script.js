@@ -1,3 +1,9 @@
+const els = document.querySelectorAll(
+".content__wrapper > *"
+)
+const maxHeight = Math.max(...Array.from(els).map(e => e.clientHeight))
+els.forEach(e => e.style.height = maxHeight + "px")
+
 function openTab(evt, tabName) {
   // Declare all variables
   var i, tabcontent, tablinks;
@@ -59,9 +65,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('load', positionIndicator);   // optional, after assets/fonts
 window.addEventListener('resize', positionIndicator); // keep it aligned on resize
-
-const els = document.querySelectorAll(
-".content__wrapper > *"
-)
-const maxHeight = Math.max(...Array.from(els).map(e => e.clientHeight))
-els.forEach(e => e.style.height = maxHeight + "px")
