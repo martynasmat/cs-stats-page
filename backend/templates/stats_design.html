@@ -22,7 +22,10 @@
                 >
                     {{ user_stats.steam.general.personaname }}
                 </a>
-                <div class="steam_level__wrapper {{ 'tier-' ~ (user_stats.steam.general.steam_level % 100 // 10 + 1) }} {{ 'shape-' ~ (user_stats.steam.general.steam_level // 100 + 1) }}">
+                <div
+                    style="background-image: url('{{ user_stats.steam.general.steam_level_bg }}');"
+                    class="steam_level__wrapper {{ 'tier-' ~ (user_stats.steam.general.steam_level % 100 // 10 + 1) }} {{ 'shape-' ~ (user_stats.steam.general.steam_level // 100 + 1) }}"
+                >
                     <p>{{ user_stats.steam.general.steam_level }}</p>
                 </div>
             </div>
@@ -74,11 +77,14 @@
         </div>
         <div class="not_found__wrapper">
             <p class="not_found_heading">Not found</p>
-            <img class="not_found_icon" src="{{ url_for('static', filename='images/profile-not-found.svg') }}" alt="Profile not found">
+            <img
+                class="not_found_icon"
+                src="{{ url_for('static', filename='images/profile-not-found.svg') }}"
+                alt="Profile not found"
+            />
         </div>
     </div>
-    {% endif %}
-    {% if 'error' not in user_stats.faceit %}
+    {% endif %} {% if 'error' not in user_stats.faceit %}
     <div class="content__faceit">
         <div class="logo__wrapper">
             <img
@@ -276,7 +282,8 @@
                                 <img
                                     class="map"
                                     src="{{ url_for('static', filename='images/maps/' ~ user_stats.faceit.recentGameStats.worst_map ~ '.webp') }}"
-                                    alt="CS2 map picture"/>
+                                    alt="CS2 map picture"
+                                />
                                 <p class="stat__value">
                                     {{
                                     user_stats.faceit.recentGameStats.worst_map_winrate
@@ -300,11 +307,14 @@
         </div>
         <div class="not_found__wrapper">
             <p class="not_found_heading">Not found</p>
-            <img class="not_found_icon" src="{{ url_for('static', filename='images/profile-not-found.svg') }}" alt="Profile not found">
+            <img
+                class="not_found_icon"
+                src="{{ url_for('static', filename='images/profile-not-found.svg') }}"
+                alt="Profile not found"
+            />
         </div>
     </div>
-    {% endif %}
-    {% if 'error' not in user_stats.leetify %}
+    {% endif %} {% if 'error' not in user_stats.leetify %}
     <div class="content__leetify">
         <div class="logo__wrapper">
             <img
@@ -338,11 +348,13 @@
                                         if user_stats.leetify.max_rating <= 18 else
                                         url_for('static', filename='images/premiere-backgrounds/' ~ user_stats.leetify.rating_tier ~ '.webp')
                                         }}"
-                             alt="Counter strike rating"/>
+                                alt="Counter strike rating"
+                            />
                             <p
                                 class="stat__value {{ user_stats.leetify.rating_tier }}"
                             >
-                                {{ user_stats.leetify.max_rating if user_stats.leetify.max_rating > 18 }}
+                                {{ user_stats.leetify.max_rating if
+                                user_stats.leetify.max_rating > 18 }}
                             </p>
                         </div>
                     </div>
@@ -467,7 +479,11 @@
         </div>
         <div class="not_found__wrapper">
             <p class="not_found_heading">Not found</p>
-            <img class="not_found_icon" src="{{ url_for('static', filename='images/profile-not-found.svg') }}" alt="Profile not found">
+            <img
+                class="not_found_icon"
+                src="{{ url_for('static', filename='images/profile-not-found.svg') }}"
+                alt="Profile not found"
+            />
         </div>
     </div>
     {% endif %}

@@ -40,6 +40,71 @@ CS2_RATINGS = {
     30000: "tier7",
 }
 
+STEAM_TIERS = [
+    "circles",
+    "hexagons",
+    "shields",
+    "books",
+    "chevrons",
+    "circle2",
+    "angle",
+    "flag",
+    "wings",
+    "arrows",
+    "crystals",
+    "space",
+    "waterelement",
+    "fireelement",
+    "earthelement",
+    "airelement_1-2",
+    "airelement_3-4",
+    "airelement_5-6",
+    "airelement_7-8",
+    "airelement_9-10",
+    "geo_1-2",
+    "geo_3-4",
+    "geo_5-6",
+    "geo_7-8",
+    "geo_9-10",
+    "mandala_1-2",
+    "mandala_3-4",
+    "mandala_5-6",
+    "mandala_7-8",
+    "mandala_9-10",
+    "spiro_1-2",
+    "spiro_3-4",
+    "spiro_5-6",
+    "spiro_7-8",
+    "spiro_9-10",
+    "patterns_1-2",
+    "patterns_3-4",
+    "patterns_5-6",
+    "patterns_7-8",
+    "patterns_9-10",
+    "shapes_1",
+    "shapes_2",
+    "shapes_3",
+    "shapes_4",
+    "shapes_5",
+    "grunge_1",
+    "grunge_2",
+    "grunge_3",
+    "grunge_4",
+    "grunge_5",
+    "halftone_1",
+    "halftone_2",
+    "halftone_3",
+    "5300_dashes",
+    "5400_crosshatch",
+    "5500_spiral",
+    "5600_leaves",
+    "5700_mountain",
+    "5800_rain",
+    "5900_tornado",
+    "6000_snowflake",
+    "6100_crown",
+]
+
 def get_cs2_rating_tier(rating: int) -> str:
     tier = ""
 
@@ -50,6 +115,12 @@ def get_cs2_rating_tier(rating: int) -> str:
             break
 
     return tier
+
+def get_steam_level_shape_link(xp: int) -> str:
+    base_url = 'https://community.fastly.steamstatic.com/public/shared/images/community/levels_'
+    tier = min(xp // 100, len(STEAM_TIERS) - 1)
+
+    return f"{base_url}{STEAM_TIERS[tier]}.png"
 
 def get_average_stats(items, count):
     adr = 0
@@ -137,7 +208,10 @@ class Scraper:
         response_xp = r.get(url)
 
         general_json = response_general.json()["response"]["players"][0]
-        general_json["steam_level"] = response_xp.json()["response"]["player_level"] if response_xp.status_code == 200 else "error"
+        steam_level = response_xp.json()["response"]["player_level"] if response_xp.status_code == 200 else 0
+        general_json["steam_level"] = steam_level
+        general_json["steam_level_bg"] = get_steam_level_shape_link(steam_level) if steam_level > 99 else ""
+
         return {
             "general": general_json
         }
