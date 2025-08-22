@@ -500,6 +500,7 @@ body {
 }
 
 .stat__value {
+    font-size: var(--fs-base);
     align-self: flex-end;
 }
 
