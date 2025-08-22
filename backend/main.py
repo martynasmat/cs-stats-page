@@ -18,7 +18,9 @@ logger = logging.getLogger(__name__)
 
 ERRORS = {
     "steam": {
-        "not_found": "STEAM_NOT_FOUND"
+        "not_found": "STEAM_NOT_FOUND",
+        "playtime_not_found": "STEAM_PLAYTIME_NOT_FOUND",
+        "friends_not_found": "STEAM_FRIENDS_NOT_FOUND",
     },
     "faceit": {
         "not_found": "FACEIT_NOT_FOUND",
@@ -121,7 +123,6 @@ def get_steam_path(url: str) -> str:
     if host != "steamcommunity.com" and host != "www.steamcommunity.com":
         raise ValueError("Invalid host")
 
-    print(path)
     _, segment_1, segment_2 = path.split("/")
 
     if segment_1 != "id" and segment_1 != "profiles" or segment_2 == "":
@@ -219,6 +220,7 @@ class Scraper:
     def get_steam_stats(self) -> dict:
         """Gets player statistics from Steam API by Steam user ID. Returns a dictionary with player statistics."""
 
+        stats = dict()
         url = (f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key="
                f"{self.steam_api_key}&steamids={self.steam_id}")
         response_general = r.get(url)
@@ -228,17 +230,48 @@ class Scraper:
                 "error": ERRORS["steam"]["not_found"]
             }
 
-        url = f"https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key={self.steam_api_key}&steamid={self.steam_id}"
-        response_xp = r.get(url)
+        url = f"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={self.steam_api_key}&steamid={self.steam_id}"
+        response_playtime = r.get(url)
 
+        if response_playtime.status_code != 200 or response_playtime.json()["response"] == {}:
+            stats["playtime"] = {"error": ERRORS["steam"]["playtime_not_found"]}
+        else:
+            playtime_json = response_playtime.json()
+            games = playtime_json["response"]["games"]
+            cs = next((i for i in games if i.get("appid") == 730), None)
+            if cs is None:
+                stats["playtime"] = {"error": ERRORS["steam"]["playtime_not_found"]}
+            else:
+                stats["playtime"] = {
+                    "games_played": playtime_json["response"]["game_count"],
+                    "playtime_total": cs["playtime_forever"],
+                    "playtime_2weeks": cs["playtime_2weeks"],
+                }
+
+        url = f"https://api.steampowered.com/IPlayerService/GetBadges/v1/?key={self.steam_api_key}&steamid={self.steam_id}"
+        response_xp = r.get(url)
+        xp_json = response_xp.json()
         general_json = response_general.json()["response"]["players"][0]
-        steam_level = response_xp.json()["response"]["player_level"] if response_xp.status_code == 200 else 0
+        steam_level = xp_json["response"]["player_level"] if response_xp.status_code == 200 else 0
         general_json["steam_level"] = steam_level
         general_json["steam_level_bg"] = get_steam_level_shape_link(steam_level) if steam_level > 99 else ""
+        general_json["steam_xp"] = xp_json["response"]["player_xp"] if response_xp.status_code == 200 else 0
+        stats["general"] = general_json
 
-        return {
-            "general": general_json
-        }
+        url = f"https://api.steampowered.com/ISteamUser/GetFriendList/v1/?key={self.steam_api_key}&steamid={self.steam_id}"
+        friends_response = r.get(url)
+
+        if friends_response.status_code != 200:
+            stats["friends"] = {"error": ERRORS["steam"]["friends_not_found"]}
+        else:
+            friends_json = friends_response.json()
+            stats["friends"] = {"count": len(friends_json["friendslist"]["friends"])}
+
+        url = f"https://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key={self.steam_api_key}&steamids={self.steam_id}"
+        bans_response = r.get(url)
+        bans_json = bans_response.json()["players"][0]
+        stats["banned"] = any(((v not in ['none', 0, False]) for v in list(bans_json.values())[1:]))
+        return stats
 
     def get_faceit_stats(self) -> dict:
         """Gets player statistics from FACEIT API by Steam user ID. Returns a dictionary with player statistics."""
@@ -353,7 +386,12 @@ class Scraper:
             if faceit_bans["items"]:
                 stats["cs2"]["bans"] = faceit_bans["items"]
 
-        print(json.dumps(stats, indent=4))
+        # Get Faceit bans
+        url = f"https://open.faceit.com/data/v4/players/{player_uuid}/bans"
+        response_bans = r.get(url, headers=headers)
+        bans_json = response_bans.json()
+        stats["banned"] = bans_json["items"] != []
+
         return stats
 
     def get_esportal_stats(user_id: str) -> dict:

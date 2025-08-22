@@ -104,6 +104,25 @@ body {
     flex-direction: column;
 }
 
+.upper-section__wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: start;
+    border-radius: 15px 17px 0 0;
+}
+
+.upper-section__wrapper.banned {
+    background: linear-gradient(180deg,rgba(171, 0, 0, 1) 0%, rgba(255, 255, 255, 0) 90%);
+}
+
+.bans__wrapper {
+    width: 130px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+}
+
 .logo__wrapper {
     display: flex;
     justify-content: center;

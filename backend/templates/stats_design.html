@@ -2,17 +2,26 @@
 <div class="content__wrapper">
     {% if 'error' not in user_stats.steam %}
     <div class="content__steam">
-        <div class="logo__wrapper">
-            <img
-                class="image__logo"
-                src="{{ url_for('static', filename='images/steam_logo.webp') }}"
-                alt="Steam logo"
-            />
+        <div class="upper-section__wrapper {{ 'banned' if user_stats.steam.banned }}">
+            {% if user_stats.steam.banned %}
+                <div class="bans__wrapper">
+                    <div class="bans__wrapper__inside">
+                        <p>BANNED</p>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="logo__wrapper">
+                <img
+                    class="image__logo"
+                    src="{{ url_for('static', filename='images/steam_logo.webp') }}"
+                    alt="Steam logo"
+                />
+            </div>
         </div>
         <div class="content__wrapper__inside">
             <a
-                    class="user__link"
-                    href="{{ user_stats.steam.general.profileurl }}"
+                class="user__link"
+                href="{{ user_stats.steam.general.profileurl }}"
                 >
                 <div class="user__wrapper steam">
                     <img
@@ -30,27 +39,15 @@
                 </div>
             </a>
             <div class="user__stats">
-                <div class="stat">
-                    <p class="stat__name">Registered</p>
-                    <time class="stat__value">
-                        {{ user_stats.steam.general.timecreated | datetimeformat
-                        }}
-                    </time>
-                </div>
-                <div class="stat">
-                    <p class="stat__name">Commendations</p>
-                    <div class="stat__wrapper">
-                        <div>69</div>
-                        <div>420</div>
-                        <div>50</div>
+                <div class="stat__wrapper">
+                    <div class="stat">
+                        <p class="stat__name">Registered</p>
+                        <time class="stat__value">
+                            {{ user_stats.steam.general.timecreated | datetimeformat
+                            }}
+                        </time>
                     </div>
-                </div>
-                <div class="stat__wrapper--even">
-                    <div class="stat stat--center">
-                        <p class="stat__name">Friends</p>
-                        <p class="stat__value">0</p>
-                    </div>
-                    <div class="stat stat--center">
+                    <div class="stat">
                         <p class="stat__name">Country</p>
                         <img
                             class="stat__country"
@@ -58,10 +55,42 @@
                             alt="Country"
                         />
                     </div>
-                    <div class="stat stat--center">
-                        <p class="stat__name">Xp level</p>
-                        <p class="stat__value">45</p>
+                </div>
+                <div class="stat__grid">
+                    {% if 'error' not in user_stats.steam.friends %}
+                    <div class="stat">
+                        <p class="stat__name">friends</p>
+                        <div class="stat__wrapper">
+                            {{ user_stats.steam.friends.count }}
+                        </div>
                     </div>
+                    {% endif %}
+                    <div class="stat">
+                        <p class="stat__name">xp level</p>
+                        <div class="stat__wrapper">
+                            {{ user_stats.steam.general.steam_xp }}
+                        </div>
+                    </div>
+                    {% if 'error' not in user_stats.steam.playtime %}
+                    <div class="stat">
+                        <p class="stat__name">games</p>
+                        <div class="stat__wrapper">
+                            {{ user_stats.steam.playtime.games_played }}
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">cs played</p>
+                        <div class="stat__wrapper">
+                            {{ (user_stats.steam.playtime.playtime_total / 60) | round(method='ceil')| int }} hrs
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <p class="stat__name">2 weeks</p>
+                        <div class="stat__wrapper">
+                            {{ (user_stats.steam.playtime.playtime_2weeks / 60) | round(method='ceil') | int }} hrs
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -85,14 +114,23 @@
         </div>
     </div>
     {% endif %} {% if 'error' not in user_stats.faceit %}
-    <div class="content__faceit">
-        <div class="logo__wrapper">
-            <img
-                class="image__logo"
-                src="{{ url_for('static', filename='images/faceit_logo.webp') }}"
-                alt="Steam logo"
-            />
-        </div>
+        <div class="content__faceit">
+            <div class="upper-section__wrapper {{ 'banned' if user_stats.faceit.banned }}">
+            {% if user_stats.faceit.banned %}
+                <div class="bans__wrapper">
+                    <div class="bans__wrapper__inside">
+                        <p>BANNED</p>
+                    </div>
+                </div>
+            {% endif %}
+                <div class="logo__wrapper">
+                    <img
+                        class="image__logo"
+                        src="{{ url_for('static', filename='images/faceit_logo.webp') }}"
+                        alt="Faceit logo"
+                    />
+                </div>
+            </div>
         <div class="content__wrapper__inside">
             <a
                 class="user__link"
@@ -285,7 +323,7 @@
                                 <img
                                     class="map"
                                     src="{{ url_for('static', filename='images/maps/' ~ user_stats.faceit.recentGameStats.best_map ~ '.webp') }}"
-                                />
+                                 alt="CS2 map banner"/>
                                 <p class="stat__value">
                                     {{
                                     user_stats.faceit.recentGameStats.best_map_winrate
