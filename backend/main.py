@@ -1,12 +1,12 @@
-import json
 import os
 import logging
 import concurrent.futures
-import time
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template, request, abort, redirect
 from dotenv import load_dotenv
 import requests as r
+import json
 from filters import init_filters
+from urllib.parse import urlsplit
 import hmac
 import hashlib
 import subprocess
@@ -112,6 +112,22 @@ STEAM_TIERS = [
     "6000_snowflake",
     "6100_crown",
 ]
+
+def get_steam_path(url: str) -> str:
+    split = urlsplit(url)
+    host = split.hostname
+    path = split.path
+
+    if host != "steamcommunity.com" and host != "www.steamcommunity.com":
+        raise ValueError("Invalid host")
+
+    print(path)
+    _, segment_1, segment_2 = path.split("/")
+
+    if segment_1 != "id" and segment_1 != "profiles" or segment_2 == "":
+        raise ValueError("Invalid segment")
+
+    return f"/{segment_1}/{segment_2}/"
 
 def get_cs2_rating_tier(rating: int) -> str:
     tier = ""
@@ -407,11 +423,6 @@ class Scraper:
             steam_future = executor.submit(self.get_steam_stats)
             leetify_future = executor.submit(self.get_leetify_stats)
             faceit_future = executor.submit(self.get_faceit_stats)
-            # print({
-            #     "steam": steam_future.result(),
-            #     "leetify": leetify_future.result(),
-            #     "faceit": faceit_future.result()
-            # })
             return {
                 "steam": steam_future.result(),
                 "leetify": leetify_future.result(),
@@ -430,8 +441,20 @@ def get_profile(steam_id: str) -> str:
 @app.route("/id/<vanity_name>/", methods=["GET"])
 def get_id(vanity_name: str) -> str:
     user_stats = Scraper(vanity_name, True).get_stats()
-    get_cs2_rating_tier(18450)
     return render_template("stats_design.html", user_stats=user_stats)
+
+@app.route("/check-link/", methods=["POST"])
+def check_link():
+    link = request.form.get("profile-input")
+
+    try:
+        if link is None:
+            return redirect("/")
+
+        path = get_steam_path(link)
+        return redirect(path)
+    except:
+        return redirect("/")
 
 @app.route("/redeploy/", methods=["POST"])
 def redeploy() -> tuple[str, int]:
