@@ -2,13 +2,38 @@
 <div class="content__wrapper">
     {% if 'error' not in user_stats.steam %}
     <div class="content__steam">
-        <div class="upper-section__wrapper {{ 'banned' if user_stats.steam.banned }}">
+        <div
+            class="upper-section__wrapper {{ 'banned' if user_stats.steam.banned }}"
+        >
             {% if user_stats.steam.banned %}
-                <div class="bans__wrapper">
-                    <div class="bans__wrapper__inside">
-                        <p>BANNED</p>
-                    </div>
-                </div>
+            <div class="bans__wrapper">
+                <p>BANNED</p>
+                <svg
+                    class="ban-hammer"
+                    fill="#000000"
+                    version="1.1"
+                    id="Capa_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    width="800px"
+                    height="800px"
+                    viewBox="0 0 97.691 97.691"
+                    xml:space="preserve"
+                >
+                    <g>
+                        <path
+                            d="M97.082,84.759L69.068,56.747c-0.812-0.812-2.127-0.811-2.938,0l-0.757,0.755l-13.18-13.18l8.899-8.898l1.612,1.61
+		c0.812,0.813,2.127,0.813,2.938,0l8.357-8.356c0.811-0.812,0.811-2.126,0-2.938L48.871,0.609c-0.812-0.812-2.126-0.812-2.938,0
+		l-8.358,8.357c-0.39,0.389-0.609,0.917-0.609,1.469c0,0.55,0.219,1.079,0.609,1.469l1.612,1.611L13.515,39.191l-1.611-1.613
+		c-0.39-0.39-0.918-0.608-1.469-0.608l0,0c-0.551,0-1.08,0.219-1.469,0.608l-8.358,8.359C0.219,46.327,0,46.854,0,47.406
+		c0,0.55,0.219,1.08,0.608,1.469l25.13,25.13c0.812,0.812,2.127,0.812,2.938,0l8.358-8.359c0.39-0.39,0.609-0.917,0.609-1.469
+		c0-0.55-0.219-1.079-0.609-1.469l-1.612-1.611l8.9-8.899l13.179,13.18l-0.756,0.753c-0.39,0.39-0.608,0.919-0.608,1.469
+		c0,0.553,0.219,1.079,0.608,1.47L84.76,97.083c0.39,0.39,0.918,0.607,1.469,0.607s1.078-0.219,1.469-0.607l9.385-9.386
+		C97.895,86.885,97.895,85.572,97.082,84.759z"
+                        />
+                    </g>
+                </svg>
+            </div>
             {% endif %}
             <div class="logo__wrapper">
                 <img
@@ -22,14 +47,16 @@
             <a
                 class="user__link"
                 href="{{ user_stats.steam.general.profileurl }}"
-                >
+            >
                 <div class="user__wrapper steam">
                     <img
                         class="user__avatar"
                         src="{{ user_stats.steam.general.avatarfull }}"
                         alt="Steam profile avatar"
                     />
-                    <p class="user__name">{{ user_stats.steam.general.personaname }}</p>
+                    <p class="user__name">
+                        {{ user_stats.steam.general.personaname }}
+                    </p>
                     <div
                         style="background-image: url('{{ user_stats.steam.general.steam_level_bg }}');"
                         class="steam_level__wrapper {{ 'tier-' ~ (user_stats.steam.general.steam_level % 100 // 10 + 1) }} {{ 'shape-' ~ (user_stats.steam.general.steam_level // 100 + 1) }}"
@@ -43,8 +70,8 @@
                     <div class="stat">
                         <p class="stat__name">Registered</p>
                         <time class="stat__value">
-                            {{ user_stats.steam.general.timecreated | datetimeformat
-                            }}
+                            {{ user_stats.steam.general.timecreated |
+                            datetimeformat }}
                         </time>
                     </div>
                     <div class="stat">
@@ -81,13 +108,15 @@
                     <div class="stat">
                         <p class="stat__name">cs played</p>
                         <div class="stat__wrapper">
-                            {{ (user_stats.steam.playtime.playtime_total / 60) | round(method='ceil')| int }} hrs
+                            {{ (user_stats.steam.playtime.playtime_total / 60) |
+                            round(method='ceil')| int }} hrs
                         </div>
                     </div>
                     <div class="stat">
                         <p class="stat__name">2 weeks</p>
                         <div class="stat__wrapper">
-                            {{ (user_stats.steam.playtime.playtime_2weeks / 60) | round(method='ceil') | int }} hrs
+                            {{ (user_stats.steam.playtime.playtime_2weeks / 60)
+                            | round(method='ceil') | int }} hrs
                         </div>
                     </div>
                     {% endif %}
@@ -114,52 +143,87 @@
         </div>
     </div>
     {% endif %} {% if 'error' not in user_stats.faceit %}
-        <div class="content__faceit">
-            <div class="upper-section__wrapper {{ 'banned' if user_stats.faceit.banned }}">
+    <div class="content__faceit">
+        <div
+            class="upper-section__wrapper {{ 'banned' if user_stats.faceit.banned }}"
+        >
             {% if user_stats.faceit.banned %}
-                <div class="bans__wrapper">
-                    <div class="bans__wrapper__inside">
-                        <p>BANNED</p>
-                    </div>
-                </div>
-            {% endif %}
-                <div class="logo__wrapper">
-                    <img
-                        class="image__logo"
-                        src="{{ url_for('static', filename='images/faceit_logo.webp') }}"
-                        alt="Faceit logo"
-                    />
-                </div>
+            <div class="bans__wrapper">
+                <p>BANNED</p>
+                <svg
+                    class="ban-hammer"
+                    fill="#000000"
+                    version="1.1"
+                    id="Capa_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    width="800px"
+                    height="800px"
+                    viewBox="0 0 97.691 97.691"
+                    xml:space="preserve"
+                >
+                    <g>
+                        <path
+                            d="M97.082,84.759L69.068,56.747c-0.812-0.812-2.127-0.811-2.938,0l-0.757,0.755l-13.18-13.18l8.899-8.898l1.612,1.61
+		c0.812,0.813,2.127,0.813,2.938,0l8.357-8.356c0.811-0.812,0.811-2.126,0-2.938L48.871,0.609c-0.812-0.812-2.126-0.812-2.938,0
+		l-8.358,8.357c-0.39,0.389-0.609,0.917-0.609,1.469c0,0.55,0.219,1.079,0.609,1.469l1.612,1.611L13.515,39.191l-1.611-1.613
+		c-0.39-0.39-0.918-0.608-1.469-0.608l0,0c-0.551,0-1.08,0.219-1.469,0.608l-8.358,8.359C0.219,46.327,0,46.854,0,47.406
+		c0,0.55,0.219,1.08,0.608,1.469l25.13,25.13c0.812,0.812,2.127,0.812,2.938,0l8.358-8.359c0.39-0.39,0.609-0.917,0.609-1.469
+		c0-0.55-0.219-1.079-0.609-1.469l-1.612-1.611l8.9-8.899l13.179,13.18l-0.756,0.753c-0.39,0.39-0.608,0.919-0.608,1.469
+		c0,0.553,0.219,1.079,0.608,1.47L84.76,97.083c0.39,0.39,0.918,0.607,1.469,0.607s1.078-0.219,1.469-0.607l9.385-9.386
+		C97.895,86.885,97.895,85.572,97.082,84.759z"
+                        />
+                    </g>
+                </svg>
             </div>
+            {% endif %}
+            <div class="logo__wrapper">
+                <img
+                    class="image__logo"
+                    src="{{ url_for('static', filename='images/faceit_logo.webp') }}"
+                    alt="Faceit logo"
+                />
+            </div>
+        </div>
         <div class="content__wrapper__inside">
             <a
                 class="user__link"
                 href="{{ user_stats.faceit.cs2.profileURL if 'error' not in user_stats.faceit.cs2
                         else user_}}"
-                >
+            >
                 <div class="user__wrapper faceit">
-                        <img
-                            class="user__avatar"
-                            src="{{ user_stats.faceit.cs2.avatar if 'error' not in user_stats.faceit.cs2
+                    <img
+                        class="user__avatar"
+                        src="{{ user_stats.faceit.cs2.avatar if 'error' not in user_stats.faceit.cs2
                                     else user_stats.faceit.csgo.avatar}}"
-                            alt="Faceit profile avatar"
-                        />
-                        <div class="header__faceit">
-                        <p class="user__name">{{ user_stats.faceit.cs2.nickname if 'error' not in user_stats.faceit.cs2
-                        else user_stats.faceit.csgo.nickname }}</p>
-                        </div>
+                        alt="Faceit profile avatar"
+                    />
+                    <div class="header__faceit">
+                        <p class="user__name">
+                            {{ user_stats.faceit.cs2.nickname if 'error' not in
+                            user_stats.faceit.cs2 else
+                            user_stats.faceit.csgo.nickname }}
+                        </p>
+                    </div>
                 </div>
             </a>
             <div class="tab">
                 <button
-                        class="tablinks
+                    class="tablinks
                             {{ 'hidden ' if 'error' in user_stats.faceit.cs2 }}
                             {{ 'active' if 'error' not in user_stats.faceit.cs2 }}"
-                        onclick="openTab(event, 'CS2')">CS2</button>
-                <button class="tablinks
+                    onclick="openTab(event, 'CS2')"
+                >
+                    CS2
+                </button>
+                <button
+                    class="tablinks
                             {{ 'hidden' if 'error' in user_stats.faceit.csgo }}
                             {{ 'active' if 'error' in user_stats.faceit.cs2 }}"
-                        onclick="openTab(event, 'CSGO')">CSGO</button>
+                    onclick="openTab(event, 'CSGO')"
+                >
+                    CSGO
+                </button>
 
                 <span class="tab__indicator" aria-hidden="true"></span>
             </div>
@@ -323,7 +387,8 @@
                                 <img
                                     class="map"
                                     src="{{ url_for('static', filename='images/maps/' ~ user_stats.faceit.recentGameStats.best_map ~ '.webp') }}"
-                                 alt="CS2 map banner"/>
+                                    alt="CS2 map banner"
+                                />
                                 <p class="stat__value">
                                     {{
                                     user_stats.faceit.recentGameStats.best_map_winrate
@@ -350,12 +415,17 @@
                 </div>
             </div>
             {% endif %} {% if 'error' not in user_stats.faceit.csgo %}
-            <div class="user__stats tabcontent" id="CSGO" style="{{ 'display: none' if 'error' not in user_stats.faceit.cs2 }}">
+            <div
+                class="user__stats tabcontent"
+                id="CSGO"
+                style="{{ 'display: none' if 'error' not in user_stats.faceit.cs2 }}"
+            >
                 <div class="stat__wrapper">
                     <div class="stat">
                         <p class="stat__name">Registered</p>
                         <p class="stat__value">
-                            {{ user_stats.faceit.csgo.createdAt | formatisodate }}
+                            {{ user_stats.faceit.csgo.createdAt | formatisodate
+                            }}
                         </p>
                     </div>
                     <div class="stat">
@@ -372,7 +442,8 @@
                         <div class="elo__wrapper">
                             <p class="stat__name">ELO</p>
                             <p class="stat__value">
-                                {{ user_stats.faceit.csgo.statsCSGO.faceit_elo }}
+                                {{ user_stats.faceit.csgo.statsCSGO.faceit_elo
+                                }}
                             </p>
                             <img
                                 class="stat__fc-level"
@@ -412,7 +483,8 @@
                     <div class="stat">
                         <p class="stat__name">LAST GAMES</p>
                         <div class="stat__recent-games">
-                            {% for r in user_stats.faceit.csgo.lifetime.recent %}
+                            {% for r in user_stats.faceit.csgo.lifetime.recent
+                            %}
                             <span
                                 class="stat__recent-games--{{ 'win' if r == 'W' else 'loss' }}"
                                 >{{ r }}</span
@@ -454,10 +526,7 @@
             />
         </div>
         <div class="content__wrapper__inside">
-            <a
-                class="user__link"
-                href="{{ user_stats.leetify.leetify_url }}"
-                >
+            <a class="user__link" href="{{ user_stats.leetify.leetify_url }}">
                 <div class="user__wrapper leetify">
                     <img
                         class="user__avatar"
@@ -469,6 +538,7 @@
             </a>
             <div class="user__stats">
                 <div class="stat__grid">
+                    {% if user_stats.leetify.max_rating != None %}
                     <div class="stat">
                         <p class="stat__name">Max rating</p>
                         <div class="rating__wrapper">
@@ -488,6 +558,7 @@
                             </p>
                         </div>
                     </div>
+                    {% endif %}
                     <div class="stat">
                         <p class="stat__name">Matches</p>
                         <p class="stat__value">
@@ -619,6 +690,6 @@
     {% endif %}
 </div>
 <script>
-    moveTabIndicator(document.querySelector('.tablinks.active'));
+    moveTabIndicator(document.querySelector(".tablinks.active"));
 </script>
 {% endblock %}

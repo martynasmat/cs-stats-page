@@ -112,15 +112,25 @@ body {
 }
 
 .upper-section__wrapper.banned {
-    background: linear-gradient(180deg,rgba(171, 0, 0, 1) 0%, rgba(255, 255, 255, 0) 90%);
+    background: linear-gradient(
+        180deg,
+        rgba(171, 0, 0, 1) 0%,
+        rgba(255, 255, 255, 0) 90%
+    );
 }
 
 .bans__wrapper {
-    width: 130px;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
+    gap: 0.5em;
     height: 100%;
+    margin-inline: auto;
+}
+
+.ban-hammer {
+    width: 20px;
+    height: 100%;
+    fill: var(--clr-neutral-min);
 }
 
 .logo__wrapper {
@@ -374,8 +384,8 @@ body {
 
 /* Style the tab */
 .tab {
-  overflow: hidden;
-  background-color: inherit;
+    overflow: hidden;
+    background-color: inherit;
 }
 
 .hidden {
@@ -384,37 +394,34 @@ body {
 
 /* --- Modern tabs --- */
 .tab {
-  /* theme vars (adjust to your palette) */
-  --tab-accent: var(--clr-base-lt, #6366f1);
-  --tab-fg: var(--clr-neutral-min, #111827);
-  --tab-muted: 0.65;                 /* base opacity for idle tabs */
-  --tab-pad-x: 14px;
-  --tab-pad-y: 2px;
-  --tab-radius: 12px;
+    /* theme vars (adjust to your palette) */
+    --tab-accent: var(--clr-base-lt, #6366f1);
+    --tab-fg: var(--clr-neutral-min, #111827);
+    --tab-muted: 0.65; /* base opacity for idle tabs */
+    --tab-pad-x: 14px;
+    --tab-pad-y: 2px;
+    --tab-radius: 12px;
 
-  position: relative;
-  display: inline-flex;              /* shrink-wrap to buttons */
-  gap: 2px;                          /* tight spacing */
-  padding-top: 8px;                  /* space for the top line to sit above */
-  margin-bottom: 0.5em;
+    position: relative;
+    display: inline-flex; /* shrink-wrap to buttons */
+    gap: 2px; /* tight spacing */
+    padding-top: 8px; /* space for the top line to sit above */
+    margin-bottom: 0.5em;
 }
 
 /* Buttons: background-free, crisp, tappable */
 .tab button {
-  appearance: none;
-  background: none;
-  border: 0;
-  padding: var(--tab-pad-y) var(--tab-pad-x);
-  font-weight: 600;
-  color: var(--tab-fg);
-  opacity: var(--tab-muted);
-  cursor: pointer;
-  border-radius: var(--tab-radius);
-  transition:
-    opacity .18s ease,
-    color .18s ease,
-    transform .18s ease;
-  white-space: nowrap;
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: var(--tab-pad-y) var(--tab-pad-x);
+    font-weight: 600;
+    color: var(--tab-fg);
+    opacity: var(--tab-muted);
+    cursor: pointer;
+    border-radius: var(--tab-radius);
+    transition: opacity 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    white-space: nowrap;
 }
 
 /* Hover + focus: a touch of lift */
@@ -424,54 +431,57 @@ body {
 }
 
 .tab button:focus-visible {
-  outline: 2px solid color-mix(in oklab, var(--tab-accent) 70%, white);
-  outline-offset: 2px;
+    outline: 2px solid color-mix(in oklab, var(--tab-accent) 70%, white);
+    outline-offset: 2px;
 }
 
 /* Active tab text pops; still no background */
 .tab button.active {
-  opacity: 1;
-  color: var(--tab-accent);
+    opacity: 1;
+    color: var(--tab-accent);
 }
 
 /* The animated top line that slides under the active tab (but placed above visually) */
 .tab .tab__indicator {
-  position: absolute;
-  top: 0;
-  height: 3px;
-  left: var(--indicator-left, 0px);
-  width: var(--indicator-width, 0px);
-  background: var(--tab-accent);
-  border-radius: 999px;
-  transition:
-    left .35s cubic-bezier(.22,1,.36,1),
-    width .35s cubic-bezier(.22,1,.36,1);
-  pointer-events: none;
+    position: absolute;
+    top: 0;
+    height: 3px;
+    left: var(--indicator-left, 0px);
+    width: var(--indicator-width, 0px);
+    background: var(--tab-accent);
+    border-radius: 999px;
+    transition: left 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
 }
 
 /* Optional: subtle baseline below tabs (not a background) */
 .tab::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0; top: 0;
-  height: 3px;
-  background: color-mix(in oklab, var(--tab-accent) 18%, transparent);
-  opacity: .25;
-  border-radius: 999px;
-  filter: blur(.3px);
-  pointer-events: none;
-  /* The real indicator sits on top of this faint track */
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+    background: color-mix(in oklab, var(--tab-accent) 18%, transparent);
+    opacity: 0.25;
+    border-radius: 999px;
+    filter: blur(0.3px);
+    pointer-events: none;
+    /* The real indicator sits on top of this faint track */
 }
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .tab .tab__indicator, .tab button { transition: none !important; }
+    .tab .tab__indicator,
+    .tab button {
+        transition: none !important;
+    }
 }
-
 
 /* Style the tab content */
 .tabcontent {
-  display: flex;
+    display: flex;
     flex-direction: column;
 }
 

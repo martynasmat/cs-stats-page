@@ -323,7 +323,7 @@ class Scraper:
                 "country": response_cs2["country"],
                 "language": response_cs2["settings"]["language"],
                 "statsCS2": response_cs2["games"]["cs2"],
-                "statsCSGO": response_cs2["games"]["csgo"],
+                "statsCSGO": response_cs2["games"]["csgo"] if "csgp" in response_cs2["games"] else ERRORS["faceit"]["no_csgo"],
                 "memberships": response_cs2["memberships"],
                 "nickname": response_cs2["nickname"],
                 "playerID": response_cs2["player_id"],
@@ -410,11 +410,15 @@ class Scraper:
                 "error": ERRORS["leetify"]["not_found"]
             }
 
+
         response_json = response.json()
         response_not_public_json = response_not_public.json()
-        max_rating = max(game["skillLevel"]
+
+        skill_levels = [game["skillLevel"]
                                         for game in response_not_public_json["games"] if game["skillLevel"] is not None
-                         and game['dataSource'] == 'matchmaking')
+                         and game['dataSource'] == 'matchmaking']
+        max_rating = max(skill_levels) if len(skill_levels) > 0 else None
+
         if response_not_public_json["teammates"] is not False:
             banned_mates = list(filter(lambda x: x["isBanned"], response_not_public_json["teammates"]))
 
@@ -438,7 +442,7 @@ class Scraper:
             "max_rating": max_rating,
             "nickname": response_json["name"],
             "leetify_url": f"https://leetify.com/app/profile/{self.steam_id}",
-            "rating_tier": get_cs2_rating_tier(max_rating)
+            "rating_tier": get_cs2_rating_tier(max_rating) if max_rating is not None else None
         }
 
     def get_stats(self) -> dict:
