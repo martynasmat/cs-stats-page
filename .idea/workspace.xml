@@ -7,7 +7,7 @@
     <list default="true" id="7c44d002-69f7-424f-9c8f-b5290e92c14b" name="Changes" comment="meldziuosi">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/backend/static/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/static/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/static/script.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/templates/stats_design.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/templates/stats_design.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -107,7 +107,9 @@
       <workItem from="1755106393912" duration="1007000" />
       <workItem from="1755119318190" duration="19000" />
       <workItem from="1755791007671" duration="18926000" />
-      <workItem from="1755880531623" duration="20266000" />
+      <workItem from="1755880531623" duration="20608000" />
+      <workItem from="1755977936700" duration="1271000" />
+      <workItem from="1756231766087" duration="7352000" />
     </task>
     <task id="LOCAL−00001" summary="meldziuosi">
       <option name="closed" value="true" />

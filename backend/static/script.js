@@ -65,3 +65,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('load', positionIndicator);   // optional, after assets/fonts
 window.addEventListener('resize', positionIndicator); // keep it aligned on resize
+

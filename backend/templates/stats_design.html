@@ -113,7 +113,7 @@
                         </div>
                     </div>
                     <div class="stat">
-                        <p class="stat__name">2 weeks</p>
+                        <p class="stat__name">last 2 wks</p>
                         <div class="stat__wrapper">
                             {{ (user_stats.steam.playtime.playtime_2weeks / 60)
                             | round(method='ceil') | int }} hrs
@@ -263,6 +263,24 @@
                             alt="Faceit Level"
                         />
                     </div>
+                    {% if 'error' not in user_stats.faceit.peak %}
+                    <div class="elo__wrapper">
+                        <div class="stat__elo">
+                            <p class="stat__name">peak elo</p>
+                        </div>
+                        <p class="stat__value">
+                            {{ user_stats.faceit.peak.peak_elo }}
+                        </p>
+                        <img
+                            class="stat__fc-level"
+                            src="{{
+                                        url_for('static', filename='images/faceit/' ~
+                                        user_stats.faceit.peak.peak_level ~ '.png')
+                                    }}"
+                            alt="Faceit Level"
+                        />
+                    </div>
+                    {% endif %}
                     <div class="stat">
                         <p class="stat__name">Hs%</p>
                         <p class="stat__value">

@@ -1,6 +1,9 @@
 import os
 import logging
 import concurrent.futures
+import time
+from xml.etree.ElementTree import indent
+
 from flask import Flask, render_template, request, abort, redirect
 from dotenv import load_dotenv
 import requests as r
@@ -33,6 +36,7 @@ ERRORS = {
         "cs2": {
             "no_lifetime": "FACEIT_CS2_LIFETIME_NOT_FOUND",
         },
+        "peak": "FACEIT_PEAK_NOT_FOUND",
     },
     "leetify": {
         "not_found": "LEETIFY_NOT_FOUND"
@@ -48,6 +52,19 @@ CS2_RATINGS = {
     20000: "tier5",
     25000: "tier6",
     30000: "tier7",
+}
+
+FACEIT_LEVELS = {
+    100: "1",
+    501: "2",
+    751: "3",
+    901: "4",
+    1051: "5",
+    1201: "6",
+    1351: "7",
+    1531: "8",
+    1751: "9",
+    2001: "10",
 }
 
 STEAM_TIERS = [
@@ -198,6 +215,7 @@ class Scraper:
         self.steam_api_key = os.getenv("STEAM_API_KEY")
         self.faceit_api_key_name = os.getenv("FACEIT_API_KEY_NAME")
         self.faceit_api_key = os.getenv("FACEIT_API_KEY")
+        self.player_uuid = None
 
     def resolve_steam_id(self, vanity_name: str) -> str | None:
         url = (f"https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key="
@@ -232,7 +250,6 @@ class Scraper:
 
         url = f"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={self.steam_api_key}&steamid={self.steam_id}"
         response_playtime = r.get(url)
-
         if response_playtime.status_code != 200 or response_playtime.json()["response"] == {}:
             stats["playtime"] = {"error": ERRORS["steam"]["playtime_not_found"]}
         else:
@@ -245,7 +262,7 @@ class Scraper:
                 stats["playtime"] = {
                     "games_played": playtime_json["response"]["game_count"],
                     "playtime_total": cs["playtime_forever"],
-                    "playtime_2weeks": cs["playtime_2weeks"],
+                    "playtime_2weeks": cs["playtime_2weeks"] if cs.get("playtime_2weeks") is not None else 0,
                 }
 
         url = f"https://api.steampowered.com/IPlayerService/GetBadges/v1/?key={self.steam_api_key}&steamid={self.steam_id}"
@@ -281,7 +298,6 @@ class Scraper:
             "cs2": {},
             "recentGameStats": {}
         }
-        player_uuid = None
         has_cs2 = False
         has_csgo = False
 
@@ -294,8 +310,8 @@ class Scraper:
         else:
             has_cs2 = True
             response_cs2 = response_cs2.json()
-            player_uuid = response_cs2["player_id"]
-            url = f"https://open.faceit.com/data/v4/players/{player_uuid}/stats/cs2"
+            self.player_uuid = response_cs2["player_id"]
+            url = f"https://open.faceit.com/data/v4/players/{self.player_uuid}/stats/cs2"
             response_lifetime = r.get(url, headers=headers)
             if response_lifetime.status_code == 200:
                 lifetime = response_lifetime.json()["lifetime"]
@@ -340,7 +356,7 @@ class Scraper:
         else:
             has_csgo = True
             response_csgo = response_csgo.json()
-            url = f"https://open.faceit.com/data/v4/players/{player_uuid}/stats/csgo"
+            url = f"https://open.faceit.com/data/v4/players/{self.player_uuid}/stats/csgo"
             response_lifetime = r.get(url, headers=headers)
             if response_lifetime.status_code == 200:
                 lifetime = response_lifetime.json()["lifetime"]
@@ -370,9 +386,9 @@ class Scraper:
                 "error": ERRORS["faceit"]["not_found"]
             }
 
-        if has_cs2 and player_uuid is not None:
+        if has_cs2 and self.player_uuid is not None:
             # Get FACEIT statistics for the last 50 games
-            url = f"https://open.faceit.com/data/v4/players/{player_uuid}/games/cs2/stats?limit=50"
+            url = f"https://open.faceit.com/data/v4/players/{self.player_uuid}/games/cs2/stats?limit=50"
             response_recent = r.get(url, headers=headers)
             if response_recent.status_code != 200 or response_recent.json()["items"] == []:
                 stats["recentGameStats"] = {"error": ERRORS["faceit"]["no_recent_games"]}
@@ -382,15 +398,18 @@ class Scraper:
                 stats["cs2"]["last_game"] = response_recent_json["items"][0]["stats"]["Created At"]
 
             # Get FACEIT bans
-            faceit_bans = r.get(f"https://open.faceit.com/data/v4/players/{player_uuid}/bans", headers=headers).json()
+            faceit_bans = r.get(f"https://open.faceit.com/data/v4/players/{self.player_uuid}/bans", headers=headers).json()
             if faceit_bans["items"]:
                 stats["cs2"]["bans"] = faceit_bans["items"]
 
         # Get Faceit bans
-        url = f"https://open.faceit.com/data/v4/players/{player_uuid}/bans"
+        url = f"https://open.faceit.com/data/v4/players/{self.player_uuid}/bans"
         response_bans = r.get(url, headers=headers)
         bans_json = response_bans.json()
         stats["banned"] = bans_json["items"] != []
+
+        stats["peak"] = self.get_peak_faceit_elo()
+        print(stats)
 
         return stats
 
@@ -470,6 +489,42 @@ class Scraper:
                 "leetify": leetify_future.result(),
                 "faceit": faceit_future.result()
             }
+
+    def get_peak_faceit_elo(self) -> dict:
+        """Gets peak Faceit ELO. Returns an integer."""
+        headers = {"Authorization": f"Bearer {self.faceit_api_key}"}
+
+        # 2235828605000 = Nov 06 2040
+        url = (f"https://api.faceit.com/stats/v1/stats/time/users/{self.player_uuid}/games/cs2?size=1000&page=0&"
+               f"from={round((time.time() * 1000) - (6 * 30 * 24 * 60 * 60 * 1000))}&to=2235828605000")
+        response = r.get(url)
+        peak = 0
+        for item in response.json():
+            try:
+                if int(item["elo"]) > peak:
+                    peak = int(item["elo"])
+            except KeyError:
+                break
+
+        peak_lvl = ""
+        if peak != 0:
+            for key in FACEIT_LEVELS:
+                if peak >= key:
+                    peak_lvl = FACEIT_LEVELS[key]
+                else:
+                    break
+
+        if peak == 0 and peak_lvl == "":
+            return {
+                "error": ERRORS["faceit"]["peak"]
+            }
+        else:
+            return {
+                "peak_elo": peak,
+                "peak_level": peak_lvl,
+            }
+
+
 
 @app.route("/", methods=["GET"])
 def home() -> str:
