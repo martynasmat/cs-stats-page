@@ -1,5 +1,13 @@
 {% extends 'base.html' %} {% block content %}
-<div class="content__wrapper">
+    {% if 'error' not in user_stats.faceit.active_match %}
+    <a href="/match/{{ user_stats.faceit.active_match.id }}" class="content__in-game">
+        <div class="in-game__wrapper">
+            <p>Playing right now</p>
+            <p>See stats</p>
+        </div>
+    </a>
+    {% endif %}
+    <div class="content__wrapper">
     {% if 'error' not in user_stats.steam %}
     <div class="content__steam">
         <div

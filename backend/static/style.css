@@ -744,3 +744,18 @@ body {
         padding: 0;
     }
 }
+
+.content__in-game {
+    margin: 0 auto;
+    text-decoration: none;
+    color: var(--clr-base-lt);
+    border: 2px solid orange;
+    width: 325px;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.in-game__wrapper {
+    display: flex;
+    justify-content: space-between;
+}

@@ -19,6 +19,10 @@ app = Flask(__name__)
 init_filters(app)
 logger = logging.getLogger(__name__)
 
+STEAM_API_KEY = os.getenv("STEAM_API_KEY")
+FACEIT_API_KEY_NAME = os.getenv("FACEIT_API_KEY_NAME")
+FACEIT_API_KEY = os.getenv("FACEIT_API_KEY")
+
 ERRORS = {
     "steam": {
         "not_found": "STEAM_NOT_FOUND",
@@ -36,6 +40,7 @@ ERRORS = {
         "cs2": {
             "no_lifetime": "FACEIT_CS2_LIFETIME_NOT_FOUND",
         },
+        "no_active_match": "FACEIT_PLAYER_NOT_IN_GAME",
         "peak": "FACEIT_PEAK_NOT_FOUND",
     },
     "leetify": {
@@ -212,14 +217,11 @@ class Scraper:
     def __init__(self, steam_id, is_vanity_name=False) -> None:
         self.steam_id = steam_id
         self.is_vanity_name = is_vanity_name
-        self.steam_api_key = os.getenv("STEAM_API_KEY")
-        self.faceit_api_key_name = os.getenv("FACEIT_API_KEY_NAME")
-        self.faceit_api_key = os.getenv("FACEIT_API_KEY")
         self.player_uuid = None
 
     def resolve_steam_id(self, vanity_name: str) -> str | None:
         url = (f"https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key="
-               f"{self.steam_api_key}&vanityurl={vanity_name}")
+               f"{STEAM_API_KEY}&vanityurl={vanity_name}")
 
         try:
             response = r.get(url)
@@ -240,7 +242,7 @@ class Scraper:
 
         stats = dict()
         url = (f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key="
-               f"{self.steam_api_key}&steamids={self.steam_id}")
+               f"{STEAM_API_KEY}&steamids={self.steam_id}")
         response_general = r.get(url)
 
         if response_general.status_code != 200:
@@ -248,7 +250,7 @@ class Scraper:
                 "error": ERRORS["steam"]["not_found"]
             }
 
-        url = f"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={self.steam_api_key}&steamid={self.steam_id}"
+        url = f"https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={STEAM_API_KEY}&steamid={self.steam_id}"
         response_playtime = r.get(url)
         if response_playtime.status_code != 200 or response_playtime.json()["response"] == {}:
             stats["playtime"] = {"error": ERRORS["steam"]["playtime_not_found"]}
@@ -265,7 +267,7 @@ class Scraper:
                     "playtime_2weeks": cs["playtime_2weeks"] if cs.get("playtime_2weeks") is not None else 0,
                 }
 
-        url = f"https://api.steampowered.com/IPlayerService/GetBadges/v1/?key={self.steam_api_key}&steamid={self.steam_id}"
+        url = f"https://api.steampowered.com/IPlayerService/GetBadges/v1/?key={STEAM_API_KEY}&steamid={self.steam_id}"
         response_xp = r.get(url)
         xp_json = response_xp.json()
         general_json = response_general.json()["response"]["players"][0]
@@ -275,7 +277,7 @@ class Scraper:
         general_json["steam_xp"] = xp_json["response"]["player_xp"] if response_xp.status_code == 200 else 0
         stats["general"] = general_json
 
-        url = f"https://api.steampowered.com/ISteamUser/GetFriendList/v1/?key={self.steam_api_key}&steamid={self.steam_id}"
+        url = f"https://api.steampowered.com/ISteamUser/GetFriendList/v1/?key={STEAM_API_KEY}&steamid={self.steam_id}"
         friends_response = r.get(url)
 
         if friends_response.status_code != 200:
@@ -284,7 +286,7 @@ class Scraper:
             friends_json = friends_response.json()
             stats["friends"] = {"count": len(friends_json["friendslist"]["friends"])}
 
-        url = f"https://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key={self.steam_api_key}&steamids={self.steam_id}"
+        url = f"https://api.steampowered.com/ISteamUser/GetPlayerBans/v1/?key={STEAM_API_KEY}&steamids={self.steam_id}"
         bans_response = r.get(url)
         bans_json = bans_response.json()["players"][0]
         stats["banned"] = any(((v not in ['none', 0, False]) for v in list(bans_json.values())[1:]))
@@ -292,7 +294,7 @@ class Scraper:
 
     def get_faceit_stats(self) -> dict:
         """Gets player statistics from FACEIT API by Steam user ID. Returns a dictionary with player statistics."""
-        headers = {"Authorization": f"Bearer {self.faceit_api_key}"}
+        headers = {"Authorization": f"Bearer {FACEIT_API_KEY}"}
         stats = {
             "csgo": {},
             "cs2": {},
@@ -409,7 +411,15 @@ class Scraper:
         stats["banned"] = bans_json["items"] != []
 
         stats["peak"] = self.get_peak_faceit_elo()
-        print(stats)
+
+        url = f"https://www.faceit.com/api/match/v1/matches/groupByState?userId={self.player_uuid}"
+        response_match = r.get(url)
+
+        if response_match.status_code != 200:
+            stats["active_match"] = {"error": ERRORS["faceit"]["no_active_match"]}
+        else:
+            response_match_json = response_match.json()
+            stats["active_match"] = {"id": response_match_json["payload"]["ONGOING"][0]["id"]}
 
         return stats
 
@@ -428,7 +438,6 @@ class Scraper:
             return {
                 "error": ERRORS["leetify"]["not_found"]
             }
-
 
         response_json = response.json()
         response_not_public_json = response_not_public.json()
@@ -492,8 +501,6 @@ class Scraper:
 
     def get_peak_faceit_elo(self) -> dict:
         """Gets peak Faceit ELO. Returns an integer."""
-        headers = {"Authorization": f"Bearer {self.faceit_api_key}"}
-
         # 2235828605000 = Nov 06 2040
         url = (f"https://api.faceit.com/stats/v1/stats/time/users/{self.player_uuid}/games/cs2?size=1000&page=0&"
                f"from={round((time.time() * 1000) - (6 * 30 * 24 * 60 * 60 * 1000))}&to=2235828605000")
@@ -525,6 +532,12 @@ class Scraper:
             }
 
 
+def get_faceit_match_stats(match_id: str) -> str:
+    url = f"https://open.faceit.com/data/v4/matches/{match_id}"
+    resp = r.get(url, headers={"Authorization": f"Bearer {FACEIT_API_KEY}"})
+    # print(json.dumps(resp.json(), indent=4))
+    return resp.json()
+
 
 @app.route("/", methods=["GET"])
 def home() -> str:
@@ -539,6 +552,11 @@ def get_profile(steam_id: str) -> str:
 def get_id(vanity_name: str) -> str:
     user_stats = Scraper(vanity_name, True).get_stats()
     return render_template("stats_design.html", user_stats=user_stats)
+
+@app.route("/match/<match_id>", methods=["GET"])
+def get_match_id(match_id: str) -> str:
+    match_stats = get_faceit_match_stats(match_id)
+    return match_stats
 
 @app.route("/check-link/", methods=["POST"])
 def check_link():
