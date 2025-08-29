@@ -2,20 +2,26 @@ import os
 import logging
 import concurrent.futures
 import time
-from xml.etree.ElementTree import indent
+from flask_cors import CORS
 
 from flask import Flask, render_template, request, abort, redirect
 from dotenv import load_dotenv
 import requests as r
-import json
 from filters import init_filters
 from urllib.parse import urlsplit
 import hmac
 import hashlib
 import subprocess
+from api.steam.steam import steam_bp
+from api.leetify.leetify import leetify_bp
+from api.faceit.faceit import faceit_bp
 
 load_dotenv()
 app = Flask(__name__)
+app.register_blueprint(steam_bp, url_prefix="/api/steam")
+app.register_blueprint(leetify_bp, url_prefix="/api/leetify")
+app.register_blueprint(faceit_bp, url_prefix="/api/faceit")
+CORS(app, origins=["http://localhost:5173"])
 init_filters(app)
 logger = logging.getLogger(__name__)
 
@@ -553,12 +559,10 @@ def get_id(vanity_name: str) -> str:
     user_stats = Scraper(vanity_name, True).get_stats()
     return render_template("stats_design.html", user_stats=user_stats)
 
-steam_key = os.getenv("STEAM_API_KEY")
-
 @app.route("/resolve/<vanity_name>/", methods=["GET"])
 def resolve_id(vanity_name: str) -> dict:
     url = (f"https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key="
-            f"{steam_key}&vanityurl={vanity_name}")
+            f"{STEAM_API_KEY}&vanityurl={vanity_name}")
 
     try:
         response = r.get(url)
@@ -573,8 +577,6 @@ def resolve_id(vanity_name: str) -> dict:
         logger.error(str(e))
 
     return {"id": None}
-
-
 
 @app.route("/match/<match_id>", methods=["GET"])
 def get_match_id(match_id: str) -> str:
@@ -621,4 +623,3 @@ def verify_signature(payload, header_signature):
 
 if __name__ == "__main__":
     app.run(debug=True)
-

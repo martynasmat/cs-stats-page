@@ -1,0 +1,45 @@
+:root {
+    --clr-base: hsl(0, 0%, 40%);
+    --clr-base-lt: hsl(0, 0%, 78%);
+    --clr-base-dk: hsl(0, 0%, 20%);
+
+    --clr-secondary-lt: #355f5d;
+    --clr-secondary-dk: #031121;
+
+    --clr-neutral-min: #fff;
+    --clr-neutral-max: #000;
+
+    --clr-rating-tier-1: hsl(211, 34%, 80%);
+    --clr-rating-tier-1-lt: hsl(211, 34%, 90%);
+    --clr-rating-tier-1-dk: hsl(211, 34%, 50%);
+    --clr-rating-tier-2: hsl(212, 61%, 69%);
+    --clr-rating-tier-2-dk: hsl(212, 61%, 50%);
+    --clr-rating-tier-3: hsl(230, 96%, 72%);
+    --clr-rating-tier-3-dk: hsl(230, 96%, 50%);
+    --clr-rating-tier-4: hsl(262, 97%, 71%);
+    --clr-rating-tier-4-dk: hsl(262, 97%, 50%);
+    --clr-rating-tier-5: hsl(293, 54%, 59%);
+    --clr-rating-tier-5-dk: hsl(293, 54%, 45%);
+    --clr-rating-tier-6: hsl(0, 79%, 69%);
+    --clr-rating-tier-6-dk: hsl(0, 79%, 50%);
+    --clr-rating-tier-7: hsl(38, 86%, 63%);
+    --clr-rating-tier-7-dk: hsl(38, 86%, 45%);
+
+    --fs-xs: 0.75rem;
+    --fs-sm: 0.8rem;
+    --fs-base: 0.9rem;
+}
+
+body {
+    min-height: 100dvh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: linear-gradient(
+        to top right,
+        var(--clr-secondary-lt) 0%,
+        var(--clr-secondary-dk) 40%,
+        var(--clr-secondary-dk) 60%,
+        var(--clr-secondary-lt) 100%
+    );
+    color: var(--clr-neutral-min);
+}
