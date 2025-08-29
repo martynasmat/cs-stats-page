@@ -553,6 +553,29 @@ def get_id(vanity_name: str) -> str:
     user_stats = Scraper(vanity_name, True).get_stats()
     return render_template("stats_design.html", user_stats=user_stats)
 
+steam_key = os.getenv("STEAM_API_KEY")
+
+@app.route("/resolve/<vanity_name>/", methods=["GET"])
+def resolve_id(vanity_name: str) -> dict:
+    url = (f"https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key="
+            f"{steam_key}&vanityurl={vanity_name}")
+
+    try:
+        response = r.get(url)
+        data = response.json()["response"]
+
+        if data["success"]:
+            return {"id": data["steamid"]}
+        else:
+            logger.error("Failed to resolve vanity URL")
+            return {"id": None}
+    except Exception as e:
+        logger.error(str(e))
+
+    return {"id": None}
+
+
+
 @app.route("/match/<match_id>", methods=["GET"])
 def get_match_id(match_id: str) -> str:
     match_stats = get_faceit_match_stats(match_id)
