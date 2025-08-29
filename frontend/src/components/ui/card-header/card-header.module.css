@@ -1,0 +1,39 @@
+.card_header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: start;
+    border-radius: 15px 17px 0 0;
+
+    &.banned {
+        background: linear-gradient(
+            180deg,
+            rgba(171, 0, 0, 1) 0%,
+            rgba(255, 255, 255, 0) 90%
+        );
+    }
+}
+
+.bans__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    height: 100%;
+    margin-inline: auto;
+}
+
+.ban_hammer {
+    width: 20px;
+    height: 100%;
+    fill: var(--clr-neutral-min);
+}
+
+.logo__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: end;
+    width: 120px;
+    height: 40px;
+    background: #0f2638;
+    border-radius: 0 15px 0 15px;
+}
