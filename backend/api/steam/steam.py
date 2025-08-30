@@ -50,7 +50,7 @@ def get_steam_stats(steam_id: str) -> tuple[dict, int]:
         games = playtime_json["response"]["games"]
         cs = next((i for i in games if i.get("appid") == 730), None)
         if cs is None:
-            stats["playtime"] = {"error": None}
+            stats["playtime"] = None
         else:
             stats["playtime"] = {
                 "games_played": playtime_json["response"]["game_count"],

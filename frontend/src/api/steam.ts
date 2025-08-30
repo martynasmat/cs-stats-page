@@ -1,8 +1,41 @@
 import { api } from ".";
 
-export async function getSteamId(vanityName: string): Promise<string> {
+export type SteamStats = {
+    banned: boolean;
+    friends: {
+        count: number;
+    } | null;
+    general: {
+        avatar: string;
+        avatarfull: string;
+        avatarhash: string;
+        avatarmedium: string;
+        commentpermission: number;
+        communityvisibilitystate: number;
+        lastlogoff: number;
+        loccountrycode?: string;
+        personaname: string;
+        personastate: number;
+        personastateflags: number;
+        primaryclanid: string;
+        profilestate: number;
+        profileurl: string;
+        steam_level: number;
+        steam_level_bg: string;
+        steam_xp: number;
+        steamid: string;
+        timecreated: number;
+    };
+    playtime: {
+        games_played: number;
+        playtime_2weeks: number;
+        playtime_total: number;
+    } | null;
+};
+
+export async function getSteamId(vanityName: string): Promise<string | null> {
     const data = await api
-        .get<{ id: string }>(`api/steam/resolve-id/${vanityName}/`)
+        .get<{ id: string | null }>(`api/steam/resolve-id/${vanityName}/`)
         .json();
 
     return data.id;
@@ -22,8 +55,10 @@ export async function checkLink(
 
 export async function getSteamStats(
     steamId: string | number
-): Promise<unknown> {
-    const data = await api.get<unknown>(`api/steam/profile/${steamId}/`);
+): Promise<SteamStats> {
+    const data = await api
+        .get<SteamStats>(`api/steam/profile/${steamId}/`)
+        .json();
 
     return data;
 }

@@ -3,16 +3,21 @@ import { getSteamStats } from "../../../api/steam";
 import { CardHeader } from "../card-header";
 import { Spinner } from "../spinner";
 import steamLogo from "../../../assets/steam_logo.webp";
+import { ProfileNotFound } from "../profile-not-found";
+import { SteamCardContent } from "./steam-card-content";
 
 type SteamCardProps = {
     steamId: string;
 };
 
 export function SteamCard({ steamId }: SteamCardProps) {
-    const isLoading = true;
-    // const { data: steamStats, error } = useFetch({
-    //     fn: () => getSteamStats(steamId),
-    // });
+    const {
+        data: stats,
+        error,
+        isLoading,
+    } = useFetch({
+        fn: () => getSteamStats(steamId),
+    });
 
     return (
         <div>
@@ -29,7 +34,13 @@ export function SteamCard({ steamId }: SteamCardProps) {
                     />
                 }
             />
-            {isLoading ? <Spinner color="red" center /> : <p>Steam card</p>}
+            {isLoading ? (
+                <Spinner color="red" center />
+            ) : error || !stats ? (
+                <ProfileNotFound />
+            ) : (
+                <SteamCardContent stats={stats} />
+            )}
         </div>
     );
 }
