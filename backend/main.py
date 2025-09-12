@@ -419,7 +419,11 @@ class Scraper:
             stats["active_match"] = {"error": ERRORS["faceit"]["no_active_match"]}
         else:
             response_match_json = response_match.json()
-            stats["active_match"] = {"id": response_match_json["payload"]["ONGOING"][0]["id"]}
+
+            if response_match_json["payload"] == {}:
+                stats["active_match"] = {"error": ERRORS["faceit"]["no_active_match"]}
+            else:
+                stats["active_match"] = {"id": response_match_json["payload"]["ONGOING"][0]["id"]}
 
         return stats
 
