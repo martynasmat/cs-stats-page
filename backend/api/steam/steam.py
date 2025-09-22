@@ -81,5 +81,4 @@ def get_steam_stats(steam_id: str) -> tuple[dict, int]:
     bans_response = r.get(url)
     bans_json = bans_response.json()["players"][0]
     stats["banned"] = any(((v not in ['none', 0, False]) for v in list(bans_json.values())[1:]))
-
     return stats, 200

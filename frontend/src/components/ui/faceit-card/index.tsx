@@ -10,9 +10,11 @@ type FaceitCardProps = {
 
 export function FaceitCard({ steamId }: FaceitCardProps) {
     const isLoading = true;
-    // const { data: faceitStats } = useFetch({
-    //     fn: () => getFaceitStats(steamId),
-    // });
+    const { data: faceitStats } = useFetch({
+        fn: () => getFaceitStats(steamId),
+    });
+
+    console.log(faceitStats);
 
     return (
         <div>

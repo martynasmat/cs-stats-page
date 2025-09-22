@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.register_blueprint(steam_bp, url_prefix="/api/steam")
 app.register_blueprint(leetify_bp, url_prefix="/api/leetify")
 app.register_blueprint(faceit_bp, url_prefix="/api/faceit")
-CORS(app, origins=["http://localhost:5173"])
+CORS(app, origins=["http://localhost:5174"])
 
 FACEIT_API_KEY_NAME = os.getenv("FACEIT_API_KEY_NAME")
 FACEIT_API_KEY = os.getenv("FACEIT_API_KEY")

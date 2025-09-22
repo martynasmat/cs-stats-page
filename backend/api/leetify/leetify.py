@@ -35,7 +35,7 @@ def get_leetify_stats(steam_id: str) -> tuple[dict, int]:
         "rating": round(response_json["ranks"]["leetify"], 2),
         "position": round(response_json["rating"]["positioning"], 2),
         "banned_mates": round(len(banned_mates) / len(response_not_public_json["teammates"]) * 100, 2)
-            if response_not_public_json["teammates"] is not False else 'NaN',
+            if response_not_public_json["teammates"] is not False else None,
         "party": round(response_not_public_json["club"]["ratings"]["leetifyRating"], 2)
             if response_not_public_json["club"] is not None else 0,
         "reaction_time": round(response_json["stats"]["reaction_time_ms"]),

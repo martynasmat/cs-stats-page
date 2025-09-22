@@ -56,9 +56,7 @@ export async function checkLink(
 export async function getSteamStats(
     steamId: string | number
 ): Promise<SteamStats> {
-    const data = await api
+    return await api
         .get<SteamStats>(`api/steam/profile/${steamId}/`)
         .json();
-
-    return data;
 }

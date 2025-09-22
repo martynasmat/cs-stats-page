@@ -5,10 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7c44d002-69f7-424f-9c8f-b5290e92c14b" name="Changes" comment="meldziuosi">
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/ui/leetify-card/leetify-card-content.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/cs-stats-page.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cs-stats-page.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/leetify/leetify.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/leetify/leetify.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/steam/steam.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/steam/steam.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/backend/static/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/templates/stats_design.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/templates/stats_design.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/leetify.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/leetify.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/api/steam.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/api/steam.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ui/faceit-card/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ui/faceit-card/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ui/leetify-card/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ui/leetify-card/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +52,9 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "api",
+    "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/marty/Desktop/cs-stats-page",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -53,6 +62,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "ts.external.directory.path": "C:\\Users\\marty\\Desktop\\cs-stats-page\\frontend\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -64,14 +74,7 @@
       <recent name="C:\Users\marty\Desktop\cs-stats-page\backend\static\images\maps" />
     </key>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-PY-251.25410.159" />
-        <option value="bundled-python-sdk-e0ed3721d81e-36ea0e71a18c-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.25410.159" />
-      </set>
-    </attachedChunks>
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="7c44d002-69f7-424f-9c8f-b5290e92c14b" name="Changes" comment="" />
@@ -111,7 +114,12 @@
       <workItem from="1755977936700" duration="1271000" />
       <workItem from="1756231766087" duration="7507000" />
       <workItem from="1756300544100" duration="1659000" />
-      <workItem from="1756329449823" duration="2400000" />
+      <workItem from="1756329449823" duration="2798000" />
+      <workItem from="1756483498867" duration="56000" />
+      <workItem from="1756499083666" duration="656000" />
+      <workItem from="1756734804459" duration="18000" />
+      <workItem from="1757029456592" duration="965000" />
+      <workItem from="1758549555916" duration="5644000" />
     </task>
     <task id="LOCAL−00001" summary="meldziuosi">
       <option name="closed" value="true" />
