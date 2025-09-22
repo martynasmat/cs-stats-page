@@ -39,15 +39,15 @@ def get_faceit_profile(steam_id: str) -> tuple[dict, int]:
             lifetime_dict = {
                 "hs_percentage": lifetime["Average Headshots %"],
                 "clutch_1v1": round(
-                    float(lifetime["1v1 Win Rate"]) * 100) if "1v1 Win Rate" in lifetime is not None else "NaN",
+                    float(lifetime["1v1 Win Rate"]) * 100) if "1v1 Win Rate" in lifetime is not None else None,
                 "clutch_1v2": round(
-                    float(lifetime["1v2 Win Rate"]) * 100) if "1v2 Win Rate" in lifetime is not None else "NaN",
+                    float(lifetime["1v2 Win Rate"]) * 100) if "1v2 Win Rate" in lifetime is not None else None,
                 "winrate": lifetime["Win Rate %"],
                 "kd": lifetime["Average K/D Ratio"],
                 "matches": lifetime["Matches"],
-                "adr": lifetime["ADR"] if "ADR" in lifetime is not None else "NaN",
+                "adr": lifetime["ADR"] if "ADR" in lifetime is not None else None,
                 "utility_damage": lifetime[
-                    "Utility Damage per Round"] if "Utility Damage per Round" in lifetime is not None else "NaN",
+                    "Utility Damage per Round"] if "Utility Damage per Round" in lifetime is not None else None,
                 "recent": list(map(lambda x: "W" if x == "1" else "L", lifetime["Recent Results"]))
             }
         else:
@@ -60,7 +60,7 @@ def get_faceit_profile(steam_id: str) -> tuple[dict, int]:
             "country": response_cs2["country"],
             "language": response_cs2["settings"]["language"],
             "statsCS2": response_cs2["games"]["cs2"],
-            "statsCSGO": response_cs2["games"]["csgo"] if "csgp" in response_cs2["games"] else None,
+            "statsCSGO": response_cs2["games"]["csgo"] if "csgo" in response_cs2["games"] else None,
             "memberships": response_cs2["memberships"],
             "nickname": response_cs2["nickname"],
             "playerID": response_cs2["player_id"],
@@ -103,6 +103,8 @@ def get_faceit_profile(steam_id: str) -> tuple[dict, int]:
     if not has_cs2 and not has_csgo:
         return {"message": "Profile not found"}, 404
 
+    stats["player_uuid"] = player_uuid
+
     if has_cs2 and player_uuid is not None:
         # Get FACEIT statistics for the last 50 games
         url = f"https://open.faceit.com/data/v4/players/{player_uuid}/games/cs2/stats?limit=50"
@@ -127,13 +129,12 @@ def get_faceit_profile(steam_id: str) -> tuple[dict, int]:
 
     url = f"https://www.faceit.com/api/match/v1/matches/groupByState?userId={player_uuid}"
     response_match = r.get(url)
-
-    if response_match.status_code != 200:
+    response_match_json = response_match.json()
+    if response_match_json["payload"] == {}:
         stats["active_match"] = None
     else:
-        response_match_json = response_match.json()
         stats["active_match"] = {"id": response_match_json["payload"]["ONGOING"][0]["id"]}
-
+    print(stats)
     return stats, 200
 
 

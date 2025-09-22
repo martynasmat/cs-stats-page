@@ -9,13 +9,6 @@ export function LeetifyCardContent({ stats }: LeetifyCardContentProps) {
 
     return (
         <div className="content__leetify">
-            <div className="logo__wrapper">
-                <img
-                    className="image__logo"
-                    src="{{ url_for('static', filename='images/leetify_logo.webp') }}"
-                    alt="Leetify logo"
-                />
-            </div>
             <div className="content__wrapper__inside">
                 <a className="user__link" href="{{ stats.leetify_url }}">
                     <div className="user__wrapper leetify">
@@ -33,11 +26,11 @@ export function LeetifyCardContent({ stats }: LeetifyCardContentProps) {
                             <p className="stat__name">Max rating</p>
                             <div className="rating__wrapper">
                                 <img
-                                    src="{{
-                                        url_for('static', filename='images/csgo-ranks/skillgroup' ~ user_stats.leetify.max_rating ~ '.png')
-                                        if user_stats.leetify.max_rating <= 18 else
-                                        url_for('static', filename='images/premiere-backgrounds/' ~ user_stats.leetify.rating_tier ~ '.webp')
-                                        }}"
+                                    src={
+                                        stats.max_rating <= 18
+                                            ? `/images/csgo-ranks/skillgroup${stats.max_rating}.png`
+                                            : `/images/premiere-backgrounds/${stats.rating_tier}.webp`
+                                    }
                                     alt="Counter strike rating"
                                 />
                                 <p
@@ -98,7 +91,7 @@ export function LeetifyCardContent({ stats }: LeetifyCardContentProps) {
                         <div className="stat">
                             <p className="stat__name">Opening</p>
                             <p
-                                className="{{ 'positive' if opening >= 0 else 'negative' }} stat__value"
+                                className={`${stats.opening >= 0 ? 'positive' : 'negative' } stat__value`}
                             >
                                 {stats.opening >= 0 ? '+' : ''}{
                                 stats.opening
