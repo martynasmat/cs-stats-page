@@ -27,6 +27,7 @@ export type FaceitStats = {
         };
     };
     cs2: {
+        last_game: string;
         createdAt: string;
         profileURL: string;
         avatar: string;
@@ -76,7 +77,7 @@ export type FaceitStats = {
         rounds_won: number;
         win_percentage: number;
         headshot_percentage: number;
-        best_map: number;
+        best_map: string;
         best_map_winrate: number;
         worst_map: number;
         worst_map_winrate: number;

@@ -1,4 +1,5 @@
 import { SteamStats } from "../../../api/steam";
+import "./steam-card.module.css";
 
 type SteamCardContentProps = {
     stats: SteamStats;
@@ -9,12 +10,12 @@ export function SteamCardContent({ stats }: SteamCardContentProps) {
         <div class="content__wrapper__inside">
             <a
                 class="user__link"
-                href="{{ user_stats.steam.general.profileurl }}"
+                href={stats.general.profileurl}
             >
                 <div class="user__wrapper steam">
                     <img
                         class="user__avatar"
-                        src="{{ user_stats.steam.general.avatarfull }}"
+                        src={stats.general.avatarfull}
                         alt="Steam profile avatar"
                     />
                     <p class="user__name">{stats.general.personaname}</p>
@@ -31,7 +32,7 @@ export function SteamCardContent({ stats }: SteamCardContentProps) {
                     <div class="stat">
                         <p class="stat__name">Registered</p>
                         <time class="stat__value">
-                            {stats.general.timecreated}
+                            {new Date(stats.general.timecreated * 1000).toLocaleString(undefined, {dateStyle: 'medium'})}
                         </time>
                     </div>
                     <div class="stat">

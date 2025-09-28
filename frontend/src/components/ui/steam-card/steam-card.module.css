@@ -1,0 +1,134 @@
+.steam_level__wrapper {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    text-align: center;
+    text-shadow: 1px 1px #1a1a1a;
+    height: 32px;
+    width: 32px;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+}
+
+.steam_level__wrapper > * {
+    text-decoration: none;
+}
+
+/* Steam level tier shapes */
+
+.shape-1 {
+    border-radius: 50%;
+    border: solid #fff 2px;
+}
+
+.shape-2 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_hexagons.png");
+}
+
+.shape-3 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_shields.png");
+}
+
+.shape-4 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_books.png");
+}
+
+.shape-5 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_chevrons.png");
+}
+
+.shape-6 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_circle2.png");
+}
+
+.shape-7 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_angle.png");
+}
+
+.shape-8 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_flag.png");
+}
+
+.shape-9 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_wings.png");
+}
+
+.shape-10 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_arrows.png");
+}
+
+.shape-11 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_crystals.png");
+}
+
+.shape-12 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_space.png");
+}
+
+.shape-13 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_waterelement.png");
+}
+
+.shape-14 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_fireelement.png");
+}
+
+.shape-18 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_airelement_5-6.png");
+}
+
+.shape-29 {
+    background-image: url("https://community.fastly.steamstatic.com/public/shared/images/community/levels_mandala_7-8.png?v=2");
+}
+
+/* Steam level tiers */
+
+.tier-1 {
+    background-position: 0 0;
+    border-color: #9b9b9b;
+}
+
+.tier-2 {
+    background-position: 0 -32px;
+    border-color: #c02942;
+}
+
+.tier-3 {
+    background-position: 0 -64px;
+    border-color: #d95b43;
+}
+
+.tier-4 {
+    background-position: 0 -96px;
+    border-color: #fecc23;
+}
+
+.tier-5 {
+    background-position: 0 -128px;
+    border-color: #467a3c;
+}
+
+.tier-6 {
+    background-position: 0 -160px;
+    border-color: #4e8ddb;
+}
+
+.tier-7 {
+    background-position: 0 -192px;
+    border-color: #7652c9;
+}
+
+.tier-8 {
+    background-position: 0 -224px;
+    border-color: #c252c9;
+}
+
+.tier-9 {
+    background-position: 0 -256px;
+    border-color: #542437;
+}
+
+.tier-10 {
+    background-position: 0 -288px;
+    border-color: #997c52;
+}

@@ -1,15 +1,15 @@
 CS2_RATINGS = {
-    0: "tier1",
-    5000: "tier2",
-    10000: "tier3",
-    15000: "tier4",
-    20000: "tier5",
-    25000: "tier6",
-    30000: "tier7",
+    0: 1,
+    5000: 2,
+    10000: 3,
+    15000: 4,
+    20000: 5,
+    25000: 6,
+    30000: 7,
 }
 
-def get_cs2_rating_tier(rating: int) -> str:
-    tier = ""
+def get_cs2_rating_tier(rating: int) -> int:
+    tier = 0
 
     for key in CS2_RATINGS:
         if rating >= key:

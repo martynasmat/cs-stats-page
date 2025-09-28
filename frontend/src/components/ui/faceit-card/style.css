@@ -1,0 +1,200 @@
+.faceit__wrapper__recent {
+    display: flex;
+    flex-direction: column;
+}
+
+.header__faceit {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.elo__wrapper {
+    display: grid;
+}
+
+.elo__wrapper > .stat__elo {
+    grid-area: 1 / 1;
+}
+
+.elo__wrapper > .stat__value {
+    grid-area: 2 / 1;
+}
+
+.elo__wrapper > .stat__fc-level {
+    grid-area: 1 / 2 / span 2;
+}
+
+/* Tabs */
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    background-color: inherit;
+}
+
+.hidden {
+    display: none;
+}
+
+/* --- Modern tabs --- */
+.tab {
+    /* theme vars (adjust to your palette) */
+    --tab-accent: var(--clr-base-lt, #6366f1);
+    --tab-fg: var(--clr-neutral-min, #111827);
+    --tab-muted: 0.65; /* base opacity for idle tabs */
+    --tab-pad-x: 14px;
+    --tab-pad-y: 2px;
+    --tab-radius: 12px;
+
+    position: relative;
+    display: inline-flex; /* shrink-wrap to buttons */
+    gap: 2px; /* tight spacing */
+    padding-top: 8px; /* space for the top line to sit above */
+    margin-bottom: 0.5em;
+}
+
+/* Buttons: background-free, crisp, tappable */
+.tab > button {
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: var(--tab-pad-y) var(--tab-pad-x);
+    font-weight: 600;
+    color: var(--tab-fg);
+    opacity: var(--tab-muted);
+    cursor: pointer;
+    border-radius: var(--tab-radius);
+    transition: opacity 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    white-space: nowrap;
+}
+
+/* Hover + focus: a touch of lift */
+.tab button:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+.tab button:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--tab-accent) 70%, white);
+    outline-offset: 2px;
+}
+
+/* Active tab text pops; still no background */
+.tab button.active {
+    opacity: 1;
+    color: var(--tab-accent);
+}
+
+/* The animated top line that slides under the active tab (but placed above visually) */
+.tab .tab__indicator {
+    position: absolute;
+    top: 0;
+    height: 3px;
+    left: var(--indicator-left, 0px);
+    width: var(--indicator-width, 0px);
+    background: var(--tab-accent);
+    border-radius: 999px;
+    transition: left 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+}
+
+/* Optional: subtle baseline below tabs (not a background) */
+.tab::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+    background: color-mix(in oklab, var(--tab-accent) 18%, transparent);
+    opacity: 0.25;
+    border-radius: 999px;
+    filter: blur(0.3px);
+    pointer-events: none;
+    /* The real indicator sits on top of this faint track */
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .tab .tab__indicator,
+    .tab button {
+        transition: none !important;
+    }
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: flex;
+    flex-direction: column;
+}
+
+.tabcontent {
+    display: flex;
+}
+
+.stat__elo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat__fc-level {
+    height: 75%;
+    align-self: center;
+    width: auto;
+}
+
+.stat__recent-games {
+    display: flex;
+    gap: 0.25em;
+}
+
+.stat__recent-games--win {
+    color: green;
+}
+
+.stat__recent-games--loss {
+    color: red;
+}
+
+.stat__map {
+    position: relative;
+    display: grid;
+    height: 30px;
+
+    .map {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        filter: brightness(70%) saturate(150%);
+    }
+
+    .stat__value {
+        position: relative;
+        align-self: center;
+        justify-self: center;
+        font-weight: 700;
+        text-shadow: 1px 2px 2px var(--clr-neutral-max);
+        z-index: 5;
+    }
+}
+
+.divider {
+    height: 2px;
+    margin-block: 0.25em;
+    background-color: var(--clr-secondary-lt);
+    border-radius: 10px;
+    opacity: 0.45;
+}
+
+.stat__wrapper__recent {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.25em;
+}

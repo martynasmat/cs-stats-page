@@ -1,6 +1,7 @@
 import {api} from ".";
 
 export type LeetifyStats = {
+    avatar: string;
     aim: number;
     preaim: number;
     matches: number;
