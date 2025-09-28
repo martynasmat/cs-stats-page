@@ -1,4 +1,4 @@
-import {api} from ".";
+import { api } from ".";
 
 export type LeetifyStats = {
     avatar: string;
@@ -24,7 +24,7 @@ export type LeetifyStats = {
 
 export async function getLeetifyStats(
     steamId: string | number
-): Promise<unknown> {
+): Promise<LeetifyStats> {
     return await api
         .get<LeetifyStats>(`api/leetify/profile/${steamId}/`)
         .json();

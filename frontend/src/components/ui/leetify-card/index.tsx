@@ -1,11 +1,10 @@
 import { useFetch } from "../../../hooks/use-fetch";
-import { getSteamStats } from "../../../api/steam";
 import { CardHeader } from "../card-header";
 import { Spinner } from "../spinner";
 import leetifyLogo from "../../../assets/leetify_logo.webp";
 import { ProfileNotFound } from "../profile-not-found";
 import { LeetifyCardContent } from "./leetify-card-content";
-import {getLeetifyStats} from "../../../api/leetify";
+import { getLeetifyStats } from "../../../api/leetify";
 
 type LeetifyCardProps = {
     steamId: string;

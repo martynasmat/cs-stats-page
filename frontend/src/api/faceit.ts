@@ -25,7 +25,7 @@ export type FaceitStats = {
             matches: number;
             recent: any;
         };
-    };
+    } | null;
     cs2: {
         last_game: string;
         createdAt: string;
@@ -67,7 +67,7 @@ export type FaceitStats = {
             utility_damage: number | null;
             recent: any;
         };
-    };
+    } | null;
     recentGameStats: {
         adr: number;
         kills: number;
@@ -92,21 +92,16 @@ export type FaceitStats = {
 export type FaceitPeakElo = {
     peakElo: number;
     peakLevel: number;
-}
+};
 
 export async function getFaceitStats(
     steamId: string | number
 ): Promise<unknown> {
-    return await api
-        .get(`api/faceit/profile/${steamId}/`)
-        .json();
+    return await api.get(`api/faceit/profile/${steamId}/`).json();
 }
 
 export async function getFaceitPeakElo(
     uuid: string | number
 ): Promise<unknown> {
-    return await api
-        .get(`api/faceit/peak-elo/${uuid}/`)
-        .json();
+    return await api.get(`api/faceit/peak-elo/${uuid}/`).json();
 }
-
