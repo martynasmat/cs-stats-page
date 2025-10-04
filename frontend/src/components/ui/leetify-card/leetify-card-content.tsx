@@ -105,10 +105,14 @@ export function LeetifyCardContent({ stats }: LeetifyCardContentProps) {
                             <p className="stat__name">Matches</p>
                             <p className="stat__value">{stats.matches}</p>
                         </div>
-                        <div className="stat">
-                            <p className="stat__name">Banned mates</p>
-                            <p className="stat__value">{stats.banned_mates}%</p>
-                        </div>
+                        {stats.banned_mates && (
+                            <div className="stat">
+                                <p className="stat__name">Banned mates</p>
+                                <p className="stat__value">
+                                    {stats.banned_mates}%
+                                </p>
+                            </div>
+                        )}
                         <div className="stat">
                             <p className="stat__name">Aim</p>
                             <p

@@ -79,7 +79,7 @@ export type FaceitStats = {
         headshot_percentage: number;
         best_map: string;
         best_map_winrate: number;
-        worst_map: number;
+        worst_map: string;
         worst_map_winrate: number;
     };
     player_uuid: string | null;
@@ -102,6 +102,12 @@ export async function getFaceitStats(
 
 export async function getFaceitPeakElo(
     uuid: string | number
-): Promise<FaceitPeakElo> {
-    return await api.get<FaceitPeakElo>(`api/faceit/peak-elo/${uuid}/`).json();
+): Promise<FaceitPeakElo | null> {
+    try {
+        return await api
+            .get<FaceitPeakElo>(`api/faceit/peak-elo/${uuid}/`)
+            .json();
+    } catch {
+        return null;
+    }
 }

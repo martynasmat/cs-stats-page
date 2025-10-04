@@ -1,56 +1,22 @@
-import { FaceitPeakElo, FaceitStats } from "../../../api/faceit";
-import level1 from "../../../assets/faceit-levels/1.png";
-import level2 from "../../../assets/faceit-levels/2.png";
-import level3 from "../../../assets/faceit-levels/3.png";
-import level4 from "../../../assets/faceit-levels/4.png";
-import level5 from "../../../assets/faceit-levels/5.png";
-import level6 from "../../../assets/faceit-levels/6.png";
-import level7 from "../../../assets/faceit-levels/7.png";
-import level8 from "../../../assets/faceit-levels/8.png";
-import level9 from "../../../assets/faceit-levels/9.png";
-import level10 from "../../../assets/faceit-levels/10.png";
-import de_ancient from "../../../assets/maps/de_ancient.webp";
-import de_dust2 from "../../../assets/maps/de_dust2.webp";
-import de_inferno from "../../../assets/maps/de_inferno.webp";
-import de_mirage from "../../../assets/maps/de_mirage.webp";
-import de_nuke from "../../../assets/maps/de_nuke.webp";
-import de_overpass from "../../../assets/maps/de_overpass.webp";
-import de_train from "../../../assets/maps/de_train.webp";
-import de_vertigo from "../../../assets/maps/de_vertigo.webp";
+import { FaceitStats, getFaceitPeakElo } from "../../../api/faceit";
 import "./style.css";
 import { useState } from "preact/hooks";
 import { formatDate } from "../../../lib/utils";
+import { FaceitLevel } from "../faceit-level";
+import { Map } from "../map";
+import { useQuery } from "@tanstack/react-query";
+import { Spinner } from "../spinner";
 
 type FaceitCardContentProps = {
     stats: FaceitStats;
-    peak: FaceitPeakElo;
-};
-
-const levels: Record<number, string> = {
-    1: level1,
-    2: level2,
-    3: level3,
-    4: level4,
-    5: level5,
-    6: level6,
-    7: level7,
-    8: level8,
-    9: level9,
-    10: level10,
-};
-
-const maps: Record<string, string> = {
-    de_ancient: de_ancient,
-    de_dust2: de_dust2,
-    de_inferno: de_inferno,
-    de_mirage: de_mirage,
-    de_nuke: de_nuke,
-    de_overpass: de_overpass,
-    de_train: de_train,
-    de_vertigo: de_vertigo,
 };
 
 export function FaceitCardContent({ stats }: FaceitCardContentProps) {
+    const { data: peak, isLoading } = useQuery({
+        queryKey: ["peakFaceitElo"],
+        queryFn: () => getFaceitPeakElo(stats.player_uuid!),
+        enabled: !!stats.player_uuid,
+    });
     const tabs = [stats.cs2 ? "CS2" : null, stats.csgo ? "CSGO" : null];
     const [activeTabIndex, setActiveTabIndex] = useState(() =>
         tabs.findIndex((tab) => tab !== null)
@@ -119,22 +85,6 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                             )
                     )}
                 </div>
-                {/* <div class="tab">
-                    <span class="tab__indicator" aria-hidden="true"></span>
-                    {tabs.map(
-                        (tab, idx) =>
-                            tab && (
-                                <button
-                                    class={
-                                        activeTabIndex === idx ? "active" : ""
-                                    }
-                                    onClick={() => setActiveTabIndex(idx)}
-                                >
-                                    {tab}
-                                </button>
-                            )
-                    )}
-                </div> */}
                 {activeTabIndex === 0 && stats.cs2 && (
                     <div className="user__stats tabcontent default" id="CS2">
                         <div className="stat__wrapper">
@@ -163,30 +113,27 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                                 <p className="stat__value">
                                     {stats.cs2.statsCS2.faceit_elo}
                                 </p>
-                                <img
-                                    className="stat__fc-level"
-                                    src={levels[stats.cs2.statsCS2.skill_level]}
-                                    alt="Faceit Level"
+                                <FaceitLevel
+                                    level={stats.cs2.statsCS2.skill_level}
                                 />
                             </div>
-                            {/*{% if 'error' not in user_stats.faceit.peak %}*/}
-                            {/*<div className="elo__wrapper">*/}
-                            {/*    <div className="stat__elo">*/}
-                            {/*        <p className="stat__name">peak elo</p>*/}
-                            {/*    </div>*/}
-                            {/*    <p className="stat__value">*/}
-                            {/*        {{user_stats.faceit.peak.peak_elo}}*/}
-                            {/*    </p>*/}
-                            {/*    <img*/}
-                            {/*        className="stat__fc-level"*/}
-                            {/*        src="{{*/}
-                            {/*                url_for('static', filename='images/faceit/' ~*/}
-                            {/*                user_stats.faceit.peak.peak_level ~ '.png')*/}
-                            {/*            }}"*/}
-                            {/*        alt="Faceit Level"*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                            {/*{% endif %}*/}
+                            {isLoading ? (
+                                <Spinner color="red" center />
+                            ) : (
+                                peak && (
+                                    <div className="elo__wrapper">
+                                        <div className="stat__elo">
+                                            <p className="stat__name">
+                                                Peak elo
+                                            </p>
+                                        </div>
+                                        <p className="stat__value">
+                                            {peak?.peakElo}
+                                        </p>
+                                        <FaceitLevel level={peak.peakLevel} />
+                                    </div>
+                                )
+                            )}
                             <div className="stat">
                                 <p className="stat__name">Hs%</p>
                                 <p className="stat__value">
@@ -308,15 +255,8 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                                 <div className="stat stat__best-map">
                                     <p className="stat__name">best map</p>
                                     <div className="stat__value__wrapper stat__map">
-                                        <img
-                                            className="map"
-                                            src={
-                                                maps[
-                                                    stats.recentGameStats
-                                                        .best_map
-                                                ]
-                                            }
-                                            alt="CS2 map banner"
+                                        <Map
+                                            map={stats.recentGameStats.best_map}
                                         />
                                         <p className="stat__value">
                                             {
@@ -330,15 +270,10 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                                 <div className="stat stat__worst-map">
                                     <p className="stat__name">worst map</p>
                                     <div className="stat__value__wrapper stat__map">
-                                        <img
-                                            className="map"
-                                            src={
-                                                maps[
-                                                    stats.recentGameStats
-                                                        .worst_map
-                                                ]
+                                        <Map
+                                            map={
+                                                stats.recentGameStats.worst_map
                                             }
-                                            alt="CS2 map picture"
                                         />
                                         <p className="stat__value">
                                             {
@@ -381,15 +316,10 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                                         <p className="stat__value">
                                             {stats.csgo.statsCSGO.faceit_elo}
                                         </p>
-                                        <img
-                                            className="stat__fc-level"
-                                            src={
-                                                levels[
-                                                    stats.csgo.statsCSGO
-                                                        .skill_level
-                                                ]
+                                        <FaceitLevel
+                                            level={
+                                                stats.csgo.statsCSGO.skill_level
                                             }
-                                            alt="Faceit Level"
                                         />
                                     </div>
                                 </div>

@@ -1,10 +1,10 @@
-import { useFetch } from "../../../hooks/use-fetch";
 import { getFaceitStats } from "../../../api/faceit";
 import { Spinner } from "../spinner";
 import { CardHeader } from "../card-header";
 import faceitLogo from "../../../assets/faceit_logo.webp";
 import { ProfileNotFound } from "../profile-not-found";
 import { FaceitCardContent } from "./faceit-card-content";
+import { useQuery } from "@tanstack/react-query";
 
 type FaceitCardProps = {
     steamId: string;
@@ -15,8 +15,9 @@ export function FaceitCard({ steamId }: FaceitCardProps) {
         data: faceitStats,
         error,
         isLoading,
-    } = useFetch({
-        fn: () => getFaceitStats(steamId),
+    } = useQuery({
+        queryKey: ["faceitStats"],
+        queryFn: () => getFaceitStats(steamId),
     });
 
     return (
@@ -40,7 +41,7 @@ export function FaceitCard({ steamId }: FaceitCardProps) {
             ) : error || !faceitStats ? (
                 <ProfileNotFound />
             ) : (
-                <FaceitCardContent stats={faceitStats} peak={{}} />
+                <FaceitCardContent stats={faceitStats} />
             )}
         </div>
     );

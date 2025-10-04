@@ -1,10 +1,10 @@
-import { useFetch } from "../../../hooks/use-fetch";
 import { CardHeader } from "../card-header";
 import { Spinner } from "../spinner";
 import leetifyLogo from "../../../assets/leetify_logo.webp";
 import { ProfileNotFound } from "../profile-not-found";
 import { LeetifyCardContent } from "./leetify-card-content";
 import { getLeetifyStats } from "../../../api/leetify";
+import { useQuery } from "@tanstack/react-query";
 
 type LeetifyCardProps = {
     steamId: string;
@@ -15,8 +15,9 @@ export function LeetifyCard({ steamId }: LeetifyCardProps) {
         data: stats,
         error,
         isLoading,
-    } = useFetch({
-        fn: () => getLeetifyStats(steamId),
+    } = useQuery({
+        queryKey: ["leetifyStats"],
+        queryFn: () => getLeetifyStats(steamId),
     });
 
     return (
