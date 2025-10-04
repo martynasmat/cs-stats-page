@@ -47,7 +47,7 @@ def get_steam_stats(steam_id: str) -> tuple[dict, int]:
         stats["playtime"] = None
     else:
         playtime_json = response_playtime.json()
-        games = playtime_json["response"]["games"]
+        games = playtime_json["response"].get("games", [])
         cs = next((i for i in games if i.get("appid") == 730), None)
         if cs is None:
             stats["playtime"] = None
@@ -62,10 +62,10 @@ def get_steam_stats(steam_id: str) -> tuple[dict, int]:
     response_xp = r.get(url)
     xp_json = response_xp.json()
     general_json = response_general.json()["response"]["players"][0]
-    steam_level = xp_json["response"]["player_level"] if response_xp.status_code == 200 else 0
+    steam_level = xp_json["response"].get("player_level", 0) if response_xp.status_code == 200 else 0
     general_json["steam_level"] = steam_level
     general_json["steam_level_bg"] = get_steam_level_shape_link(steam_level) if steam_level > 99 else ""
-    general_json["steam_xp"] = xp_json["response"]["player_xp"] if response_xp.status_code == 200 else 0
+    general_json["steam_xp"] = xp_json["response"].get("player_xp", 0) if response_xp.status_code == 200 else 0
     stats["general"] = general_json
 
     url = f"https://api.steampowered.com/ISteamUser/GetFriendList/v1/?key={STEAM_API_KEY}&steamid={steam_id}"
