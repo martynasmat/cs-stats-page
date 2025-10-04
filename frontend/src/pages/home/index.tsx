@@ -4,17 +4,22 @@ import styles from "./home.module.css";
 import { TargetedEvent } from "preact/compat";
 import { useLocation } from "preact-iso";
 import { checkLink } from "../../api/steam";
+import { useMutation } from "@tanstack/react-query";
+import { Spinner } from "../../components/ui/spinner";
 
 export default function Home() {
     const location = useLocation();
     const [profile, setProfile] = useState("");
     const [error, setError] = useState<string | undefined>();
+    const { mutateAsync: check, isPending } = useMutation({
+        mutationFn: (profile: string) => checkLink(profile),
+    });
 
     async function handleSubmit(event: TargetedEvent<HTMLFormElement>) {
         event.preventDefault();
 
         try {
-            const { id } = await checkLink(profile);
+            const { id } = await check(profile);
 
             if (!id) {
                 setError("Invalid Steam URL");
@@ -58,7 +63,11 @@ export default function Home() {
                             />
                         </div>
                         <button class={styles.search_btn}>
-                            <Search />
+                            {isPending ? (
+                                <Spinner size={20} center />
+                            ) : (
+                                <Search />
+                            )}
                         </button>
                     </div>
                     {error && <small class={styles.error}>{error}</small>}
