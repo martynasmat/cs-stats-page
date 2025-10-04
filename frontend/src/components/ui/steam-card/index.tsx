@@ -33,6 +33,7 @@ export function SteamCard({ steamId }: SteamCardProps) {
                         src={steamLogo}
                     />
                 }
+                banned={stats?.banned}
             />
             {isLoading ? (
                 <Spinner color="red" center />

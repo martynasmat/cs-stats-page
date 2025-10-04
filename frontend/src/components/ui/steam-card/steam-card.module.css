@@ -8,11 +8,18 @@
     text-align: center;
     text-shadow: 1px 1px #1a1a1a;
     vertical-align: middle;
-    border-radius: 50%;
 }
 
 .steam_level__wrapper > * {
     text-decoration: none;
+}
+
+.shape-1 {
+    border-radius: 50%;
+}
+
+.shape-none {
+    border: none !important;
 }
 
 /* Steam level tiers */

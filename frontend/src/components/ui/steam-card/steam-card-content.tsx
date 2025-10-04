@@ -8,6 +8,7 @@ type SteamCardContentProps = {
 
 export function SteamCardContent({ stats }: SteamCardContentProps) {
     const tier = Math.trunc((stats.general.steam_level % 100) / 10) + 1;
+    const shape = Math.trunc(stats.general.steam_level / 100) + 1;
 
     return (
         <div class="content__wrapper__inside">
@@ -23,6 +24,10 @@ export function SteamCardContent({ stats }: SteamCardContentProps) {
                         style={`background-image: url('${stats.general.steam_level_bg}');`}
                         class={`${styles.steam_level__wrapper} ${
                             styles[`tier-${tier}`]
+                        } ${
+                            shape === 1
+                                ? styles[`shape-${shape}`]
+                                : styles[`shape-none`]
                         }`}
                     >
                         <p>{stats.general.steam_level}</p>

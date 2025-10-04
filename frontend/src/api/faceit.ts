@@ -96,12 +96,12 @@ export type FaceitPeakElo = {
 
 export async function getFaceitStats(
     steamId: string | number
-): Promise<unknown> {
-    return await api.get(`api/faceit/profile/${steamId}/`).json();
+): Promise<FaceitStats> {
+    return await api.get<FaceitStats>(`api/faceit/profile/${steamId}/`).json();
 }
 
 export async function getFaceitPeakElo(
     uuid: string | number
-): Promise<unknown> {
-    return await api.get(`api/faceit/peak-elo/${uuid}/`).json();
+): Promise<FaceitPeakElo> {
+    return await api.get<FaceitPeakElo>(`api/faceit/peak-elo/${uuid}/`).json();
 }
