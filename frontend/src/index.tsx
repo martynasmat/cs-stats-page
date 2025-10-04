@@ -3,4 +3,4 @@ import { App } from "./main";
 import "./reset.css";
 import "./style.css";
 
-render(<App />, document.getElementById("app"));
+render(<App />, document.getElementById("app")!);

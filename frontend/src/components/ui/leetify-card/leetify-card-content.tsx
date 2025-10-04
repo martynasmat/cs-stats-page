@@ -92,7 +92,7 @@ export function LeetifyCardContent({ stats }: LeetifyCardContentProps) {
                                         alt="Counter strike rating"
                                     />
                                     <p
-                                        className={`stat__value ${stats.rating_tier}}`}
+                                        className={`stat__value tier${stats.rating_tier}`}
                                     >
                                         {stats.max_rating > 18
                                             ? stats.max_rating

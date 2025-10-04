@@ -55,6 +55,10 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
     const [activeTabIndex, setActiveTabIndex] = useState(() =>
         tabs.findIndex((tab) => tab !== null)
     );
+    const filteredTabs = tabs.filter((tab) => tab !== null);
+    const activeFilteredIndex =
+        tabs.slice(0, activeTabIndex + 1).filter((tab) => tab !== null).length -
+        1;
 
     return (
         <div className="content__faceit">
@@ -86,12 +90,28 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                         </div>
                     </div>
                 </a>
-                <div class="tab">
+                <div className="tab">
+                    <span
+                        className="tab__indicator"
+                        style={{
+                            width: `calc(${
+                                100 / filteredTabs.length
+                            }% - 0.25rem)`,
+                            transform: `translateX(calc(${
+                                activeFilteredIndex * 100
+                            }% + ${activeFilteredIndex * 0.25}rem))`,
+                        }}
+                        aria-hidden="true"
+                    />
+
                     {tabs.map(
                         (tab, idx) =>
                             tab && (
                                 <button
-                                    class={"tablinks"}
+                                    key={idx}
+                                    className={
+                                        activeTabIndex === idx ? "active" : ""
+                                    }
                                     onClick={() => setActiveTabIndex(idx)}
                                 >
                                     {tab}
@@ -99,6 +119,22 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                             )
                     )}
                 </div>
+                {/* <div class="tab">
+                    <span class="tab__indicator" aria-hidden="true"></span>
+                    {tabs.map(
+                        (tab, idx) =>
+                            tab && (
+                                <button
+                                    class={
+                                        activeTabIndex === idx ? "active" : ""
+                                    }
+                                    onClick={() => setActiveTabIndex(idx)}
+                                >
+                                    {tab}
+                                </button>
+                            )
+                    )}
+                </div> */}
                 {activeTabIndex === 0 && stats.cs2 && (
                     <div className="user__stats tabcontent default" id="CS2">
                         <div className="stat__wrapper">

@@ -3,8 +3,8 @@ import { getFaceitStats } from "../../../api/faceit";
 import { Spinner } from "../spinner";
 import { CardHeader } from "../card-header";
 import faceitLogo from "../../../assets/faceit_logo.webp";
-import {ProfileNotFound} from "../profile-not-found";
-import {FaceitCardContent} from "./faceit-card-content";
+import { ProfileNotFound } from "../profile-not-found";
+import { FaceitCardContent } from "./faceit-card-content";
 
 type FaceitCardProps = {
     steamId: string;
@@ -14,12 +14,10 @@ export function FaceitCard({ steamId }: FaceitCardProps) {
     const {
         data: faceitStats,
         error,
-        isLoading
+        isLoading,
     } = useFetch({
         fn: () => getFaceitStats(steamId),
     });
-
-    console.log(faceitStats);
 
     return (
         <div>
