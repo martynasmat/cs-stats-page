@@ -12,9 +12,9 @@ type SpinnerProps = {
 };
 
 export function Spinner({
-    size = 24,
+    size = 30,
     thickness = 3,
-    color = "currentColor",
+    color = "#6366f1",
     trackColor = "rgba(0,0,0,0.12)",
     className,
     style,

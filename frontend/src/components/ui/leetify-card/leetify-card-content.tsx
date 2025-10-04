@@ -105,7 +105,7 @@ export function LeetifyCardContent({ stats }: LeetifyCardContentProps) {
                             <p className="stat__name">Matches</p>
                             <p className="stat__value">{stats.matches}</p>
                         </div>
-                        {stats.banned_mates && (
+                        {stats.banned_mates !== null && (
                             <div className="stat">
                                 <p className="stat__name">Banned mates</p>
                                 <p className="stat__value">

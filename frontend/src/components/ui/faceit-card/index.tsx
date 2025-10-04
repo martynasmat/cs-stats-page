@@ -37,7 +37,7 @@ export function FaceitCard({ steamId }: FaceitCardProps) {
                 banned={faceitStats?.banned}
             />
             {isLoading ? (
-                <Spinner color="red" center />
+                <Spinner center />
             ) : error || !faceitStats ? (
                 <ProfileNotFound />
             ) : (

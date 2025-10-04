@@ -24,7 +24,7 @@ export type SteamStats = {
         steam_level_bg: string;
         steam_xp: number;
         steamid: string;
-        timecreated: number;
+        timecreated?: number;
     };
     playtime: {
         games_played: number;
@@ -56,7 +56,5 @@ export async function checkLink(
 export async function getSteamStats(
     steamId: string | number
 ): Promise<SteamStats> {
-    return await api
-        .get<SteamStats>(`api/steam/profile/${steamId}/`)
-        .json();
+    return await api.get<SteamStats>(`api/steam/profile/${steamId}/`).json();
 }

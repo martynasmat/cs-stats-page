@@ -36,12 +36,14 @@ export function SteamCardContent({ stats }: SteamCardContentProps) {
             </a>
             <div class="user__stats">
                 <div class="stat__wrapper">
-                    <div class="stat">
-                        <p class="stat__name">Registered</p>
-                        <time class="stat__value">
-                            {formatDate(stats.general.timecreated * 1000)}
-                        </time>
-                    </div>
+                    {!!stats.general.timecreated && (
+                        <div class="stat">
+                            <p class="stat__name">Registered</p>
+                            <time class="stat__value">
+                                {formatDate(stats.general.timecreated * 1000)}
+                            </time>
+                        </div>
+                    )}
                     <div class="stat">
                         <p class="stat__name">Country</p>
                         <img

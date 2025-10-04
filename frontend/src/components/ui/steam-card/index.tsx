@@ -37,7 +37,7 @@ export function SteamCard({ steamId }: SteamCardProps) {
                 banned={stats?.banned}
             />
             {isLoading ? (
-                <Spinner color="red" center />
+                <Spinner center />
             ) : error || !stats ? (
                 <ProfileNotFound />
             ) : (

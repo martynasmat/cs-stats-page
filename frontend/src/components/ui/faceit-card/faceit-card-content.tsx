@@ -118,7 +118,7 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                                 />
                             </div>
                             {isLoading ? (
-                                <Spinner color="red" center />
+                                <Spinner center />
                             ) : (
                                 peak && (
                                     <div className="elo__wrapper">

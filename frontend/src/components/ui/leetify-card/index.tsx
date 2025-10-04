@@ -36,7 +36,7 @@ export function LeetifyCard({ steamId }: LeetifyCardProps) {
                 }
             />
             {isLoading ? (
-                <Spinner color="red" center />
+                <Spinner center />
             ) : error || !stats ? (
                 <ProfileNotFound />
             ) : (
