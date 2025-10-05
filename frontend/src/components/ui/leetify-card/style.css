@@ -1,0 +1,51 @@
+.content__leetify > .logo__wrapper {
+    background: #16373f;
+}
+
+.rating__wrapper {
+    display: grid;
+    place-items: center;
+    width: 90%;
+}
+
+.rating__wrapper > img,
+.rating__wrapper > .stat__value {
+    grid-area: 1 / 1;
+}
+
+.rating__wrapper > .stat__value {
+    justify-self: center;
+    align-self: center;
+    margin-left: 0.5em;
+    font-style: italic;
+    font-weight: 700;
+    text-shadow: 1px 2px 0px black;
+
+    &.tier1 {
+        color: var(--clr-rating-tier-1);
+    }
+
+    &.tier2 {
+        color: var(--clr-rating-tier-2);
+    }
+
+    &.tier3 {
+        color: var(--clr-rating-tier-3);
+    }
+
+    &.tier4 {
+        color: var(--clr-rating-tier-4);
+    }
+
+    &.tier5 {
+        color: var(--clr-rating-tier-5);
+    }
+
+    &.tier6 {
+        color: var(--clr-rating-tier-6);
+    }
+
+    &.tier7 {
+        color: var(--clr-rating-tier-7);
+    }
+}

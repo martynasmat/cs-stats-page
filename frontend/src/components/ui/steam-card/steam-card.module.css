@@ -1,0 +1,75 @@
+.steam_level__wrapper {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    height: 32px;
+    width: 32px;
+    background-repeat: no-repeat;
+    text-align: center;
+    text-shadow: 1px 1px #1a1a1a;
+    vertical-align: middle;
+}
+
+.steam_level__wrapper > * {
+    text-decoration: none;
+}
+
+.shape-1 {
+    border-radius: 50%;
+}
+
+.shape-none {
+    border: none !important;
+}
+
+/* Steam level tiers */
+
+.tier-1 {
+    background-position: 0 0;
+    border: 2px solid #9b9b9b;
+}
+
+.tier-2 {
+    background-position: 0 -32px;
+    border: 2px solid #c02942;
+}
+
+.tier-3 {
+    background-position: 0 -64px;
+    border: 2px solid #d95b43;
+}
+
+.tier-4 {
+    background-position: 0 -96px;
+    border: 2px solid #fecc23;
+}
+
+.tier-5 {
+    background-position: 0 -128px;
+    border: 2px solid #467a3c;
+}
+
+.tier-6 {
+    background-position: 0 -160px;
+    border: 2px solid #4e8ddb;
+}
+
+.tier-7 {
+    background-position: 0 -192px;
+    border: 2px solid #7652c9;
+}
+
+.tier-8 {
+    background-position: 0 -224px;
+    border: 2px solid #c252c9;
+}
+
+.tier-9 {
+    background-position: 0 -256px;
+    border: 2px solid #542437;
+}
+
+.tier-10 {
+    background-position: 0 -288px;
+    border: 2px solid #997c52;
+}

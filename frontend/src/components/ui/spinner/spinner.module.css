@@ -1,0 +1,23 @@
+.spinner {
+    display: inline-block;
+    width: var(--spinner-size, 24px);
+    height: var(--spinner-size, 24px);
+    border-radius: 50%;
+    border-style: solid;
+    border-width: var(--spinner-thickness, 3px);
+    border-color: var(--spinner-track, rgba(0, 0, 0, 0.12));
+    border-top-color: var(--spinner-color, currentColor);
+    animation: spinner-rotate 0.75s linear infinite;
+    margin-bottom: 2rem;
+}
+
+.spinner__wrapper {
+    display: grid;
+    place-items: center;
+}
+
+@keyframes spinner-rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}

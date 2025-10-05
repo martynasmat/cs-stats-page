@@ -1,0 +1,136 @@
+.faceit__wrapper__recent {
+    display: flex;
+    flex-direction: column;
+}
+
+.header__faceit {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.elo__wrapper {
+    display: grid;
+}
+
+.elo__wrapper > .stat__elo {
+    grid-area: 1 / 1;
+}
+
+.elo__wrapper > .stat__value {
+    grid-area: 2 / 1;
+}
+
+.elo__wrapper > .stat__fc-level {
+    grid-area: 1 / 2 / span 2;
+}
+
+/* Tabs */
+
+.tab {
+    position: relative;
+    display: inline-flex;
+    margin-bottom: 0.5em;
+    border-radius: 0.5rem;
+    gap: 0.25rem;
+}
+
+.tab__indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background-color: #6366f1;
+    transition: all 100ms ease-out;
+    margin: 0 0.125rem;
+}
+
+.tab button {
+    position: relative;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: color 200ms;
+    color: #9ca3af;
+}
+
+.tab button:hover,
+.tab button.active {
+    color: var(--clr-neutral-min);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .tab .tab__indicator,
+    .tab button {
+        transition: none !important;
+    }
+}
+
+.stat__elo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat__fc-level {
+    height: 70%;
+    align-self: center;
+    width: auto;
+}
+
+.stat__recent-games {
+    display: flex;
+    gap: 0.25em;
+}
+
+.stat__recent-games--win {
+    color: green;
+}
+
+.stat__recent-games--loss {
+    color: red;
+}
+
+.stat__map {
+    position: relative;
+    display: grid;
+    height: 30px;
+
+    .map {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        filter: brightness(70%) saturate(150%);
+    }
+
+    .stat__value {
+        position: relative;
+        align-self: center;
+        justify-self: center;
+        font-weight: 700;
+        text-shadow: 1px 2px 2px var(--clr-neutral-max);
+        z-index: 5;
+    }
+}
+
+.divider {
+    height: 2px;
+    margin-block: 0.25em;
+    background-color: var(--clr-secondary-lt);
+    border-radius: 10px;
+    opacity: 0.45;
+}
+
+.stat__wrapper__recent {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.25em;
+}
