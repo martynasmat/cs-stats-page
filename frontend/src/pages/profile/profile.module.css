@@ -26,6 +26,15 @@
     }
 }
 
+.contact {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    bottom: 2px;
+    align-items: center;
+    color: var(--clr-base-lt);
+}
+
 @media (min-width: 700px) and (max-width: 1020px) {
     .content__wrapper {
         grid-template-columns: repeat(2, 1fr);

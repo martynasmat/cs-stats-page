@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7c44d002-69f7-424f-9c8f-b5290e92c14b" name="Changes" comment="meldziuosi">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ui/spinner/spinner.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ui/spinner/spinner.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/profile/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/profile/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/profile/profile.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/profile/profile.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +121,7 @@
       <workItem from="1758660012521" duration="650000" />
       <workItem from="1759072677367" duration="6142000" />
       <workItem from="1759167368091" duration="30000" />
-      <workItem from="1759687562217" duration="331000" />
+      <workItem from="1759687562217" duration="3148000" />
     </task>
     <task id="LOCAL−00001" summary="meldziuosi">
       <option name="closed" value="true" />

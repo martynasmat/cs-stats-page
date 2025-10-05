@@ -10,7 +10,8 @@
 		"@tanstack/react-query": "^5.90.2",
 		"ky": "^1.9.1",
 		"preact": "^10.26.9",
-		"preact-iso": "^2.10.0"
+		"preact-iso": "^2.10.0",
+		"react-ga4": "^2.1.0"
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.10.2",
