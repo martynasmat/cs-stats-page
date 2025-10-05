@@ -13,9 +13,9 @@ from api.faceit.faceit import faceit_bp
 
 load_dotenv()
 app = Flask(__name__)
-app.register_blueprint(steam_bp, url_prefix="/api/steam")
-app.register_blueprint(leetify_bp, url_prefix="/api/leetify")
-app.register_blueprint(faceit_bp, url_prefix="/api/faceit")
+app.register_blueprint(steam_bp, url_prefix="/steam")
+app.register_blueprint(leetify_bp, url_prefix="/leetify")
+app.register_blueprint(faceit_bp, url_prefix="/faceit")
 CORS(app, origins=["http://localhost:5173"])
 
 FACEIT_API_KEY_NAME = os.getenv("FACEIT_API_KEY_NAME")
