@@ -8,6 +8,7 @@
     border-color: var(--spinner-track, rgba(0, 0, 0, 0.12));
     border-top-color: var(--spinner-color, currentColor);
     animation: spinner-rotate 0.75s linear infinite;
+    margin-bottom: 2rem;
 }
 
 .spinner__wrapper {
