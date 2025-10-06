@@ -180,12 +180,13 @@ html {
 }
 
 .user__wrapper {
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: flex-start;
     gap: 1em;
     margin-bottom: 1.5em;
     color: var(--clr-neutral-min);
+    grid-template-columns: 2fr 3fr 1fr;
 }
 
 .user__avatar {

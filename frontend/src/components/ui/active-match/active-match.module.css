@@ -1,0 +1,49 @@
+.active_match {
+    align-self: end;
+    justify-self: center;
+    display: grid;
+    grid-template-columns: 4fr 3fr;
+    align-items: center;
+    width: 325px;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 10px;
+    background: rgba(255, 69, 0, 0.45);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.playing_text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--fs-base);
+}
+
+.active_match > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 69, 0, 0.35);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 6px;
+
+    color: white;
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+
+    transition: background 0.05s;
+}
+
+.active_match > a:hover {
+    background: rgba(255, 69, 0, 1);
+}
+
+.active_match > p {
+    font-size: var(--fs-base);
+}

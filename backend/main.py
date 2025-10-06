@@ -10,29 +10,18 @@ import subprocess
 from api.steam.steam import steam_bp
 from api.leetify.leetify import leetify_bp
 from api.faceit.faceit import faceit_bp
+from api.match.match import match_bp
 
 load_dotenv()
 app = Flask(__name__)
-app.register_blueprint(steam_bp, url_prefix="/steam")
-app.register_blueprint(leetify_bp, url_prefix="/leetify")
-app.register_blueprint(faceit_bp, url_prefix="/faceit")
+app.register_blueprint(steam_bp, url_prefix="/api/steam")
+app.register_blueprint(leetify_bp, url_prefix="/api/leetify")
+app.register_blueprint(faceit_bp, url_prefix="/api/faceit")
+app.register_blueprint(match_bp, url_prefix="/api/match")
 CORS(app, origins=["http://localhost:5173"])
 
 FACEIT_API_KEY_NAME = os.getenv("FACEIT_API_KEY_NAME")
 FACEIT_API_KEY = os.getenv("FACEIT_API_KEY")
-
-
-def get_faceit_match_stats(match_id: str) -> str:
-    url = f"https://open.faceit.com/data/v4/matches/{match_id}"
-    resp = r.get(url, headers={"Authorization": f"Bearer {FACEIT_API_KEY}"})
-    # print(json.dumps(resp.json(), indent=4))
-    return resp.json()
-
-
-@app.route("/match/<match_id>", methods=["GET"])
-def get_match_id(match_id: str) -> str:
-    match_stats = get_faceit_match_stats(match_id)
-    return match_stats
 
 
 @app.route("/redeploy/", methods=["POST"])

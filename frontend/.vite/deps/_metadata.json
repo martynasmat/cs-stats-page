@@ -1,0 +1,73 @@
+{
+  "hash": "3d71965c",
+  "configHash": "e5e9ca25",
+  "lockfileHash": "7c95cf48",
+  "browserHash": "f53d2f9d",
+  "optimized": {
+    "preact/jsx-dev-runtime": {
+      "src": "../../node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
+      "file": "preact_jsx-dev-runtime.js",
+      "fileHash": "1e202f64",
+      "needsInterop": false
+    },
+    "preact": {
+      "src": "../../node_modules/preact/dist/preact.module.js",
+      "file": "preact.js",
+      "fileHash": "c7b1244f",
+      "needsInterop": false
+    },
+    "preact-iso": {
+      "src": "../../node_modules/preact-iso/src/index.js",
+      "file": "preact-iso.js",
+      "fileHash": "22cfd51a",
+      "needsInterop": false
+    },
+    "@tanstack/react-query": {
+      "src": "../../node_modules/@tanstack/react-query/build/modern/index.js",
+      "file": "@tanstack_react-query.js",
+      "fileHash": "71a0718f",
+      "needsInterop": false
+    },
+    "react-ga4": {
+      "src": "../../node_modules/react-ga4/dist/index.js",
+      "file": "react-ga4.js",
+      "fileHash": "77252b0b",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "b7a29f5a",
+      "needsInterop": true
+    },
+    "preact/hooks": {
+      "src": "../../node_modules/preact/hooks/dist/hooks.module.js",
+      "file": "preact_hooks.js",
+      "fileHash": "f3921ea3",
+      "needsInterop": false
+    },
+    "ky": {
+      "src": "../../node_modules/ky/distribution/index.js",
+      "file": "ky.js",
+      "fileHash": "f001dbef",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "prerender-WP6ICF4E": {
+      "file": "prerender-WP6ICF4E.js"
+    },
+    "chunk-UNLUE3XC": {
+      "file": "chunk-UNLUE3XC.js"
+    },
+    "chunk-4VCQC55C": {
+      "file": "chunk-4VCQC55C.js"
+    },
+    "chunk-OXECWYFW": {
+      "file": "chunk-OXECWYFW.js"
+    },
+    "chunk-5WRI5ZAA": {
+      "file": "chunk-5WRI5ZAA.js"
+    }
+  }
+}

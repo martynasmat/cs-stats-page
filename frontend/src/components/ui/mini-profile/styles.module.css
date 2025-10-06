@@ -1,0 +1,82 @@
+.mini_profile__wrapper {
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
+    width: 280px;
+    height: 140px;
+    text-decoration: none;
+    color: white;
+    gap: 8px;
+}
+
+.player__info {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 16px;
+}
+
+.player__name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.player__stats {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.elo__wrapper {
+    display: grid;
+}
+
+.elo__wrapper > .stat__elo {
+    grid-area: 1 / 1;
+}
+
+.elo__wrapper > .stat__value {
+    grid-area: 2 / 1;
+}
+
+.elo__wrapper > .stat__fc-level {
+    grid-area: 1 / 2 / span 2;
+}
+
+.stat__elo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.divider {
+    height: 2px;
+    margin-block: 0.25em;
+    background-color: var(--clr-secondary-lt);
+    border-radius: 10px;
+    opacity: 0.45;
+}
+
+.elo__wrapper > .stat__elo {
+    grid-area: 1 / 1;
+}
+
+.elo__wrapper > .stat__value {
+    grid-area: 2 / 1;
+}
+
+.elo__wrapper > .stat__fc-level {
+    grid-area: 1 / 2 / span 2;
+}
+
+.stat__fc-level {
+    height: 70%;
+    align-self: center;
+    width: auto;
+}

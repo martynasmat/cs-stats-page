@@ -3,6 +3,7 @@
     place-items: center;
     min-height: 100dvh;
     margin-inline: auto;
+    gap: 20px;
 }
 
 .content__wrapper {
@@ -11,7 +12,7 @@
     place-items: center;
     gap: 1em;
     margin-inline: auto;
-
+    align-self: end;
     & > * {
         display: flex;
         flex-direction: column;
@@ -28,11 +29,14 @@
 
 .contact {
     display: flex;
-    position: absolute;
     justify-content: center;
-    bottom: 2px;
     align-items: center;
     color: var(--clr-base-lt);
+    align-self: end;
+}
+
+.match_found {
+    align-self: start;
 }
 
 @media (min-width: 700px) and (max-width: 1020px) {

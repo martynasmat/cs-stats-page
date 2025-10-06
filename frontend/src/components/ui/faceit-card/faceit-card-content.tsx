@@ -27,7 +27,7 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
         1;
 
     return (
-        <div className="content__faceit">
+        <div className={"content__faceit"}>
             <div className="content__wrapper__inside">
                 <a
                     className="user__link"

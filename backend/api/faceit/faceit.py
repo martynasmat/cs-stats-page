@@ -2,6 +2,7 @@ import os
 import requests as r
 import time
 from flask import Blueprint
+import json
 from .helpers import get_faceit_level, get_average_stats
 
 FACEIT_API_KEY_NAME = os.getenv("FACEIT_API_KEY_NAME")
@@ -130,11 +131,11 @@ def get_faceit_profile(steam_id: str) -> tuple[dict, int]:
     url = f"https://www.faceit.com/api/match/v1/matches/groupByState?userId={player_uuid}"
     response_match = r.get(url)
     response_match_json = response_match.json()
-    if response_match_json["payload"] == {}:
+    if response_match_json["payload"] == {} or "ONGOING" not in response_match_json["payload"]:
         stats["active_match"] = None
     else:
         stats["active_match"] = {"id": response_match_json["payload"]["ONGOING"][0]["id"]}
-    print(stats)
+
     return stats, 200
 
 
@@ -150,7 +151,7 @@ def get_faceit_peak_elo(player_uuid: str) -> tuple[dict, int]:
             if int(item["elo"]) > peak:
                 peak = int(item["elo"])
         except KeyError:
-            break
+            continue
 
     peak_lvl = get_faceit_level(peak)
 
