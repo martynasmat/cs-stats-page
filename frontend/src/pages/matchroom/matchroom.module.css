@@ -1,4 +1,29 @@
+.matchroom__wrapper {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .matchroom {
     display: grid;
-    grid-template-columns: 2fr 1fr 2fr;
+    grid-template-columns: auto 1fr auto;
+    width: 60%;
+    justify-items: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.faction {
+    display: grid;
+    grid-template-rows: 1fr repeat(5, 5fr);
+    gap: 24px;
+}
+
+.faction__name {
+    align-self: end;
+    justify-self: center;
+    font-weight: 500;
+    color: var(--clr-base-lt);
 }

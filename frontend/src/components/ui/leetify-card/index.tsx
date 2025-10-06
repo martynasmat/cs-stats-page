@@ -16,7 +16,7 @@ export function LeetifyCard({ steamId }: LeetifyCardProps) {
         error,
         isLoading,
     } = useQuery({
-        queryKey: ["leetifyStats"],
+        queryKey: [`leetifyStats-${steamId}`],
         queryFn: () => getLeetifyStats(steamId),
     });
 

@@ -10,7 +10,7 @@ export default function Matchroom() {
     const location = useRoute();
     const matchId = location.params.id;
     const TRACKING_ID = "G-Y3C1F7ZBQ1";
-    console.log("matchId", matchId);
+
     const {
         data: stats,
         error,
@@ -28,17 +28,21 @@ export default function Matchroom() {
     })
 
     return (
-        <main className={styles.matchroom}>
-            <div className={styles.faction}>
-                {(stats?.teams?.faction1.roster ?? []).map((player) => (
-                    <MiniProfile steamId={player.game_player_id} />
-                ))}
-            </div>
-            <div className={styles.match_stats}></div>
-            <div className={styles.faction}>
-                {stats?.teams?.faction2.roster.map((player) => (
-                    <MiniProfile steamId={player.game_player_id} />
-                ))}
+        <main className={styles.matchroom__wrapper}>
+            <div className={styles.matchroom}>
+                <div className={styles.faction}>
+                    <h3 className={styles.faction__name}>{stats?.teams?.faction1?.name}</h3>
+                    {(stats?.teams?.faction1.roster ?? []).map((player) => (
+                        <MiniProfile steamId={player.game_player_id} />
+                    ))}
+                </div>
+                <div className={styles.match_stats}></div>
+                <div className={styles.faction}>
+                    <h3 className={styles.faction__name}>{stats?.teams?.faction2?.name}</h3>
+                    {stats?.teams?.faction2.roster.map((player) => (
+                        <MiniProfile steamId={player.game_player_id} />
+                    ))}
+                </div>
             </div>
         </main>
     );

@@ -16,7 +16,7 @@ export function SteamCard({ steamId }: SteamCardProps) {
         error,
         isLoading,
     } = useQuery({
-        queryKey: ["steamStats"],
+        queryKey: [`steamStats-${steamId}`],
         queryFn: () => getSteamStats(steamId),
     });
 
