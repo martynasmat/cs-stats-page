@@ -85,6 +85,7 @@
 .team_info__values {
     text-transform: uppercase;
     font-size: var(--fs-base);
+    text-align: center;
 }
 
 .match_stat__grid {
