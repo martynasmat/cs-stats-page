@@ -34,6 +34,7 @@ def resolve_id(vanity_name: str) -> tuple[dict, int]:
 @steam_bp.route("/profile/<steam_id>/", methods=["GET"])
 def get_steam_stats(steam_id: str) -> tuple[dict, int]:
     stats = dict()
+    print('asdasdasdasd')
     url = (f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key="
             f"{STEAM_API_KEY}&steamids={steam_id}")
     response_general = r.get(url)

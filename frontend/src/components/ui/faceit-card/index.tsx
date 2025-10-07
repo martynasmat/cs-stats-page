@@ -4,21 +4,20 @@ import { CardHeader } from "../card-header";
 import faceitLogo from "../../../assets/faceit_logo.webp";
 import { ProfileNotFound } from "../profile-not-found";
 import { FaceitCardContent } from "./faceit-card-content";
-import { useQuery } from "@tanstack/react-query";
 
 type FaceitCardProps = {
     steamId: string;
+    faceitStats?: Awaited<ReturnType<typeof getFaceitStats>>;
+    isLoading?: boolean;
+    error?: unknown;
 };
 
-export function FaceitCard({ steamId }: FaceitCardProps) {
-    const {
-        data: faceitStats,
-        error,
-        isLoading,
-    } = useQuery({
-        queryKey: ["faceitStats"],
-        queryFn: () => getFaceitStats(steamId),
-    });
+export function FaceitCard({ faceitStats, isLoading, error }: FaceitCardProps) {
+    const shouldQuery = faceitStats === undefined;
+
+    const stats = shouldQuery ? undefined : faceitStats;
+    const loading = shouldQuery ? isLoading : !!isLoading;
+    const err = shouldQuery ? error : error;
 
     return (
         <div>
@@ -36,12 +35,12 @@ export function FaceitCard({ steamId }: FaceitCardProps) {
                 }
                 banned={faceitStats?.banned}
             />
-            {isLoading ? (
+            {loading ? (
                 <Spinner center />
-            ) : error || !faceitStats ? (
+            ) : err || !stats ? (
                 <ProfileNotFound />
             ) : (
-                <FaceitCardContent stats={faceitStats} />
+                <FaceitCardContent stats={stats} />
             )}
         </div>
     );

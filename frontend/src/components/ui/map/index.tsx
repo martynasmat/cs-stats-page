@@ -1,11 +1,11 @@
-import de_ancient from "../../../assets/maps/de_ancient.webp";
-import de_dust2 from "../../../assets/maps/de_dust2.webp";
-import de_inferno from "../../../assets/maps/de_inferno.webp";
-import de_mirage from "../../../assets/maps/de_mirage.webp";
-import de_nuke from "../../../assets/maps/de_nuke.webp";
-import de_overpass from "../../../assets/maps/de_overpass.webp";
-import de_train from "../../../assets/maps/de_train.webp";
-import de_vertigo from "../../../assets/maps/de_vertigo.webp";
+import de_ancient from "../../../assets/maps/de_ancient.png";
+import de_dust2 from "../../../assets/maps/de_dust2.png";
+import de_inferno from "../../../assets/maps/de_inferno.png";
+import de_mirage from "../../../assets/maps/de_mirage.png";
+import de_nuke from "../../../assets/maps/de_nuke.png";
+import de_overpass from "../../../assets/maps/de_overpass.png";
+import de_train from "../../../assets/maps/de_train.png";
+import de_vertigo from "../../../assets/maps/de_vertigo.png";
 
 type MapProps = {
     map: string;
