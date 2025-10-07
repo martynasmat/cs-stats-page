@@ -26,6 +26,8 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
         tabs.slice(0, activeTabIndex + 1).filter((tab) => tab !== null).length -
         1;
 
+    console.log(stats)
+
     return (
         <div className={"content__faceit"}>
             <div className="content__wrapper__inside">
@@ -184,12 +186,14 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                             </div>
                         </div>
                         <div className="stat__wrapper">
+                            { stats.cs2.last_game != null && (
                             <div className="stat">
                                 <p className="stat__name">Last match</p>
                                 <time className="stat__value">
                                     {formatDate(stats.cs2.last_game)}
                                 </time>
                             </div>
+                                )}
                             <div className="stat">
                                 <p className="stat__name">Recent</p>
                                 <div className="stat__recent-games">
@@ -206,7 +210,10 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                                 </div>
                             </div>
                         </div>
+                        { stats.recentGameStats != null && (
                         <div className="divider"></div>
+                        )}
+                        { stats.recentGameStats != null && (
                         <div className="faceit__wrapper__recent">
                             <p className="stat__name">LAST 50 GAMES</p>
                             <div className="stat__wrapper__recent">
@@ -286,6 +293,7 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                                 </div>
                             </div>
                         </div>
+                        )}
                     </div>
                 )}
                 {activeTabIndex === 1 && stats.csgo && (
