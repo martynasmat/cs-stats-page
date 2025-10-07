@@ -26,7 +26,7 @@ export default function Profile() {
 
     useEffect(() => {
         ReactGA.initialize(TRACKING_ID);
-        ReactGA.send({ hitType: "pageview", page: `/profiles/${steamId}`, title: "Steam profile" });
+        ReactGA.send({ hitType: "pageview", page: `/profiles/${steamId}`, title: "Check profile" });
     })
 
     return (
