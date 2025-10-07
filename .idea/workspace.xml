@@ -6,22 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7c44d002-69f7-424f-9c8f-b5290e92c14b" name="Changes" comment="meldziuosi">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/maps/de_ancient.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/maps/de_dust2.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/maps/de_inferno.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/maps/de_mirage.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/maps/de_nuke.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/maps/de_overpass.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/maps/de_train.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/maps/de_vertigo.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ui/faceit-card/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ui/faceit-card/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ui/map/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ui/map/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ui/mini-profile/mini-profile-content.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ui/mini-profile/mini-profile-content.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ui/mini-profile/styles.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ui/mini-profile/styles.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/matchroom/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/matchroom/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/matchroom/matchroom.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/matchroom/matchroom.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +122,7 @@
       <workItem from="1759687562217" duration="3148000" />
       <workItem from="1759749220425" duration="21459000" />
       <workItem from="1759849017840" duration="45000" />
-      <workItem from="1759849064948" duration="9311000" />
+      <workItem from="1759849064948" duration="10222000" />
     </task>
     <task id="LOCAL−00001" summary="meldziuosi">
       <option name="closed" value="true" />

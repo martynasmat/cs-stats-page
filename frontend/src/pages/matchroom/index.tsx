@@ -23,6 +23,7 @@ export default function Matchroom() {
         isLoading,
     } = useQuery({
         queryKey: [`matchStats-${matchId}`],
+        staleTime: 180000,
         queryFn: () => getMatchStats(matchId),
     });
 
@@ -72,24 +73,28 @@ export default function Matchroom() {
                     <div className={styles.match_info}>
                         <p className={styles.match_stat__label}>score</p>
                         <div className={styles.match_stat__grid}>
-                            <p className={styles.team_score}>{stats?.results?.score["faction1"]}</p>
+                            <p className={`${styles.team_score} ${stats?.results?.score["faction1"] > stats?.results?.score["faction2"] ? "positive" : ""}`}>{stats?.results?.score["faction1"]}</p>
                             <p className={styles.dash}>-</p>
-                            <p className={styles.team_score}>{stats?.results?.score["faction2"]}</p>
+                            <p className={`${styles.team_score} ${stats?.results?.score["faction2"] > stats?.results?.score["faction1"] ? "positive" : ""}`}>{stats?.results?.score["faction2"]}</p>
                         </div>
                     </div>
                     <div className={styles.team_info}>
                         <div className={styles.team_stat}>
                             <p className={styles.team_info__label}>Win probability</p>
                             <div className={styles.team_info__values}>
-                                <p>{stats?.teams?.faction1.stats?.winProbability * 100}%</p>
-                                <p>{stats?.teams?.faction2.stats?.winProbability * 100}%</p>
+                                <p className={stats?.teams?.faction1.stats?.winProbability > 0.5 ? "positive" : ""}>{stats?.teams?.faction1.stats?.winProbability * 100}%</p>
+                                <p className={stats?.teams?.faction2.stats?.winProbability > 0.5 ? "positive" : ""}>{stats?.teams?.faction2.stats?.winProbability * 100}%</p>
                             </div>
                         </div>
                         <div className={styles.team_stat}>
                             <p className={styles.team_info__label}>average elo</p>
                             <div className={styles.team_info__values}>
-                                <p>{stats?.teams?.faction1.stats?.rating}</p>
-                                <p>{stats?.teams?.faction2.stats?.rating}</p>
+                                <p className={
+                                    stats?.teams?.faction1.stats?.rating > stats?.teams?.faction2.stats?.rating ? "positive" : ""
+                                }>{stats?.teams?.faction1.stats?.rating}</p>
+                                <p className={
+                                    stats?.teams?.faction2.stats?.rating > stats?.teams?.faction1.stats?.rating ? "positive" : ""
+                                }>{stats?.teams?.faction2.stats?.rating}</p>
                             </div>
                         </div>
                     </div>

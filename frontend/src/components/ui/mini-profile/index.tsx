@@ -16,6 +16,7 @@ export function MiniProfile({ steamId }: MiniProfileProps) {
         isLoading,
     } = useQuery({
         queryKey: [`faceitStatsMatch-${steamId}`],
+        staleTime: 180000,
         queryFn: () => getFaceitStats(steamId),
     });
 

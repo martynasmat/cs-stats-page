@@ -20,6 +20,7 @@ export default function Profile() {
         isLoading: isFaceitLoading,
     } = useQuery({
         queryKey: [`faceitStats-${steamId}`],
+        staleTime: 180000,
         queryFn: () => getFaceitStats(steamId),
     });
 
