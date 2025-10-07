@@ -26,8 +26,6 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
         tabs.slice(0, activeTabIndex + 1).filter((tab) => tab !== null).length -
         1;
 
-    console.log(stats)
-
     return (
         <div className={"content__faceit"}>
             <div className="content__wrapper__inside">

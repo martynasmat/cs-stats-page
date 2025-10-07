@@ -14,6 +14,9 @@
     -webkit-backdrop-filter: blur(6.1px);
     padding: 14px;
 
+    width: 330px;
+    height: 150px;
+
     transition: background 0.05s;
 }
 
@@ -89,7 +92,11 @@
     top: -20px
 }
 
-@media (max-width: 1200px) {
+.star_player {
+    border: 2px solid #ffe000;
+}
+
+@media (max-width: 1080px) {
     .winrate, .current_elo {
         display: none;
     }

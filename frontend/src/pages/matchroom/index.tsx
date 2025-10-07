@@ -6,16 +6,30 @@ import {getMatchStats} from "../../api/match";
 import {MiniProfile} from "../../components/ui/mini-profile";
 import styles from "./matchroom.module.css"
 import {Map} from "../../components/ui/map";
-import {getCode} from "country-list"
-import {useState} from "preact/hooks";
 import {Spinner} from "../../components/ui/spinner";
-import {ProfileNotFound} from "../../components/ui/profile-not-found";
-import {FaceitCardContent} from "../../components/ui/faceit-card/faceit-card-content";
+import {useCallback, useState} from "preact/hooks";
 
 export default function Matchroom() {
     const location = useRoute();
     const matchId = location.params.id;
     const TRACKING_ID = "G-Y3C1F7ZBQ1";
+
+    const serverCountryCode = {
+        "moscow": "ru",
+        "netherlands": "nl",
+        "uk": "uk",
+        "germany": "de",
+        "sweden": "se",
+        "france": "fr",
+        "finland": "fi",
+        "kazakhstan": "kz",
+        "california": "us",
+        "dallas": "us",
+        "denver": "us",
+        "new york": "us",
+        "chicago": "us",
+        "miami": "us",
+    }
 
     const {
         data: stats,
@@ -26,6 +40,20 @@ export default function Matchroom() {
         staleTime: 180000,
         queryFn: () => getMatchStats(matchId),
     });
+
+    const [bestPlayers, setBestPlayers] = useState<{ [key in "faction1" | "faction2"]?: { playerId: string; score: number } }>({});
+
+    const handleStatsLoaded = useCallback((teamKey: "faction1" | "faction2", playerId: string, score: number) => {
+        setBestPlayers((previous) => {
+            const current = previous[teamKey];
+
+            if (!current || score > current.score) {
+                return { ...previous, [teamKey]: { playerId, score } };
+            }
+
+            return previous;
+        });
+    }, []);
 
     useEffect(() => {
         ReactGA.initialize(TRACKING_ID);
@@ -38,7 +66,13 @@ export default function Matchroom() {
                 <div className={styles.faction}>
                     <h3 className={styles.faction__name}>{stats?.teams?.faction1?.name}</h3>
                     {(stats?.teams?.faction1.roster ?? []).map((player) => (
-                        <MiniProfile steamId={player.game_player_id} />
+                        <MiniProfile
+                            key={player.game_player_id}
+                            steamId={player.game_player_id}
+                            teamKey="faction1"
+                            onStatsLoaded={handleStatsLoaded}
+                            showStar={bestPlayers.faction1?.playerId === player.game_player_id}
+                        />
                     ))}
                 </div>
                 <div className={styles.match_stats}>
@@ -55,7 +89,7 @@ export default function Matchroom() {
                                 ) : (
                                     <img
                                         className="stat__country"
-                                        src={`https://flagcdn.com/${getCode(stats?.voting?.location?.pick[0])?.toLowerCase() ?? ""}.svg`}
+                                        src={`https://flagcdn.com/${serverCountryCode[stats?.voting?.location?.pick[0].toLowerCase()]}.svg`}
                                         alt="Country"
                                     />
                                 )}
@@ -102,7 +136,13 @@ export default function Matchroom() {
                 <div className={styles.faction}>
                     <h3 className={styles.faction__name}>{stats?.teams?.faction2?.name}</h3>
                     {stats?.teams?.faction2.roster.map((player) => (
-                        <MiniProfile steamId={player.game_player_id}/>
+                        <MiniProfile
+                            key={player.game_player_id}
+                            steamId={player.game_player_id}
+                            teamKey="faction2"
+                            onStatsLoaded={handleStatsLoaded}
+                            showStar={bestPlayers.faction2?.playerId === player.game_player_id}
+                        />
                     ))}
                 </div>
             </div>

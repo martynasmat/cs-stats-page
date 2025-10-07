@@ -7,9 +7,10 @@ import star from "../../../assets/star.svg"
 
 type MiniProfileContentProps = {
     stats: FaceitStats;
+    showStar?: boolean;
 };
 
-export function MiniProfileContent({ stats }: MiniProfileContentProps) {
+export function MiniProfileContent({ stats, showStar }: MiniProfileContentProps) {
     const { data: peak, isLoading } = useQuery({
         queryKey: [`peakFaceitElo-${stats.cs2?.statsCS2?.game_player_id}`],
         queryFn: () => getFaceitPeakElo(stats.player_uuid!),
@@ -17,8 +18,10 @@ export function MiniProfileContent({ stats }: MiniProfileContentProps) {
     });
 
     return (
-        <a className={styles.mini_profile__wrapper} href={`/profiles/${stats.cs2?.statsCS2?.game_player_id}`}>
-            <img src={star} alt={"Star icon"} className={styles.star__icon}/>
+        <a className={`${styles.mini_profile__wrapper} ${showStar ? styles.star_player : ""}`} href={`/profiles/${stats.cs2?.statsCS2?.game_player_id}`}>
+            {showStar && (
+                <img src={star} alt={"Star icon"} className={styles.star__icon}/>
+            )}
             <div className={styles.player__info}>
                 <img className={styles.user__avatar} src={stats.cs2?.avatar}  alt={"Player avatar"}/>
                 <p className={styles.player__name}>{stats.cs2?.nickname}</p>
