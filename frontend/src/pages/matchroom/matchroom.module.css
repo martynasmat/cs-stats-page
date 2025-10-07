@@ -9,7 +9,7 @@
 .matchroom {
     display: grid;
     grid-template-columns: auto 1fr auto;
-    width: 60%;
+    width: min(80%, 1200px);
     justify-items: center;
     align-items: center;
     margin: 0 auto;
@@ -26,4 +26,92 @@
     justify-self: center;
     font-weight: 500;
     color: var(--clr-base-lt);
+}
+
+.match_stats {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    width: 60%;
+    height: 80%;
+}
+
+.server_info,
+.team_info,
+.match_info {
+    display: grid;
+    grid-template-rows: auto;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+}
+
+.server_stat__label,
+.team_info__label,
+.match_stat__label {
+    color: var(--clr-base-lt);
+    text-transform: uppercase;
+    font-size: var(--fs-base);
+}
+
+.server_stat, .team_stat {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    gap: 4px;
+}
+
+.server_stat__grid {
+    display: grid;
+    width: min(70%, 150px);
+    grid-template-columns: 1fr 2fr;
+    justify-items: start;
+    align-items: center;
+}
+
+.server_stat__grid > img {
+    justify-self: center;
+    align-self: center;
+}
+
+.server_stat__grid > p {
+    justify-self: center;
+}
+
+.server_stat__value,
+.team_info__values {
+    text-transform: uppercase;
+    font-size: var(--fs-base);
+}
+
+.match_stat__grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    justify-items: center;
+    align-items: center;
+    width: min(100%, 225px);
+}
+
+.team_score {
+    font-size: 2rem;
+}
+
+.dash {
+    color: var(--clr-base-dk);
+    font-size: 2rem;
+}
+
+.team_info {
+    width: 100%;
+}
+
+.team_info__values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    justify-items: center;
+    align-items: center;
 }

@@ -8,6 +8,7 @@
 	},
 	"dependencies": {
 		"@tanstack/react-query": "^5.90.2",
+		"country-list": "^2.4.1",
 		"ky": "^1.9.1",
 		"preact": "^10.26.9",
 		"preact-iso": "^2.10.0",
@@ -15,6 +16,7 @@
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.10.2",
+		"@types/country-list": "^2.1.4",
 		"eslint": "^9.34.0",
 		"eslint-config-preact": "^2.0.0",
 		"typescript": "^5.9.2",

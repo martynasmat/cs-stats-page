@@ -40,7 +40,7 @@ export function MiniProfileContent({ stats }: MiniProfileContentProps) {
                     <Spinner center />
                 ) : (
                     peak && (
-                        <div className={styles.matchroom__elo__wrapper}>
+                        <div className={`${styles.matchroom__elo__wrapper} ${styles.current_elo}`}>
                             <div className={styles.matchroom__stat__elo}>
                                 <p className={styles.matchroom__stat__name}>
                                     Peak elo
