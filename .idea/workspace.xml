@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7c44d002-69f7-424f-9c8f-b5290e92c14b" name="Changes" comment="meldziuosi">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ui/faceit-card/faceit-card-content.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ui/faceit-card/faceit-card-content.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ui/active-match/active-match.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ui/active-match/active-match.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +122,7 @@
       <workItem from="1759687562217" duration="3148000" />
       <workItem from="1759749220425" duration="21459000" />
       <workItem from="1759849017840" duration="45000" />
-      <workItem from="1759849064948" duration="298000" />
+      <workItem from="1759849064948" duration="1386000" />
     </task>
     <task id="LOCAL−00001" summary="meldziuosi">
       <option name="closed" value="true" />
