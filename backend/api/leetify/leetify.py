@@ -25,6 +25,8 @@ def get_leetify_stats(steam_id: str) -> tuple[dict, int]:
     if response_not_public_json["teammates"] is not False:
         banned_mates = list(filter(lambda x: x["isBanned"], response_not_public_json["teammates"]))
 
+    rating = response_json["ranks"]["leetify"]
+
     return {
         "avatar": response_not_public_json["meta"]["steamAvatarUrl"],
         "aim": round(response_json["rating"]["aim"], 2),
@@ -33,7 +35,7 @@ def get_leetify_stats(steam_id: str) -> tuple[dict, int]:
         "kd": 0,
         "opening": round(response_json["rating"]["opening"] * 100, 2),
         "avg_he": round(response_json["stats"]["he_foes_damage_avg"], 2),
-        "rating": round(response_json["ranks"]["leetify"], 2),
+        "rating": round(rating, 2) if rating is not None else None,
         "position": round(response_json["rating"]["positioning"], 2),
         "banned_mates": round(len(banned_mates) / len(response_not_public_json["teammates"]) * 100, 2)
             if response_not_public_json["teammates"] is not False else None,
