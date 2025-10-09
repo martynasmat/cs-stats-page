@@ -28,7 +28,7 @@ export function MiniProfileContent({ stats, showStar }: MiniProfileContentProps)
             </div>
             <hr className={styles.matchroom__divider} />
             <div className={styles.matchroom__player__stats}>
-                <div className={styles.matchroom__elo__wrapper}>
+                <div className={`${styles.matchroom__elo__wrapper} ${styles.current_elo}`}>
                     <div className={styles.matchroom__stat__elo}>
                         <p className={styles.matchroom__stat__name}>Elo</p>
                     </div>
@@ -43,10 +43,10 @@ export function MiniProfileContent({ stats, showStar }: MiniProfileContentProps)
                     <Spinner center />
                 ) : (
                     peak && (
-                        <div className={`${styles.matchroom__elo__wrapper} ${styles.current_elo}`}>
+                        <div className={`${styles.matchroom__elo__wrapper} ${styles.peak_elo}`}>
                             <div className={styles.matchroom__stat__elo}>
                                 <p className={styles.matchroom__stat__name}>
-                                    Peak elo
+                                    Peak
                                 </p>
                             </div>
                             <p className={styles.matchroom__stat__value}>
