@@ -18,7 +18,7 @@ app.register_blueprint(steam_bp, url_prefix="/api/steam")
 app.register_blueprint(leetify_bp, url_prefix="/api/leetify")
 app.register_blueprint(faceit_bp, url_prefix="/api/faceit")
 app.register_blueprint(match_bp, url_prefix="/api/match")
-CORS(app, origins=["http://localhost:5173", "https://www.steamcommunity.com", "https://steamcommunity.com"])
+CORS(app, origins=["http://localhost:5173", "https://www.steamcommunity.win", "https://steamcommunity.win"])
 
 FACEIT_API_KEY_NAME = os.getenv("FACEIT_API_KEY_NAME")
 FACEIT_API_KEY = os.getenv("FACEIT_API_KEY")
