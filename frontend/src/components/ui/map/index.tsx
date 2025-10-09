@@ -6,20 +6,22 @@ import de_nuke from "../../../assets/maps/de_nuke.png";
 import de_overpass from "../../../assets/maps/de_overpass.png";
 import de_train from "../../../assets/maps/de_train.png";
 import de_vertigo from "../../../assets/maps/de_vertigo.png";
+import de_anubis from "../../../assets/maps/de_anubis.webp";
 
 type MapProps = {
     map: string;
 };
 
 const maps: Record<string, string> = {
-    de_ancient: de_ancient,
-    de_dust2: de_dust2,
-    de_inferno: de_inferno,
-    de_mirage: de_mirage,
-    de_nuke: de_nuke,
-    de_overpass: de_overpass,
-    de_train: de_train,
-    de_vertigo: de_vertigo,
+    de_ancient,
+    de_dust2,
+    de_inferno,
+    de_mirage,
+    de_nuke,
+    de_overpass,
+    de_train,
+    de_vertigo,
+    de_anubis,
 };
 
 export function Map({ map }: MapProps) {
