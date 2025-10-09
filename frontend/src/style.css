@@ -203,8 +203,15 @@ html {
 }
 
 .user__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: 1.5rem;
     color: var(--clr-neutral-min);
+
+    *:has(&) {
+        overflow: auto;
+    }
 }
 
 .user__stats {

@@ -184,14 +184,14 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                             </div>
                         </div>
                         <div className="stat__wrapper">
-                            { stats.cs2.last_game != null && (
-                            <div className="stat">
-                                <p className="stat__name">Last match</p>
-                                <time className="stat__value">
-                                    {formatDate(stats.cs2.last_game)}
-                                </time>
-                            </div>
-                                )}
+                            {stats.cs2.last_game != null && (
+                                <div className="stat">
+                                    <p className="stat__name">Last match</p>
+                                    <time className="stat__value">
+                                        {formatDate(stats.cs2.last_game)}
+                                    </time>
+                                </div>
+                            )}
                             <div className="stat">
                                 <p className="stat__name">Recent</p>
                                 <div className="stat__recent-games">
@@ -208,89 +208,97 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                                 </div>
                             </div>
                         </div>
-                        { stats.recentGameStats != null && (
-                        <div className="divider"></div>
+                        {stats.recentGameStats != null && (
+                            <div className="divider"></div>
                         )}
-                        { stats.recentGameStats != null && (
-                        <div className="faceit__wrapper__recent">
-                            <p className="stat__name">LAST 50 GAMES</p>
-                            <div className="stat__wrapper__recent">
-                                <div className="stat">
-                                    <p className="stat__name">ADR</p>
-                                    <p className="stat__value">
-                                        {stats.recentGameStats.adr}
-                                    </p>
-                                </div>
-                                <div className="stat">
-                                    <p className="stat__name">Kills</p>
-                                    <p className="stat__value">
-                                        {stats.recentGameStats.kills}
-                                    </p>
-                                </div>
-                                <div className="stat">
-                                    <p className="stat__name">Deaths</p>
-                                    <p className="stat__value">
-                                        {stats.recentGameStats.deaths}
-                                    </p>
-                                </div>
-                                <div className="stat">
-                                    <p className="stat__name">Assists</p>
-                                    <p className="stat__value">
-                                        {stats.recentGameStats.assists}
-                                    </p>
-                                </div>
-                                <div className="stat">
-                                    <p className="stat__name">K/D</p>
-                                    <p className="stat__value">
-                                        {stats.recentGameStats.kd_ratio}
-                                    </p>
-                                </div>
-                                <div className="stat">
-                                    <p className="stat__name">Win %</p>
-                                    <p className="stat__value">
-                                        {stats.recentGameStats.win_percentage}%
-                                    </p>
-                                </div>
-                                <div className="stat stat__rounds-won">
-                                    <p className="stat__name">RNDS won</p>
-                                    <p className="stat__value">
-                                        {stats.recentGameStats.rounds_won}
-                                    </p>
-                                </div>
-                                <div className="stat stat__best-map">
-                                    <p className="stat__name">best map</p>
-                                    <div className="stat__value__wrapper stat__map">
-                                        <Map
-                                            map={stats.recentGameStats.best_map}
-                                        />
+                        {stats.recentGameStats != null && (
+                            <div className="faceit__wrapper__recent">
+                                <p className="stat__name">LAST 50 GAMES</p>
+                                <div className="stat__wrapper__recent">
+                                    <div className="stat">
+                                        <p className="stat__name">ADR</p>
+                                        <p className="stat__value">
+                                            {stats.recentGameStats.adr}
+                                        </p>
+                                    </div>
+                                    <div className="stat">
+                                        <p className="stat__name">Kills</p>
+                                        <p className="stat__value">
+                                            {stats.recentGameStats.kills}
+                                        </p>
+                                    </div>
+                                    <div className="stat">
+                                        <p className="stat__name">Deaths</p>
+                                        <p className="stat__value">
+                                            {stats.recentGameStats.deaths}
+                                        </p>
+                                    </div>
+                                    <div className="stat">
+                                        <p className="stat__name">Assists</p>
+                                        <p className="stat__value">
+                                            {stats.recentGameStats.assists}
+                                        </p>
+                                    </div>
+                                    <div className="stat">
+                                        <p className="stat__name">K/D</p>
+                                        <p className="stat__value">
+                                            {stats.recentGameStats.kd_ratio}
+                                        </p>
+                                    </div>
+                                    <div className="stat">
+                                        <p className="stat__name">Win %</p>
                                         <p className="stat__value">
                                             {
                                                 stats.recentGameStats
-                                                    .best_map_winrate
+                                                    .win_percentage
                                             }
                                             %
                                         </p>
                                     </div>
-                                </div>
-                                <div className="stat stat__worst-map">
-                                    <p className="stat__name">worst map</p>
-                                    <div className="stat__value__wrapper stat__map">
-                                        <Map
-                                            map={
-                                                stats.recentGameStats.worst_map
-                                            }
-                                        />
+                                    <div className="stat stat__rounds-won">
+                                        <p className="stat__name">RNDS won</p>
                                         <p className="stat__value">
-                                            {
-                                                stats.recentGameStats
-                                                    .worst_map_winrate
-                                            }
-                                            %
+                                            {stats.recentGameStats.rounds_won}
                                         </p>
+                                    </div>
+                                    <div className="stat stat__best-map">
+                                        <p className="stat__name">best map</p>
+                                        <div className="stat__value__wrapper stat__map">
+                                            <Map
+                                                map={
+                                                    stats.recentGameStats
+                                                        .best_map
+                                                }
+                                            />
+                                            <p className="stat__value">
+                                                {
+                                                    stats.recentGameStats
+                                                        .best_map_winrate
+                                                }
+                                                %
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="stat stat__worst-map">
+                                        <p className="stat__name">worst map</p>
+                                        <div className="stat__value__wrapper stat__map">
+                                            <Map
+                                                map={
+                                                    stats.recentGameStats
+                                                        .worst_map
+                                                }
+                                            />
+                                            <p className="stat__value">
+                                                {
+                                                    stats.recentGameStats
+                                                        .worst_map_winrate
+                                                }
+                                                %
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         )}
                     </div>
                 )}

@@ -2,7 +2,6 @@ import os
 import requests as r
 import time
 from flask import Blueprint
-import json
 from .helpers import get_faceit_level, get_average_stats
 
 FACEIT_API_KEY_NAME = os.getenv("FACEIT_API_KEY_NAME")

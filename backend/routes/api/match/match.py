@@ -1,6 +1,5 @@
 from flask import Blueprint
 import os
-import json
 import requests as r
 
 FACEIT_API_KEY_NAME = os.getenv("FACEIT_API_KEY_NAME")

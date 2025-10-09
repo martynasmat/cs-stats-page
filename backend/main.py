@@ -1,16 +1,11 @@
-import os
 from flask_cors import CORS
-
-from flask import Flask,  request, abort
+from flask import Flask
 from dotenv import load_dotenv
-import requests as r
-import hmac
-import hashlib
-import subprocess
-from api.steam.steam import steam_bp
-from api.leetify.leetify import leetify_bp
-from api.faceit.faceit import faceit_bp
-from api.match.match import match_bp
+from routes.api.steam.steam import steam_bp
+from routes.api.leetify.leetify import leetify_bp
+from routes.api.faceit.faceit import faceit_bp
+from routes.api.match.match import match_bp
+from routes.redeploy.redeploy import redeploy_bp
 
 load_dotenv()
 app = Flask(__name__)
@@ -18,36 +13,8 @@ app.register_blueprint(steam_bp, url_prefix="/api/steam")
 app.register_blueprint(leetify_bp, url_prefix="/api/leetify")
 app.register_blueprint(faceit_bp, url_prefix="/api/faceit")
 app.register_blueprint(match_bp, url_prefix="/api/match")
+app.register_blueprint(redeploy_bp, url_prefix="/")
 CORS(app, origins=["http://localhost:5173", "https://www.steamcommunity.win", "https://steamcommunity.win"])
-
-FACEIT_API_KEY_NAME = os.getenv("FACEIT_API_KEY_NAME")
-FACEIT_API_KEY = os.getenv("FACEIT_API_KEY")
-
-
-@app.route("/redeploy/", methods=["POST"])
-def redeploy() -> tuple[str, int]:
-    header_signature = request.headers.get('X-Hub-Signature-256')
-    payload = request.data
-    if not verify_signature(payload, header_signature):
-        abort(403, "Signature verification failed")
-
-    subprocess.run(["/bin/bash", "/home/cs-stats-page/backend/deploy_script.sh"])
-    return "Webhook received and verified", 200
-
-
-def verify_signature(payload, header_signature):
-    if header_signature is None:
-        return False
-
-    sha_name, signature = header_signature.split('=')
-    if sha_name != 'sha256':
-        return False
-
-    mac = hmac.new(os.getenv("REDEPLOY_WEBHOOK_SECRET").encode(), msg=payload, digestmod=hashlib.sha256)
-    expected_signature = mac.hexdigest()
-
-    return hmac.compare_digest(expected_signature, signature)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
