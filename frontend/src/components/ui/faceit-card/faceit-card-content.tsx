@@ -137,49 +137,49 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                             <div className="stat">
                                 <p className="stat__name">Hs%</p>
                                 <p className="stat__value">
-                                    {stats.cs2.lifetime.hs_percentage}%
+                                    {stats.cs2.lifetime?.hs_percentage}%
                                 </p>
                             </div>
                             <div className="stat">
                                 <p className="stat__name">Clutch 1v1</p>
                                 <p className="stat__value">
-                                    {stats.cs2.lifetime.clutch_1v1}%
+                                    {stats.cs2.lifetime?.clutch_1v1}%
                                 </p>
                             </div>
                             <div className="stat">
                                 <p className="stat__name">Winrate</p>
                                 <p className="stat__value">
-                                    {stats.cs2.lifetime.winrate}%
+                                    {stats.cs2.lifetime?.winrate}%
                                 </p>
                             </div>
                             <div className="stat">
                                 <p className="stat__name">Kd</p>
                                 <p className="stat__value">
-                                    {stats.cs2.lifetime.kd}
+                                    {stats.cs2.lifetime?.kd}
                                 </p>
                             </div>
                             <div className="stat">
                                 <p className="stat__name">Clutch 1v2</p>
                                 <p className="stat__value">
-                                    {stats.cs2.lifetime.clutch_1v2}%
+                                    {stats.cs2.lifetime?.clutch_1v2}%
                                 </p>
                             </div>
                             <div className="stat">
                                 <p className="stat__name">Matches</p>
                                 <p className="stat__value">
-                                    {stats.cs2.lifetime.matches}
+                                    {stats.cs2.lifetime?.matches}
                                 </p>
                             </div>
                             <div className="stat">
                                 <p className="stat__name">Adr</p>
                                 <p className="stat__value">
-                                    {stats.cs2.lifetime.adr}
+                                    {stats.cs2.lifetime?.adr}
                                 </p>
                             </div>
                             <div className="stat">
                                 <p className="stat__name">Util dmg</p>
                                 <p className="stat__value">
-                                    {stats.cs2.lifetime.utility_damage}
+                                    {stats.cs2.lifetime?.utility_damage}
                                 </p>
                             </div>
                         </div>
@@ -195,7 +195,7 @@ export function FaceitCardContent({ stats }: FaceitCardContentProps) {
                             <div className="stat">
                                 <p className="stat__name">Recent</p>
                                 <div className="stat__recent-games">
-                                    {stats.cs2.lifetime.recent.map((r, i) => (
+                                    {stats.cs2.lifetime?.recent.map((r, i) => (
                                         <span
                                             key={i}
                                             className={`stat__recent-games--${
