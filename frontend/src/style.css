@@ -25,9 +25,10 @@
     --clr-rating-tier-7: hsl(38, 86%, 63%);
     --clr-rating-tier-7-dk: hsl(38, 86%, 45%);
 
-    --fs-xs: 0.75rem;
-    --fs-sm: 0.8rem;
-    --fs-base: 0.9rem;
+    --fs-xs: 0.7rem;
+    --fs-sm: 0.75rem;
+    --fs-base: 0.85rem;
+    --padding: 0.8rem;
 }
 
 body {
@@ -75,7 +76,6 @@ html {
 .content__wrapper > * {
     display: flex;
     flex-direction: column;
-    width: 325px;
     height: 100%;
     padding: 0;
     background: rgba(31, 31, 31, 0.23);
@@ -148,7 +148,7 @@ html {
 }
 
 .content__wrapper__inside {
-    padding: 24px;
+    padding: var(--padding);
 }
 
 .image__logo {
