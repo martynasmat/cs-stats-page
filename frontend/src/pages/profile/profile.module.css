@@ -4,6 +4,7 @@
     min-height: 100dvh;
     margin-inline: auto;
     gap: 20px;
+    padding: 24px 0;
 }
 
 .content__wrapper {

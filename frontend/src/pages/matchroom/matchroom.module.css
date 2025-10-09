@@ -1,9 +1,10 @@
 .matchroom__wrapper {
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
+    min-width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 24px 0;
 }
 
 .matchroom {
