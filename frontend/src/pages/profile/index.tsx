@@ -45,7 +45,12 @@ export default function Profile() {
                 <LeetifyCard steamId={steamId} />
             </div>
             <div class={styles.contact}>
-                <p class={"contact-info"}>Contact us on Discord - tsitrina & mykolas_</p>
+                <p className={"advertise"}>Wanna earn extra cash? We are paying people to advertise this website in-game.</p>
+                <p className={"contact-info steam"}>Contact us on Steam -
+                    <a href={"https://steamcommunity.com/profiles/76561198284155976/"} target={"_blank"}> here</a> or
+                    <a href={"https://steamcommunity.com/id/asdalbajobas"} target={"_blank"}> here</a>
+                </p>
+                <p className={"contact-info discord"}>Discord - tsitrina & mykolas_</p>
             </div>
         </main>
     );

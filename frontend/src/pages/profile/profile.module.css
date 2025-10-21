@@ -30,10 +30,12 @@
 
 .contact {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     color: var(--clr-base-lt);
     align-self: end;
+    font-size: 0.9rem;
 }
 
 .match_found {
