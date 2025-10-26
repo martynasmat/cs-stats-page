@@ -7,8 +7,6 @@
     <list default="true" id="7c44d002-69f7-424f-9c8f-b5290e92c14b" name="Changes" comment="meldziuosi">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/api/leetify/leetify.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api/leetify/leetify.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/profile/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/profile/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/profile/profile.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/profile/profile.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +128,8 @@
       <workItem from="1759967260242" duration="4313000" />
       <workItem from="1759972140360" duration="449000" />
       <workItem from="1760559657093" duration="836000" />
-      <workItem from="1761056840499" duration="966000" />
+      <workItem from="1761056840499" duration="3528000" />
+      <workItem from="1761436650318" duration="348000" />
     </task>
     <task id="LOCAL−00001" summary="meldziuosi">
       <option name="closed" value="true" />
